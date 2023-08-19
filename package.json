@@ -2,13 +2,13 @@
   "name": "ixfx-play",
   "version": "1.0.0",
   "description": "",
-  "browserslist": "last 2 Chrome versions",
+  "type": "module",
   "scripts": {
-    "start": "npm run postinstall && concurrently npm:watch:*",
-    "build": "npm run postinstall && tsc && npm run static",
-    "check": "tsc --noEmit",
+    "start": "npm run ixfx && concurrently npm:watch:*",
+    "build": "npm run ixfx && tsc && npm run static",
     "static": "cpx \"src/**/*.{html,css,js}\" docs",
-    "postinstall": "copyfiles --up 3 node_modules/ixfx/dist/**.* docs/ixfx",
+    "clean": "npm rimraf docs",
+    "ixfx": "copyfiles --up 3 node_modules/ixfx/dist/**.* docs/ixfx",
     "watch:tsc": "tsc --watch",
     "watch:static": "cpx \"src/**/*.{html,css,js}\" docs --watch"
   },
@@ -22,13 +22,5 @@
     "ixfx": "^0.10.1",
     "rimraf": "^5.0.1",
     "typescript": "^5.1.6"
-  },
-  "type": "module",
-  "targets": {
-    "main": {
-      "includeNodeModules": [
-        "ixfx"
-      ]
-    }
   }
 }
