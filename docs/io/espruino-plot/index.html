@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>espruino plot</title>
-  <script src="/visuals/circle-fill-animated/index.51a85442.js"></script><script src="/io/espruino-plot/index.82943fe3.js"></script>
+  <script src="split.min.js"></script>
 
-  <link rel="stylesheet" href="/io/espruino-plot/index.07489ce6.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -56,7 +56,7 @@ Puck.on('accel', (a) => {
           <div id="plot">
             <div id="canvasWrapper">
               <canvas id="plotCanvas">
-            </canvas></div>
+            </div>
           </div>
           <div id="stream">
             <div id="log"></div>
@@ -66,7 +66,7 @@ Puck.on('accel', (a) => {
     </div>
   </div>
 
-  <script src="/io/espruino-plot/index.2100761f.js" defer=""></script>
+  <script type="module" src="script.js"></script>
 </body>
 
 </html>

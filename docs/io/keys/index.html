@@ -1,63 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>keys playground</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<head><script src="/visuals/circle-fill-animated/index.51a85442.js"></script>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>keys playground</title>
-</head>
-<style>:root {
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --mono-font: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
-  --hue: 214;
-  --bg: hsl(var(--hue) 64% 87%);
-  --fg: hsl(var(--hue) 100% 9%);
-  --padding: .3em;
-}
+  <body>
+    <script type="importmap">
+      {
+        "imports": {
+          "ixfx": "./ixfx/"
+        }
+      }
+    </script>
+    <h1>Keyboard events</h1>
+    <p>This playground shows data from keyboard events.</p>
+    <label for="evKeydown">keydown</label>
+    <input type="checkbox" checked id="evKeydown" />
 
-html, body {
-  background-color: var(--bg);
-  color: var(--fg);
-  font-size: 14px;
-  font-family: var(--font);
-}
+    <label for="evKeyup">keyup</label>
+    <input type="checkbox" checked id="evKeyup" />
 
-#last {
-  font-family: var(--mono-font);
-}
+    <label for="evKeypress">keypress</label>
+    <input type="checkbox" checked id="evKeypress" />
 
-#log {
-  font-family: var(--mono-font);
-  height: 10em;
-}
+    <section>
+      <div>
+        <h2>Last event</h2>
+        <div id="last"></div>
+      </div>
+      <div>
+        <h2>Log</h2>
+        <button id="btnLogClear">Clear</button>
+        <div id="log"></div>
+      </div>
+    </section>
 
-</style>
-
-<body>
-  <h1>Keyboard events</h1>
-  <p>This playground shows data from keyboard events.</p>
-  <label for="evKeydown">keydown</label>
-  <input type="checkbox" checked="" id="evKeydown">
-
-  <label for="evKeyup">keyup</label>
-  <input type="checkbox" checked="" id="evKeyup">
-
-  <label for="evKeypress">keypress</label>
-  <input type="checkbox" checked="" id="evKeypress">
-
-  <section>
-    <div>
-      <h2>Last event</h2>
-      <div id="last"></div>
-    </div>
-    <div>
-      <h2>Log</h2>
-      <button id="btnLogClear">Clear</button>
-      <div id="log"></div>
-    </div>
-  </section>
-
-  <script src="/io/keys/index.0b47e5df.js" defer=""></script>
-</body>
-
+    <script type="module" src="script.js"></script>
+  </body>
 </html>

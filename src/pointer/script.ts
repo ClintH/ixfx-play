@@ -1,4 +1,4 @@
-import {log, Forms} from 'ixfx/dist/dom'
+import {log, Forms} from '../ixfx/dom.js'
 
 const settings = Object.freeze({
   pointerEl: document.getElementById(`pointerArea`),
@@ -16,7 +16,7 @@ const clearPointers = () => {
  * 
  * @param {PointerEvent} ev 
  */
-const updatePointer = (ev) => {
+const updatePointer = (ev: PointerEvent) => {
   const {currentEl, log} = settings;
   const {isPrimary, pointerType, pointerId, type, shiftKey, ctrlKey, metaKey} = ev;
   const {movementX, movementY, x, y, offsetX, offsetY, screenX, screenY} = ev;
@@ -43,7 +43,7 @@ const updatePointer = (ev) => {
   if (pointerType === `pen`) {
     const {pressure, twist, tangentialPressure, tiltX, tiltY} = ev;
     penStr += `pressure: ${pressure}<br />twist: ${twist} tangentialPressure: ${tangentialPressure}<br />tilt: ${tiltX},${tiltY}<br />`;
-    if (ev.altitudeAngle && ev.azimuthAngle) {
+    if (`altitudeAngle` in ev && `azimuthAngle` in ev) {
       penStr += `altitudeAngle ${ev.altitudeAngle}<br />azimuthAngle: ${ev.azimuthAngle})<br />`;
     }
     penStr += `<br />`;
@@ -63,11 +63,7 @@ const updatePointer = (ev) => {
   `;
 };
 
-/**
- * 
- * @param {PointerEvent} ev 
- */
-const pointerEventSimplify = (ev) => {
+const pointerEventSimplify = (ev: PointerEvent) => {
   const {button, buttons, ctrlKey, isPrimary, metaKey, movementX, movementY, offsetX, offsetY, pageX, pageY, pointerId, pointerType, screenX, screenY, shiftKey, x, y} = ev;
 
   let r = {button, buttons, ctrlKey, isPrimary, metaKey, movementX, movementY, offsetX, offsetY, pageX, pageY, pointerId, pointerType, screenX, screenY, shiftKey, x, y};
@@ -75,6 +71,7 @@ const pointerEventSimplify = (ev) => {
   if (ev.pointerType !== 'mouse') {
     r = {
       ...r,
+      // @ts-ignore
       pressure: ev.pressure,
       tangentialPressure: ev.tangentialPressure,
       tiltX: ev.tiltX,
@@ -82,9 +79,12 @@ const pointerEventSimplify = (ev) => {
       twist: ev.twist
     }
   }
-  if (ev.altitudeAngle) r.altitudeAngle = ev.altitudeAngle;
-  if (ev.azimuthAngle) r.azimuthAngle = ev.azimuthAngle;
-  if (ev.webkitForce) r.webkitForce = ev.webkitForce;
+  // @ts-ignore
+  if (`altitudeAngle` in ev) r.altitudeAngle = ev.altitudeAngle;
+  // @ts-ignore
+  if (`azimuthAngle` in ev) r.azimuthAngle = ev.azimuthAngle;
+  // @ts-ignore
+  if (`webkitForce` in ev) r.webkitForce = ev.webkitForce;
   return r;
 };
 
@@ -131,12 +131,12 @@ const setup = () => {
 
   pointerEl.addEventListener(`webkitmouseforcedown`, ev => {
     if (!chkPointerdown.checked) return;
-    updatePointer(ev);
+    updatePointer(ev as PointerEvent);
 
   });
   pointerEl.addEventListener(`webkitmouseforceup`, ev => {
     if (!chkPointerup.checked) return;
-    updatePointer(ev);
+    updatePointer(ev as PointerEvent);
 
   });
   pointerEl.addEventListener(`webkitforcechanged`, ev => {

@@ -1,0 +1,9 @@
+{
+  "port": 4500,
+  "open": "docs/index.html",
+  "watch": ["src/**/*"],
+  "mount": {
+    "/src": "./docs"
+  },
+  "navigate": false
+}

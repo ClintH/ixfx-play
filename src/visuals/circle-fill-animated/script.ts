@@ -1,8 +1,8 @@
-import * as Dom from 'ixfx/dist/dom.js';
-import {repeat, debounce} from 'ixfx/dist/flow.js';
-import * as Random from 'ixfx/dist/random.js';
-import {Points, Polar} from 'ixfx/dist/geometry.js';
-import {pingPongPercent} from 'ixfx/dist/generators.js';
+import * as Dom from '../../ixfx/dom.js';
+import {repeat, debounce} from '../../ixfx/flow.js';
+import * as Random from '../../ixfx/random.js';
+import {Points, Polar} from '../../ixfx/geometry.js';
+import {pingPongPercent} from '../../ixfx/generators.js';
 
 const settings = Object.freeze({
   piPi: Math.PI * 2,
@@ -204,7 +204,7 @@ function drawPoint(ctx: CanvasRenderingContext2D, position: Points.Point, fillSt
 function inputChangeDebounce(id: string, callback: (value: string) => void) {
   const el = document.getElementById(id) as HTMLInputElement;
   if (!el) throw new Error(`${id} not found`);
-  const debouncer = debounce((evt) => {
+  const debouncer = debounce((evt: any) => {
     callback(el.value);
   }, 500);
 

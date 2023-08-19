@@ -2,85 +2,11 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>pointer playground</title>
+  <link href="style.css" rel="stylesheet">
 </head>
-<style>:root {
-  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --mono-font: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
-  --hue: 210;
-  --bg: hsl(var(--hue) 64% 37%);
-  --faint: hsl(var(--hue) 100% 15%);
-  --fg: hsl(var(--hue) 100% 90%);
-  --padding: .3em;
-}
-
-html, body {
-  background-color: var(--bg);
-  color: var(--fg);
-  font-size: 14px;
-  font-family: var(--font);
-  width: 100vw;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  overscroll-behavior: none;
-  touch-action: none;
-  display: flex;
-  overflow: hidden;
-}
-
-#penArea {
-  background-color: hsl(var(--hue) 100% 5%);
-  touch-action: none;
-  -webkit-user-select: none;
-  user-select: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 20vw;
-  display: flex;
-}
-
-.mono {
-  font-family: var(--mono-font);
-}
-
-section {
-  padding: var(--padding);
-}
-
-#ïnfoAreaA, #infoAreaB {
-  flex-grow: 1;
-}
-
-.cell {
-  width: 3em;
-}
-
-#helpArea {
-  color: #000;
-  background-color: #fff;
-  width: 100vw;
-  height: 100vh;
-  padding: 2em;
-  display: none;
-  position: absolute;
-}
-
-#helpArea > div {
-  max-width: 40vw;
-  height: 100%;
-  margin: auto;
-  overflow: scroll;
-}
-
-</style>
-
 <body>
   <section id="ïnfoAreaA">
     <div>
@@ -116,10 +42,10 @@ section {
       <h1>Coords</h1>
       <table>
         <thead>
-          </thead><td></td>
+          <td></td>
           <td></td>
           <td>movement</td>
-        
+        </thead>
         <tr>
           <td>x</td>
           <td class="mono cell" id="x"></td>
@@ -139,11 +65,11 @@ section {
       <table>
         <tr>
           <td>Pressure</td>
-          <td style="width: 5em" class="mono" id="pressure"></td>
+          <td style="width:5em" class="mono" id="pressure"></td>
         </tr>
         <tr>
           <td>Tangential</td>
-          <td class="mono" "id=" tangentialPressure"></td>
+          <td class="mono""id=" tangentialPressure"></td>
         </tr>
 
       </table>
@@ -155,7 +81,7 @@ section {
       Pen input here...
     </p>
 
-    <button style="position: absolute; top: 1em" id="btnHelpShow">Info</button>
+    <button style="top:1em;position:absolute" id="btnHelpShow">Info</button>
   </section>
   <section id="infoAreaB">
     <div>
@@ -176,11 +102,11 @@ section {
       <table>
         <tr>
           <td>azimuth</td>
-          <td style="width: 6em" class="mono" id="azimuthAngle"></td>
+          <td style="width:6em" class="mono" id="azimuthAngle"></td>
         </tr>
         <tr>
           <td>altitude</td>
-          <td style="width: 6em" class="mono" id="altitudeAngle"></td>
+          <td style="width:6em" class="mono" id="altitudeAngle"></td>
         </tr>
       </table>
     </div>
@@ -193,7 +119,7 @@ section {
     <div>
 
       <h1>Help</h1>
-      <button id="btnHelpClose">Close</button><br>
+      <button id="btnHelpClose">Close</button><br />
 
       From the <a href="https://w3c.github.io/pointerevents/#pointerevent-interface">spec</a>...
 
@@ -233,7 +159,6 @@ section {
     </div>
 
   </div>
-  <script src="/pointer/pen/index.c4c5d243.js" defer=""></script>
+  <script type="module" src="script.js"></script>
 </body>
-
 </html>
