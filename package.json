@@ -2,10 +2,12 @@
   "name": "test",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "browserslist": "last 2 Chrome versions",
   "scripts": {
-    "start": "parcel src/index.html",
-    "check": "tsc --noEmit"
+    "start": "parcel src/index.html --dist-dir docs",
+    "build": "npm run clean && parcel build src/index.html --dist-dir docs  --no-optimize",
+    "check": "tsc --noEmit",
+    "clean": "rimraf .parcel-cache"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +15,14 @@
   "devDependencies": {
     "ixfx": "^0.10.1",
     "parcel": "^2.9.3",
+    "rimraf": "^5.0.1",
     "typescript": "^5.1.6"
+  },
+  "targets": {
+    "main": {
+      "includeNodeModules": [
+        "ixfx"
+      ]
+    }
   }
 }

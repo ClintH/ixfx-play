@@ -1,0 +1,59 @@
+*, :before, :after {
+  box-sizing: border-box;
+}
+
+:root {
+  --accent-hue: 330;
+  --accent: hsl(var(--accent-hue), 100%, 50%);
+  --size-xs: .1rem;
+  --size-m: 1rem;
+  --size-l: 1.4rem;
+  --size-xl: 2rem;
+}
+
+html {
+  font-family: Overpass Mono, monospace;
+}
+
+body {
+  margin: var(--size-m);
+  justify-content: center;
+  height: 100%;
+  display: flex;
+}
+
+h1 {
+  font-size: var(--size-xl);
+}
+
+h2 {
+  font-size: var(--size-l);
+  margin-bottom: var(--size-xs);
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  max-width: 40em;
+}
+
+a:link {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+a:visited {
+  color: hsl(var(--accent-hue), 50%, 50%);
+  font-weight: 300;
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=index.fcf714d7.css.map */
