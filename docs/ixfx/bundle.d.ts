@@ -1,4 +1,4 @@
-export { i as Data } from './index-da25b2ac.js';
+export { i as Data } from './index-e5824093.js';
 export { i as Geometry } from './index-d053e7c7.js';
 export { T as Text } from './Text-daab6327.js';
 export { N as Numbers } from './Numbers-225b1e7e.js';
