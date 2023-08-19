@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+<link href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="style.css" rel="stylesheet">
+  <title>force playground</title>
+  <script src="./script.ts" type="module"></script>
+</head>
+
+<body>
+  <style>
+
+  </style>
+  <header>
+    <h1>force playground</h1>
+    <p>With an Apple trackpad (and in Safari browser) or pressure-sensitive stylus, try applying varying force in the
+      square below.</p>
+    <div>
+      Webkit force: <span id="webkitForce">?</span>
+    </div>
+    <div>
+      Pointer pressure: <span id="pointerPressure">?</span>
+    </div>
+    <div>
+      Normalised: <span id="normalised">?</span>
+    </div>
+  </header>
+
+  <section id="container">
+    <div id="thing"></div>
+  </section>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+:root {
+  --hue: 100;
+  --bg: hsl(var(--hue), 50%, 90%);
+  --fg: hsl(var(--hue), 20%, 20%);
+}
+
+body {
+  color: var(--fg);
+  background-color: var(--bg);
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  overscroll-behavior: none;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  font-family: Overpass Mono, monospace;
+  display: flex;
+  overflow: hidden;
+}
+
+section {
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+header {
+  margin: 1em;
+}
+
+#thing {
+  border: 3px solid var(--fg);
+  background-color: hsl(var(--hue), 0%, 50%);
+  width: 20vw;
+  height: 20vw;
+}
+
+/*# sourceMappingURL=index.f2892ded.css.map */
