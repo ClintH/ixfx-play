@@ -10,8 +10,8 @@ const settings = Object.freeze({
     `,
         reverse: true,
     }),
-    txtInput: document.getElementById(`txtInput`),
-    selBoard: document.getElementById(`board`)
+    txtInput: document.querySelector(`#txtInput`),
+    selBoard: document.querySelector(`#board`)
 });
 let state = Object.freeze({
     board: `puck`,
@@ -34,16 +34,16 @@ const setDisconnected = (disconnected) => {
     if (disconnected) {
         document.body.classList.add(`disconnected`);
         txtInput.setAttribute(`disabled`, `true`);
-        document.getElementById(`btnSend`)?.setAttribute(`disabled`, `true`);
-        document.getElementById(`btnConnect`)?.removeAttribute(`disabled`);
-        document.getElementById(`btnDisconnect`)?.setAttribute(`disabled`, `true`);
+        document.querySelector(`#btnSend`)?.setAttribute(`disabled`, `true`);
+        document.querySelector(`#btnConnect`)?.removeAttribute(`disabled`);
+        document.querySelector(`#btnDisconnect`)?.setAttribute(`disabled`, `true`);
     }
     else {
         document.body.classList.remove(`disconnected`);
         txtInput.removeAttribute(`disabled`);
-        document.getElementById(`btnSend`)?.removeAttribute(`disabled`);
-        document.getElementById(`btnConnect`)?.setAttribute(`disabled`, `true`);
-        document.getElementById(`btnDisconnect`)?.removeAttribute(`disabled`);
+        document.querySelector(`#btnSend`)?.removeAttribute(`disabled`);
+        document.querySelector(`#btnConnect`)?.setAttribute(`disabled`, `true`);
+        document.querySelector(`#btnDisconnect`)?.removeAttribute(`disabled`);
         inputSel();
     }
 };
@@ -55,7 +55,7 @@ const send = async (what) => {
     if (what === undefined)
         what = txtInput.value;
     if (what.endsWith(`;`))
-        what = what.substring(0, what.length - 1);
+        what = what.slice(0, Math.max(0, what.length - 1));
     // Only add to history if it's different
     if (history.peek !== what)
         history.push(what);
@@ -72,13 +72,13 @@ const send = async (what) => {
         });
         log.log(`< ${result}`)?.classList.add(`recv`);
     }
-    catch (ex) {
-        console.log(ex);
-        log.error(ex);
+    catch (error) {
+        console.log(error);
+        log.error(error);
     }
     inputSel();
 };
-document.getElementById(`btnDemo`)?.addEventListener(`click`, async () => {
+document.querySelector(`#btnDemo`)?.addEventListener(`click`, async () => {
     const { log } = settings;
     const { espruino } = state;
     const demosPuck = `
@@ -118,8 +118,8 @@ document.getElementById(`btnDemo`)?.addEventListener(`click`, async () => {
         if (demo.startsWith(`//`) ||
             espruino === undefined ||
             !espruino.isConnected) {
-            const el = log.log(demo);
-            el?.classList.add(`meta`);
+            const element = log.log(demo);
+            element?.classList.add(`meta`);
         }
         else {
             await send(demo);
@@ -127,14 +127,14 @@ document.getElementById(`btnDemo`)?.addEventListener(`click`, async () => {
         return;
     }, connected ? 1000 : 400);
 });
-document.getElementById(`btnSend`)?.addEventListener(`click`, () => send());
-document.getElementById(`btnDisconnect`)?.addEventListener(`click`, () => {
+document.querySelector(`#btnSend`)?.addEventListener(`click`, () => send());
+document.querySelector(`#btnDisconnect`)?.addEventListener(`click`, () => {
     const { espruino } = state;
     if (espruino === undefined)
         return;
     espruino.disconnect();
 });
-document.getElementById(`btnConnect`)?.addEventListener(`click`, async () => {
+document.querySelector(`#btnConnect`)?.addEventListener(`click`, async () => {
     const { log, selBoard } = settings;
     const boardSel = selBoard.value;
     if (boardSel === `pico` || boardSel === `puck`) {
@@ -151,31 +151,31 @@ document.getElementById(`btnConnect`)?.addEventListener(`click`, async () => {
             updateState({ espruino });
         }
     }
-    catch (ex) {
-        log.error(ex);
+    catch (error) {
+        log.error(error);
     }
 });
 const setup = () => {
     const { txtInput, selBoard } = settings;
     setDisconnected(true);
-    txtInput.addEventListener(`keyup`, (evt) => {
+    txtInput.addEventListener(`keyup`, (event) => {
         const { history } = state;
         let { historyIndex } = state;
-        if (evt.key === `ArrowUp` || evt.key === `ArrowDown`) {
-            if (evt.key === `ArrowUp`) {
+        if (event.key === `ArrowUp` || event.key === `ArrowDown`) {
+            if (event.key === `ArrowUp`) {
                 historyIndex = Math.max(0, historyIndex - 1);
             }
-            else if (evt.key === `ArrowDown`) {
+            else if (event.key === `ArrowDown`) {
                 historyIndex = Math.min(history.data.length - 1, historyIndex + 1);
             }
             updateState({ historyIndex });
             //console.log(historyIndex + `. ` + history.data[historyIndex]);
             inputSet(history.data[historyIndex]);
-            evt.preventDefault();
+            event.preventDefault();
         }
-        else if (evt.key === `Enter`) {
+        else if (event.key === `Enter`) {
             send();
-            evt.preventDefault();
+            event.preventDefault();
         }
     });
     const defaultBoard = localStorage.getItem(`board`);
@@ -185,10 +185,10 @@ const setup = () => {
     }
 };
 setup();
-function onEspruinoChange(e) {
+function onEspruinoChange(event) {
     const { log } = settings;
-    log.log(`State: ${e.newState}`)?.classList.add(`meta`);
-    if (e.newState === `connected`) {
+    log.log(`State: ${event.newState}`)?.classList.add(`meta`);
+    if (event.newState === `connected`) {
         setDisconnected(false);
     }
     else {
@@ -199,14 +199,14 @@ function onEspruinoChange(e) {
  * Update state
  */
 function updateState(s) {
-    const prevEspruino = state.espruino;
+    const previousEspruino = state.espruino;
     state = Object.freeze({
         ...state,
         ...s,
     });
     if (s.espruino) {
-        if (prevEspruino) {
-            prevEspruino.removeEventListener(`change`, onEspruinoChange);
+        if (previousEspruino) {
+            previousEspruino.removeEventListener(`change`, onEspruinoChange);
         }
         s.espruino.addEventListener(`change`, onEspruinoChange);
         setDisconnected(false);

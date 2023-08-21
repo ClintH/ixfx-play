@@ -18,27 +18,27 @@ let state = {
  */
 const displayState = () => {
     const { webkitForce, normalised, pointerPressure } = state;
-    updateEl(`webkitForce`, webkitForce);
-    updateEl(`pointerPressure`, pointerPressure);
-    updateEl(`normalised`, normalised);
+    updateElement(`webkitForce`, webkitForce);
+    updateElement(`pointerPressure`, pointerPressure);
+    updateElement(`normalised`, normalised);
 };
 const useState = () => {
     const { normalised } = state;
     // Display numerical readouts
     displayState();
     // Use data to change background
-    const el = document.getElementById(`thing`);
-    if (!el)
+    const element = document.querySelector(`#thing`);
+    if (!element)
         return;
-    el.style.backgroundColor = `hsl(100, ${Math.round(normalised * 100)}%, 50%)`;
+    element.style.backgroundColor = `hsl(100, ${Math.round(normalised * 100)}%, 50%)`;
 };
 const setup = () => {
-    const el = document.getElementById(`thing`);
-    if (!el)
+    const element = document.querySelector(`#thing`);
+    if (!element)
         return;
     // Listen for pressure or force events on element,
     // setting state and using it.
-    pressureOrForce(el, state => {
+    pressureOrForce(element, state => {
         updateState(state);
         useState();
     });
@@ -53,10 +53,10 @@ function updateState(s) {
         ...s
     });
 }
-function updateEl(id, text) {
-    const el = document.getElementById(id);
+function updateElement(id, text) {
+    const element = document.querySelector(`#${id}`);
     if (text === undefined)
         text = `?`;
-    el.innerHTML = text.toString();
+    element.innerHTML = text.toString();
 }
 //# sourceMappingURL=script.js.map

@@ -53,24 +53,24 @@ const effects = [
 const settings = Object.freeze({
     effects,
     durationLimit: 500,
-    selEffectsEl: document.getElementById(`selEffects`),
-    seqArrayEl: document.getElementById(`seqArray`),
-    txtEnvEl: document.getElementById(`txtEnv`),
-    envArraysEl: document.getElementById(`envArrays`),
-    numEnvResolutionEl: document.getElementById(`numEnvResolution`),
-    btnEnvSendEl: document.getElementById(`btnEnvSend`)
+    selEffectsEl: document.querySelector(`#selEffects`),
+    seqArrayEl: document.querySelector(`#seqArray`),
+    txtEnvEl: document.querySelector(`#txtEnv`),
+    envArraysEl: document.querySelector(`#envArrays`),
+    numEnvResolutionEl: document.querySelector(`#numEnvResolution`),
+    btnEnvSendEl: document.querySelector(`#btnEnvSend`)
 });
 // Keep track of Espruino instance
 let state = Object.freeze({
-    espruino: null
+    espruino: undefined
 });
 const setupTrigger = () => {
     const { effects, selEffectsEl } = settings;
-    const selEffects = Forms.select(selEffectsEl, (newValue) => {
-        console.log(newValue);
+    const selEffects = Forms.select(selEffectsEl, (value) => {
+        console.log(value);
     });
     // Prefix effect name by its index
-    const effectsPrefixed = effects.map((e, index) => `${index + 1}. ${e}`);
+    const effectsPrefixed = effects.map((effect, index) => `${index + 1}. ${effect}`);
     selEffects.setOpts(effectsPrefixed);
     Forms.button(`#btnTrigger`, () => {
         const index = selEffects.index + 1;
@@ -83,31 +83,32 @@ const setupSequencer = () => {
     const { effects, seqArrayEl } = settings;
     const steps = 8;
     const selectEls = [];
-    const effectsPrefixed = effects.map((e, index) => `${index + 1}. ${e}`);
+    const effectsPrefixed = effects.map((effect, index) => `${index + 1}. ${effect}`);
     const getSeq = () => {
         const seq = [];
-        for (let i = 0; i < steps; i++) {
-            const index = selectEls[i].index;
+        for (let index_ = 0; index_ < steps; index_++) {
+            const index = selectEls[index_].index;
             if (index === 0)
                 break;
-            seq[i] = selectEls[i].index;
+            seq[index_] = selectEls[index_].index;
         }
         return seq;
     };
     const updateCodePreview = () => {
-        seqArrayEl.innerText = JSON.stringify(getSeq());
+        seqArrayEl.textContent = JSON.stringify(getSeq());
     };
     let dirty = true;
-    for (let i = 0; i < steps; i++) {
-        const el = Forms.select(`#selSeq${i}`, () => {
+    for (let index = 0; index < steps; index++) {
+        const element = Forms.select(`#selSeq${index}`, () => {
             dirty = true;
             updateCodePreview();
         }, { shouldAddChoosePlaceholder: true });
-        el.setOpts(effectsPrefixed);
-        selectEls[i] = el;
+        element.setOpts(effectsPrefixed);
+        selectEls[index] = element;
     }
     Forms.button(`#btnSeqReset`, () => {
-        selectEls.forEach(el => el.select(0));
+        for (const element of selectEls)
+            element.select(0);
         dirty = true;
         updateCodePreview();
     });
@@ -117,10 +118,10 @@ const setupSequencer = () => {
             return;
         if (dirty) {
             // Call sequence(steps) on the Espruino
-            espruino.write(`setSequence(${JSON.stringify(getSeq())}\n)`);
+            espruino?.write(`setSequence(${JSON.stringify(getSeq())}\n)`);
             dirty = false;
         }
-        espruino.write(`start()\n`);
+        espruino?.write(`start()\n`);
     });
     Forms.button(`#btnSeqStop`, () => {
         if (state.espruino) {
@@ -136,8 +137,8 @@ const setupEnvelope = () => {
         envArraysEl.innerHTML = `1. Edit envelope and click 'Sample'.<br />2. Click 'Send to Espruino'`;
         btnEnvSendEl.disabled = true;
     };
-    const sampleEnv = async () => {
-        const sampleRate = parseInt(numEnvResolutionEl.value);
+    const sampleEnvironment = async () => {
+        const sampleRate = Number.parseInt(numEnvResolutionEl.value);
         try {
             const o = eval(`(${txtEnvEl.value.trim()})`);
             console.log(o);
@@ -157,9 +158,9 @@ const setupEnvelope = () => {
             envArraysEl.innerHTML = line1 + `<br />` + line2;
             btnEnvSendEl.disabled = false;
         }
-        catch (e) {
-            console.log(e);
-            envArraysEl.innerHTML = `<h1>:(</h1><p>There is an error in the envelope definition.</p><p>${e}</p>`;
+        catch (error) {
+            console.log(error);
+            envArraysEl.innerHTML = `<h1>:(</h1><p>There is an error in the envelope definition.</p><p>${error}</p>`;
             btnEnvSendEl.disabled = true;
             amplitudes = [];
             durations = [];
@@ -171,7 +172,7 @@ const setupEnvelope = () => {
     Forms.button(`#btnPasteEnv`, async () => {
         let t = await navigator.clipboard.readText();
         if (t.startsWith(`"`) && t.endsWith(`"`)) {
-            t = t.substring(1, t.length - 1);
+            t = t.slice(1, -1); // substring(1, t.length - 1);
         }
         let lines = t.split(`\\n`);
         lines = lines.filter(l => {
@@ -189,7 +190,7 @@ const setupEnvelope = () => {
         btnEnvSendEl.disabled = true;
     });
     Forms.button(`#btnSample`, async () => {
-        sampleEnv();
+        sampleEnvironment();
     });
     Forms.button(btnEnvSendEl, () => {
         if (state.espruino && amplitudes.length > 0 && durations.length > 0) {
@@ -198,39 +199,39 @@ const setupEnvelope = () => {
     });
     reset();
 };
+// Hide or show UI depending on connection state
+const onConnected = (connected) => {
+    for (const element of document.querySelectorAll(`section`)) {
+        if (connected) {
+            element.classList.remove(`disconnected`);
+            element.classList.add(`connected`);
+        }
+        else {
+            element.classList.add(`disconnected`);
+            element.classList.remove(`connected`);
+        }
+    }
+};
 const setup = () => {
-    // Hide or show UI depending on connection state
-    const onConnected = (connected) => {
-        document.querySelectorAll(`section`).forEach(el => {
-            if (connected) {
-                el.classList.remove(`disconnected`);
-                el.classList.add(`connected`);
-            }
-            else {
-                el.classList.add(`disconnected`);
-                el.classList.remove(`connected`);
-            }
-        });
-    };
     Forms.button(`#btnConnect`, async () => {
         try {
             // Connect to Pico
             const p = await Espruino.serial();
             // Listen for events
-            p.addEventListener(`change`, evt => {
-                console.log(`${evt.priorState} -> ${evt.newState}`);
-                onConnected(evt.newState === `connected`);
+            p.addEventListener(`change`, event => {
+                console.log(`${event.priorState} -> ${event.newState}`);
+                onConnected(event.newState === `connected`);
             });
-            p.addEventListener(`data`, (evt) => {
-                if (evt.data === `=undefined`)
+            p.addEventListener(`data`, (event) => {
+                if (event.data === `=undefined`)
                     return; // boring
-                console.log(evt.data);
+                console.log(event.data);
             });
             onConnected(true);
             updateState({ espruino: p });
         }
-        catch (ex) {
-            console.error(ex);
+        catch (error) {
+            console.error(error);
             onConnected(false);
         }
     });

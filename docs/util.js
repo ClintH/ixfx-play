@@ -1,54 +1,54 @@
 export function setText(id, text, fallback) {
-    const el = document.getElementById(id);
+    const element = document.querySelector(`#${id}`);
     if (text) {
-        el.innerText = text.toString();
+        element.textContent = text.toString();
     }
     else if (fallback) {
-        el.innerText = fallback;
+        element.textContent = fallback;
     }
 }
 export const setHtml = (id, text, fallback) => {
-    const el = document.getElementById(id);
-    if (el !== null) {
+    const element = document.querySelector(`#${id}`);
+    if (element !== null) {
         if (text) {
-            el.innerHTML = text.toString();
+            element.innerHTML = text.toString();
         }
         else if (fallback) {
-            el.innerHTML = fallback;
+            element.innerHTML = fallback;
         }
     }
 };
-export const getCtx = (id = 'canvas') => {
-    const canvasEl = document.getElementById(`canvas`);
-    const ctx = canvasEl?.getContext(`2d`);
-    if (!ctx || !canvasEl)
+export const getContext = (id = `canvas`) => {
+    const canvasElement = document.querySelector(`#canvas`);
+    const context = canvasElement?.getContext(`2d`);
+    if (!context || !canvasElement)
         return;
-    return ctx;
+    return context;
 };
 /**
  * Draws a line from a -> b
  * @returns
  */
-export const drawLine = (ctx, a, b) => {
-    ctx.beginPath();
-    ctx.strokeStyle = `black`;
-    ctx.moveTo(a.x, a.y);
-    ctx.lineTo(b.x, b.y);
-    ctx.stroke();
+export const drawLine = (context, a, b) => {
+    context.beginPath();
+    context.strokeStyle = `black`;
+    context.moveTo(a.x, a.y);
+    context.lineTo(b.x, b.y);
+    context.stroke();
 };
-export const drawDot = (ctx, a, fillStyle = `black`) => {
-    ctx.fillStyle = fillStyle;
-    ctx.save();
-    ctx.translate(a.x, a.y);
-    ctx.beginPath();
-    ctx.arc(0, 0, 5, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
+export const drawDot = (context, a, fillStyle = `black`) => {
+    context.fillStyle = fillStyle;
+    context.save();
+    context.translate(a.x, a.y);
+    context.beginPath();
+    context.arc(0, 0, 5, 0, Math.PI * 2);
+    context.fill();
+    context.restore();
 };
 export const pc = (v) => {
     if (v === undefined)
-        return '?';
+        return `?`;
     return Math.round(v * 100) + `%`;
 };
-export const val = (v) => typeof v === `undefined` ? `` : Math.round(v).toString();
+export const value = (v) => typeof v === `undefined` ? `` : Math.round(v).toString();
 //# sourceMappingURL=util.js.map
