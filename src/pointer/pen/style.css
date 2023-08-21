@@ -27,7 +27,6 @@ body {
 body {
   overscroll-behavior: none;
   overflow: hidden;
-  touch-action: none;
   display: flex;
 }
 
@@ -40,7 +39,7 @@ body {
   -webkit-user-select: none;
   align-items: center;
   justify-content: center;
-  width: 20vw;
+  width: 100%;
 }
 
 .mono {
@@ -54,6 +53,7 @@ section {
 #ïnfoAreaA,
 #infoAreaB {
   flex-grow: 1;
+  max-width: 12em;
 }
 
 .cell {

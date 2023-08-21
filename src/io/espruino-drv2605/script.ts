@@ -1,11 +1,7 @@
-/**
- * This code is a playground. It's is meant for playing with in the browser,
- * but the code is not meant to be extended.
- */
-import { Espruino } from 'ixfx/dist/io.js';
-import { Forms } from 'ixfx/dist/dom.js';
-import { adsrIterable } from 'ixfx/dist/modulation.js';
-import { IterableAsync } from 'ixfx/dist/util.js';
+import {Espruino} from '../../ixfx/io.js';
+import {Forms} from '../../ixfx/dom.js';
+import {adsrIterable} from '../../ixfx/modulation.js';
+import {IterableAsync} from '../../ixfx/util.js';
 
 const effects = [
   `strong click 100%`, `strong click 60%`, `strong click 30%`,
@@ -59,22 +55,25 @@ const effects = [
 const settings = Object.freeze({
   effects,
   durationLimit: 500,
-  selEffectsEl: /** @type HTMLSelectElement */(document.getElementById(`selEffects`)),
-  seqArrayEl: /** @type HTMLSelectElement */(document.getElementById(`seqArray`)),
-  txtEnvEl: /** @type HTMLInputElement */(document.getElementById(`txtEnv`)),
-  envArraysEl: /** @type HTMLElement */(document.getElementById(`envArrays`)),
-  numEnvResolutionEl: /** @type HTMLInputElement */(document.getElementById(`numEnvResolution`)),
-  btnEnvSendEl: /** @type HTMLButtonElement */(document.getElementById(`btnEnvSend`))
+  selEffectsEl: document.getElementById(`selEffects`) as HTMLSelectElement,
+  seqArrayEl: document.getElementById(`seqArray`) as HTMLSelectElement,
+  txtEnvEl: document.getElementById(`txtEnv`) as HTMLInputElement,
+  envArraysEl: document.getElementById(`envArrays`) as HTMLElement,
+  numEnvResolutionEl: document.getElementById(`numEnvResolution`) as HTMLInputElement,
+  btnEnvSendEl: document.getElementById(`btnEnvSend`) as HTMLButtonElement
 });
 
+type State = Readonly<{
+  espruino: Espruino.EspruinoDevice | null
+}>
+
 // Keep track of Espruino instance
-let state = Object.freeze({
-  /** @type {Espruino.EspruinoDevice|null} */
+let state: State = Object.freeze({
   espruino: null
 });
 
 const setupTrigger = () => {
-  const { effects, selEffectsEl } = settings;
+  const {effects, selEffectsEl} = settings;
   const selEffects = Forms.select(selEffectsEl, (newValue) => {
     console.log(newValue);
   });
@@ -92,9 +91,9 @@ const setupTrigger = () => {
 };
 
 const setupSequencer = () => {
-  const { effects, seqArrayEl } = settings;
+  const {effects, seqArrayEl} = settings;
   const steps = 8;
-  const selectEls = [];
+  const selectEls: Forms.SelectHandler[] = [];
 
   const effectsPrefixed = effects.map((e, index) => `${index + 1}. ${e}`);
 
@@ -118,7 +117,7 @@ const setupSequencer = () => {
     const el = Forms.select(`#selSeq${i}`, () => {
       dirty = true;
       updateCodePreview();
-    }, { shouldAddChoosePlaceholder: true });
+    }, {shouldAddChoosePlaceholder: true});
     el.setOpts(effectsPrefixed);
     selectEls[i] = el;
   }
@@ -130,7 +129,7 @@ const setupSequencer = () => {
   });
 
   Forms.button(`#btnSeqStart`, () => {
-    const { espruino } = state;
+    const {espruino} = state;
     if (espruino === null) return;
 
     if (dirty) {
@@ -151,10 +150,10 @@ const setupSequencer = () => {
 };
 
 const setupEnvelope = () => {
-  const { btnEnvSendEl, txtEnvEl, envArraysEl, durationLimit, numEnvResolutionEl } = settings;
+  const {btnEnvSendEl, txtEnvEl, envArraysEl, durationLimit, numEnvResolutionEl} = settings;
 
-  let amplitudes = [];
-  let durations = [];
+  let amplitudes: number[] = [];
+  let durations: number[] = [];
 
   const reset = () => {
     envArraysEl.innerHTML = `1. Edit envelope and click 'Sample'.<br />2. Click 'Send to Espruino'`;
@@ -172,7 +171,7 @@ const setupEnvelope = () => {
       if (o.decayDuration > durationLimit) throw new Error(`decayDuration cannot be longer than ${durationLimit}ms.`);
       if (o.releaseDuration > durationLimit) throw new Error(`releaseDuration cannot be longer than ${durationLimit}ms.`);
 
-      const data = await IterableAsync.toArray(adsrIterable({ env: o, sampleRateMs: sampleRate }));
+      const data = await IterableAsync.toArray(adsrIterable({env: o, sampleRateMs: sampleRate}));
       console.log(data);
 
       amplitudes = data.map(d => Math.round(d * 127));
@@ -231,7 +230,7 @@ const setupEnvelope = () => {
 
 const setup = () => {
   // Hide or show UI depending on connection state
-  const onConnected = (connected) => {
+  const onConnected = (connected: boolean) => {
     document.querySelectorAll(`section`).forEach(el => {
       if (connected) {
         el.classList.remove(`disconnected`);
@@ -264,7 +263,7 @@ const setup = () => {
 
       onConnected(true);
 
-      updateState({ espruino: p });
+      updateState({espruino: p});
 
     } catch (ex) {
       console.error(ex);
@@ -280,9 +279,8 @@ setup();
 
 /**
  * Update state
- * @param {Partial<state>} s 
  */
-function updateState (s) {
+function updateState(s: Partial<State>) {
   state = Object.freeze({
     ...state,
     ...s

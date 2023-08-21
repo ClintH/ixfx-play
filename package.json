@@ -7,7 +7,7 @@
     "start": "npm run ixfx && concurrently npm:watch:*",
     "build": "npm run ixfx && tsc && npm run static",
     "static": "cpx \"src/**/*.{html,css,js}\" docs",
-    "clean": "npm rimraf docs",
+    "clean": "rimraf docs",
     "ixfx": "copyfiles --up 3 node_modules/ixfx/dist/**.* docs/ixfx",
     "watch:tsc": "tsc --watch",
     "watch:static": "cpx \"src/**/*.{html,css,js}\" docs --watch"

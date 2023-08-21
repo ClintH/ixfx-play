@@ -6,11 +6,12 @@
     "target": "ES2022",
     "allowImportingTsExtensions": false,
     "isolatedModules": true,
+    "allowJs": true,
     "strict": true,
     "outDir": "./docs/",
     "skipLibCheck": true,
     "rootDirs": ["docs", "src"]
   },
-  "exclude": ["node_modules", "**/node_modules/*"],
+  "exclude": ["node_modules", "**/node_modules/*", "docs/*"],
   "include": ["src/**/*.ts"]
 }

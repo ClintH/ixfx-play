@@ -1,11 +1,7 @@
-/**
- * This code isn't meant for extending - it's just meant for running in
- * the browser, providing a REPL environment
- */
-import { Espruino } from 'ixfx/dist/io.js';
-import { log } from 'ixfx/dist/dom.js';
-import { forEachAsync } from 'ixfx/dist/flow.js';
-import { Stacks } from 'ixfx/dist/collections.js';
+import {Espruino, IoEvents, StateChangeEvent} from "../../ixfx/io.js";
+import {log} from "../../ixfx/dom.js";
+import {forEachAsync} from "../../ixfx/flow.js";
+import {Stacks} from "../../ixfx/collections.js";
 
 const settings = Object.freeze({
   log: log(`#log`, {
@@ -13,36 +9,40 @@ const settings = Object.freeze({
     .recv { color: hsl(var(--hue-primary), 88%, 96%);}
     .meta { color: hsl(var(--hue-secondary), 0%, 76%);}
     `,
-    reverse: true
+    reverse: true,
   }),
-  
-  txtInput: /** @type {HTMLInputElement} */(document.getElementById(`txtInput`))
+  txtInput: document.getElementById(`txtInput`) as HTMLInputElement,
+  selBoard: document.getElementById(`board`) as HTMLInputElement
 });
 
-let state = Object.freeze({
-  /** @type {'puck'|'pico'} */
+type State = Readonly<{
+  board: `puck` | `pico`,
+  espruino: Espruino.EspruinoDevice | undefined,
+  history: Stacks.IStackMutable<string>,
+  historyIndex: number
+}>
+
+let state: State = Object.freeze({
   board: `puck`,
-  /** @type Espruino.EspruinoDevice|undefined */
   espruino: undefined,
-  history: Stacks.mutable(),
-  /** @type {number} */
-  historyIndex: 0
+  history: Stacks.mutable<string>(),
+  historyIndex: 0,
 });
 
 const inputSel = () => {
-  const { txtInput } = settings;
+  const {txtInput} = settings;
   txtInput.focus();
   txtInput.setSelectionRange(0, txtInput.value.length);
 };
 
-const inputSet = (what) => {
-  const { txtInput } = settings;
+const inputSet = (what: string) => {
+  const {txtInput} = settings;
   txtInput.value = what;
   txtInput.setSelectionRange(0, txtInput.value.length);
 };
 
-const setDisconnected = (disconnected) => {
-  const { txtInput } = settings;
+const setDisconnected = (disconnected: boolean) => {
+  const {txtInput} = settings;
   if (disconnected) {
     document.body.classList.add(`disconnected`);
     txtInput.setAttribute(`disabled`, `true`);
@@ -59,9 +59,9 @@ const setDisconnected = (disconnected) => {
   }
 };
 
-const send = async (what) => {
-  const { log, txtInput } = settings;
-  const { espruino, history } = state;
+const send = async (what?: string) => {
+  const {log, txtInput} = settings;
+  const {espruino, history} = state;
   if (espruino === undefined) return;
 
   if (what === undefined) what = txtInput.value;
@@ -71,12 +71,16 @@ const send = async (what) => {
   if (history.peek !== what) history.push(what);
   updateState({
     history,
-    historyIndex: history.data.length - 1
+    historyIndex: history.data.length - 1,
   });
   log.log(`> ${what}`)?.classList.add(`sent`);
 
   try {
-    const result = await espruino.eval(what, { timeoutMs: 2000, assumeExclusive: true, debug: false });
+    const result = await espruino.eval(what, {
+      timeoutMs: 2000,
+      assumeExclusive: true,
+      debug: false,
+    });
     log.log(`< ${result}`)?.classList.add(`recv`);
   } catch (ex) {
     console.log(ex);
@@ -86,8 +90,8 @@ const send = async (what) => {
 };
 
 document.getElementById(`btnDemo`)?.addEventListener(`click`, async () => {
-  const { log } = settings;
-  const { espruino } = state;
+  const {log} = settings;
+  const {espruino} = state;
   const demosPuck = `
   // https://www.espruino.com/Puck.js
   // LED on/off
@@ -122,65 +126,71 @@ document.getElementById(`btnDemo`)?.addEventListener(`click`, async () => {
     log.log(`// Connect to an Espruino to run this for real`);
   }
 
-  await forEachAsync(demos.trim().split(`\n`), async (demo) => {
-    if (!demo) return;
-    demo = demo.trim();
-    if (demo.startsWith(`//`) || (espruino === undefined || !espruino.isConnected)) {
-      const el = log.log(demo);
-      el?.classList.add(`meta`);
-    } else {
-      await send(demo);
-    }
-    return;
-  }, connected ? 1000 : 400);
+  await forEachAsync(
+    demos.trim().split(`\n`),
+    async (demo) => {
+      if (!demo) return;
+      demo = demo.trim();
+      if (
+        demo.startsWith(`//`) ||
+        espruino === undefined ||
+        !espruino.isConnected
+      ) {
+        const el = log.log(demo);
+        el?.classList.add(`meta`);
+      } else {
+        await send(demo);
+      }
+      return;
+    },
+    connected ? 1000 : 400
+  );
 });
 
 document.getElementById(`btnSend`)?.addEventListener(`click`, () => send());
 
 document.getElementById(`btnDisconnect`)?.addEventListener(`click`, () => {
-  const { espruino } = state;
+  const {espruino} = state;
   if (espruino === undefined) return;
   espruino.disconnect();
 });
 
 document.getElementById(`btnConnect`)?.addEventListener(`click`, async () => {
-  const { log } = settings;
+  const {log, selBoard} = settings;
 
-  const boardSel = /** @type HTMLInputElement */(document.getElementById(`board`)).value;
+  const boardSel = selBoard.value;
   if (boardSel === `pico` || boardSel === `puck`) {
-    updateState({ board: boardSel });
+    updateState({board: boardSel});
     localStorage.setItem(`board`, boardSel);
   }
 
   try {
     if (state.board === `puck`) {
       const espruino = await Espruino.connectBle();
-      updateState({ espruino  });
+      updateState({espruino});
     } else if (state.board === `pico`) {
       const espruino = await Espruino.serial();
-      updateState({ espruino });
+      updateState({espruino});
     }
-
   } catch (ex) {
     log.error(ex);
   }
 });
 
-
 const setup = () => {
-  const { txtInput } = settings;
+  const {txtInput, selBoard} = settings;
   setDisconnected(true);
 
-  txtInput.addEventListener(`keyup`, evt => {
-    const { history } = state;
-    let { historyIndex } = state;
+  txtInput.addEventListener(`keyup`, (evt) => {
+    const {history} = state;
+    let {historyIndex} = state;
     if (evt.key === `ArrowUp` || evt.key === `ArrowDown`) {
       if (evt.key === `ArrowUp`) {
         historyIndex = Math.max(0, historyIndex - 1);
       } else if (evt.key === `ArrowDown`) {
         historyIndex = Math.min(history.data.length - 1, historyIndex + 1);
       }
-      updateState({ historyIndex });
+      updateState({historyIndex});
       //console.log(historyIndex + `. ` + history.data[historyIndex]);
       inputSet(history.data[historyIndex]);
       evt.preventDefault();
@@ -192,15 +202,14 @@ const setup = () => {
 
   const defaultBoard = localStorage.getItem(`board`);
   if (defaultBoard === `pico` || defaultBoard === `puck`) {
-    /** @type HTMLSelectElement */(document.getElementById(`board`)).value = defaultBoard;
-    updateState({ board: defaultBoard });
-
+    selBoard.value = defaultBoard;
+    updateState({board: defaultBoard});
   }
 };
 setup();
 
-function onEspruinoChange(e) {
-  const { log } = settings;
+function onEspruinoChange(e: StateChangeEvent<any>) {
+  const {log} = settings;
 
   log.log(`State: ${e.newState}`)?.classList.add(`meta`);
   if (e.newState === `connected`) {
@@ -211,14 +220,13 @@ function onEspruinoChange(e) {
 }
 /**
  * Update state
- * @param {Partial<state>} s 
  */
-function updateState (s) {
+function updateState(s: Partial<State>) {
   const prevEspruino = state.espruino;
 
   state = Object.freeze({
     ...state,
-    ...s
+    ...s,
   });
 
   if (s.espruino) {

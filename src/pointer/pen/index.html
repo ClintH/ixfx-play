@@ -12,27 +12,15 @@
     <div>
       <h1>Basic</h1>
       <table>
-        <tr>
-          <td>Id</td>
-          <td id="pointerId"></td>
+        <tr title="Indicates the device type that caused the event (mouse, pen, touch, etc.)">
+          <td>Type</td>
+          <td id="pointerType"></td>
         </tr>
-        <tr>
-          <td>Keys</td>
-          <td id="keys"></td>
-        </tr>
-        <tr>
-          <td>Button</td>
-          <td id="button"></td>
-        </tr>
-        <tr>
-          <td>Buttons</td>
-          <td id="buttons"></td>
-        </tr>
-        <tr>
-          <td>Width</td>
+        <tr title="The width (magnitude on the X axis), in CSS pixels, of the contact geometry of the pointer.">
+          <td >Width</td>
           <td id="width"></td>
         </tr>
-        <tr>
+        <tr title="The height (magnitude on the Y axis), in CSS pixels, of the contact geometry of the pointer.">
           <td>Height</td>
           <td id="height"></td>
         </tr>
@@ -63,18 +51,20 @@
     <div>
       <h1>Pressure</h1>
       <table>
-        <tr>
+        <tr title="The normalized pressure of the pointer input in the range 0 to 1, where 0 and 1 represent the minimum and maximum pressure the hardware is capable of detecting, respectively">
           <td>Pressure</td>
           <td style="width:5em" class="mono" id="pressure"></td>
         </tr>
-        <tr>
+        <tr title="The normalized tangential pressure of the pointer input (also known as barrel pressure or cylinder stress) in the range -1 to 1, where 0 is the neutral position of the control">
           <td>Tangential</td>
           <td class="mono""id=" tangentialPressure"></td>
         </tr>
 
       </table>
     </div>
-
+    <div>
+      <p>Works best with a stylus input. Support for different fields will vary based on platform and browser.</p>
+    </div>
   </section>
   <section id="penArea">
     <p>
@@ -87,11 +77,11 @@
     <div>
       <h1>Tilt</h1>
       <table>
-        <tr>
+        <tr title="The plane angle (in degrees, in the range of -90 to 90) between the Y–Z plane and the plane containing both the pointer (e.g. pen stylus) axis and the Y axis">
           <td>x</td>
           <td class="mono" id="tiltX"></td>
         </tr>
-        <tr>
+        <tr title="The plane angle (in degrees, in the range of -90 to 90) between the X–Z plane and the plane containing both the pointer (e.g. pen stylus) axis and the X axis">
           <td>y</td>
           <td class="mono" id="tiltY"></td>
         </tr>
@@ -110,7 +100,7 @@
         </tr>
       </table>
     </div>
-    <div>
+    <div title="The clockwise rotation of the pointer (e.g. pen stylus) around its major axis in degrees, with a value in the range 0 to 359">
       <h1>Twist</h1>
       <div id="twist" class="mono"></div>
     </div>
