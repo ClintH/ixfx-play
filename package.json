@@ -8,7 +8,7 @@
     "build": "npm run ixfx && tsc && npm run static",
     "static": "cpx \"src/**/*.{html,css,js}\" docs",
     "clean": "rimraf docs",
-    "ixfx": "copyfiles --up 3 node_modules/ixfx/dist/**.* docs/ixfx",
+    "ixfx": "rimraf ixfx && copyfiles --up 3 node_modules/ixfx/dist/**.* docs/ixfx",
     "watch:tsc": "tsc --watch",
     "watch:static": "cpx \"src/**/*.{html,css,js}\" docs --watch"
   },
@@ -19,8 +19,13 @@
     "concurrently": "^8.2.0",
     "copyfiles": "^2.4.1",
     "cpx2": "^5.0.0",
+    "eslint": "^8.47.0",
     "ixfx": "^0.10.1",
     "rimraf": "^5.0.1",
     "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@typescript-eslint/parser": "^6.4.0",
+    "eslint-plugin-unicorn": "^48.0.1"
   }
 }
