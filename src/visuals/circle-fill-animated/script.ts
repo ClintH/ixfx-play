@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/no-array-callback-reference */
+
 import * as Dom from '../../ixfx/dom.js';
 import {repeat, debounce} from '../../ixfx/flow.js';
 import * as Random from '../../ixfx/random.js';
@@ -44,8 +46,8 @@ const evaluateExpression = (txt: string, contextLabel: string) => {
     let distance = eval(txt);
     clearError();
     return distance;
-  } catch (ex) {
-    handleError(ex, contextLabel);
+  } catch (error) {
+    handleError(error, contextLabel);
   }
 };
 
@@ -101,20 +103,20 @@ const drawState = () => {
   // Haven't computed points yet
   if (startPoints.length === 0 || startPoints.length === 0) return;
 
-  const canvasEl = document.querySelector(`#canvas`) as HTMLCanvasElement;
-  const ctx = canvasEl.getContext(`2d`);
-  if (!ctx || !canvasEl) return;
+  const canvasElement = document.querySelector(`#canvas`) as HTMLCanvasElement;
+  const context = canvasElement.getContext(`2d`);
+  if (!context || !canvasElement) return;
 
   // Make background transparent
-  ctx.clearRect(0, 0, bounds.width, bounds.height);
+  context.clearRect(0, 0, bounds.width, bounds.height);
 
   const size = pointSize * state.scaleBy;
-  for (let i = 0; i < numberOfPoints; i++) {
+  for (let index = 0; index < numberOfPoints; index++) {
     // Compute particle
-    const p = Points.interpolate(animationPoint, startPoints[i], endPoints[i]);
+    const p = Points.interpolate(animationPoint, startPoints[index], endPoints[index]);
 
     // Draw
-    drawPoint(ctx, p, pointColour, size);
+    drawPoint(context, p, pointColour, size);
   }
 };
 
@@ -123,10 +125,10 @@ const drawState = () => {
  * Setup and run main loop 
  */
 const setup = () => {
-  Dom.fullSizeCanvas(`#canvas`, args => {
+  Dom.fullSizeCanvas(`#canvas`, arguments_ => {
     updateState({
-      bounds: args.bounds,
-      scaleBy: Math.min(args.bounds.width, args.bounds.height)
+      bounds: arguments_.bounds,
+      scaleBy: Math.min(arguments_.bounds.width, arguments_.bounds.height)
     });
     onCodeUpdated();
   });
@@ -138,9 +140,9 @@ const setup = () => {
   };
   loop();
 
-  const numberParticlesEl = document.getElementById(`numberParticles`) as HTMLInputElement
-  numberParticlesEl?.addEventListener(`change`, () => {
-    updateState({numberOfPoints: parseInt(numberParticlesEl.value)});
+  const numberParticlesElement = document.querySelector(`#numberParticles`) as HTMLInputElement
+  numberParticlesElement?.addEventListener(`change`, () => {
+    updateState({numberOfPoints: Number.parseInt(numberParticlesElement.value)});
   });
 
   inputChangeDebounce(`startExpr`, (v: string) => {
@@ -155,14 +157,14 @@ const setup = () => {
     });
   });
 
-  const sourceEl = document.getElementById(`source`) as HTMLSelectElement;
-  sourceEl?.addEventListener(`change`, () => {
-    const v = sourceEl.value;
+  const sourceElement = document.querySelector(`#source`) as HTMLSelectElement;
+  sourceElement?.addEventListener(`change`, () => {
+    const v = sourceElement.value;
 
     if (v === `Gaussian`) {
       updateState({randomSource: Random.gaussian});
     } else if (v.startsWith(`Weighted (`)) {
-      const easing = v.substring(10, v.length - 1);
+      const easing = v.slice(10, - 1);
       // @ts-ignore
       updateState({randomSource: Random.weightedFn(easing)});
     } else {
@@ -191,39 +193,39 @@ function updateState(s: Partial<typeof state>) {
 /**
  * Draws a point (in pixel coordinates)
  */
-function drawPoint(ctx: CanvasRenderingContext2D, position: Points.Point, fillStyle = `black`, size = 1) {
-  ctx.fillStyle = fillStyle;
-  ctx.beginPath();
-  ctx.arc(position.x, position.y, size, 0, settings.piPi);
-  ctx.fill();
+function drawPoint(context: CanvasRenderingContext2D, position: Points.Point, fillStyle = `black`, size = 1) {
+  context.fillStyle = fillStyle;
+  context.beginPath();
+  context.arc(position.x, position.y, size, 0, settings.piPi);
+  context.fill();
 }
 
 /**
  * Invokes `callback` with value of HTML element when it changes
  */
 function inputChangeDebounce(id: string, callback: (value: string) => void) {
-  const el = document.getElementById(id) as HTMLInputElement;
-  if (!el) throw new Error(`${id} not found`);
-  const debouncer = debounce((evt: any) => {
-    callback(el.value);
+  const element = document.querySelector(`#${id}`) as HTMLInputElement;
+  if (!element) throw new Error(`${id} not found`);
+  const debouncer = debounce((event: any) => {
+    callback(element.value);
   }, 500);
 
-  el?.addEventListener(`input`, evt => {
-    debouncer(evt);
+  element?.addEventListener(`input`, event => {
+    debouncer(event);
   });
 }
 
 function handleError(ex: unknown, headline: string) {
-  const errorEl = document.getElementById(`error`);
-  if (!errorEl) return;
-  errorEl.classList.remove(`hidden`);
-  errorEl.innerHTML = `<h1>Error with ${headline}</h1><p>${ex}</p>`;
+  const errorElement = document.querySelector(`#error`);
+  if (!errorElement) return;
+  errorElement.classList.remove(`hidden`);
+  errorElement.innerHTML = `<h1>Error with ${headline}</h1><p>${ex}</p>`;
 }
 
 function clearError() {
-  const errorEl = document.getElementById(`error`);
-  if (!errorEl) return;
-  if (errorEl.classList.contains(`hidden`)) return;
-  errorEl.innerHTML = ``;
-  errorEl.classList.add(`hidden`);
+  const errorElement = document.querySelector(`#error`);
+  if (!errorElement) return;
+  if (errorElement.classList.contains(`hidden`)) return;
+  errorElement.innerHTML = ``;
+  errorElement.classList.add(`hidden`);
 }

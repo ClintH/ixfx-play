@@ -1,13 +1,13 @@
 import {Points, radianToDegree, Triangles} from "../../ixfx/geometry.js";
 import {reconcileChildren, DataTable} from '../../ixfx/dom.js';
 import {numberTracker, pointsTracker, PointTracker, pointTracker, TrackedPointMap} from "../../ixfx/data.js";
-import {setText, pc, val} from "../../util.js";
+import {setText, pc, value} from "../../util.js";
 import {NumberTracker} from "../../ixfx/data.js";
 const settings = Object.freeze({
-  currentPointsEl: document.getElementById(`current-points`),
-  startPointsEl: document.getElementById(`start-points`),
-  centroidEl: document.getElementById(`centroid`),
-  startCentroidEl: document.getElementById(`startCentroid`),
+  currentPointsEl: document.querySelector(`#current-points`) as HTMLElement,
+  startPointsEl: document.querySelector(`#start-points`) as HTMLElement,
+  centroidEl: document.querySelector(`#centroid`) as HTMLElement,
+  startCentroidEl: document.querySelector(`#startCentroid`) as HTMLElement,
   thingSize: 100
 });
 
@@ -111,7 +111,7 @@ const update = () => {
     displayMap.set(v.id, {
       id: v.id,
       length: Math.round(v.length),
-      angle: Math.round(latestPoint ? radianToDegree(Points.angle(latestPoint, v.initial)) : NaN)
+      angle: Math.round(latestPoint ? radianToDegree(Points.angle(latestPoint, v.initial)) : Number.NaN)
     });
   }
 
@@ -127,77 +127,77 @@ const draw = () => {
 
   // Create or remove elements based on tracked points
   if (!currentPointsEl) return;
-  reconcileChildren(currentPointsEl, pointers.store, (trackedPoint, el) => {
-    if (el === null) {
-      el = document.createElement(`div`) as HTMLElement;
-      el.innerText = trackedPoint.id;
+  reconcileChildren(currentPointsEl, pointers.store, (trackedPoint, element) => {
+    if (element === null) {
+      element = document.createElement(`div`) as HTMLElement;
+      element.textContent = trackedPoint.id;
     }
-    positionEl(el, trackedPoint, thingSize);
-    return el;
+    positionElement(element, trackedPoint, thingSize);
+    return element;
   });
 
   if (!startPointsEl) return;
-  reconcileChildren(startPointsEl, pointers.store, (trackedPoint, el) => {
-    if (el === null) {
-      el = document.createElement(`div`) as HTMLDivElement;
-      (el as HTMLElement).innerText = trackedPoint.id;
+  reconcileChildren(startPointsEl, pointers.store, (trackedPoint, element) => {
+    if (element === null) {
+      element = document.createElement(`div`) as HTMLDivElement;
+      (element as HTMLElement).textContent = trackedPoint.id;
     }
     const initial = trackedPoint.initial;
-    if (initial) positionEl(el, initial, thingSize);
-    return el;
+    if (initial) positionElement(element, initial, thingSize);
+    return element;
   });
 
   // Update centroid circle
-  const centroidTravelEl = document.getElementById(`centroidTravel`);
-  if (centroidTravelEl) centroidTravelEl.innerText = val(centroid.distanceFromStart());
+  const centroidTravelElement = document.querySelector(`#centroidTravel`);
+  if (centroidTravelElement) centroidTravelElement.textContent = value(centroid.distanceFromStart());
 
   if (centroid.initial === undefined) {
-    positionEl(startCentroidEl, {x: -1000, y: -1000}, thingSize);
+    positionElement(startCentroidEl, {x: -1000, y: -1000}, thingSize);
   } else {
-    positionEl(startCentroidEl, centroid.initial, thingSize);
+    positionElement(startCentroidEl, centroid.initial, thingSize);
   }
   if (centroid.last === undefined) {
-    positionEl(centroidEl, {x: -1000, y: -1000}, thingSize);
+    positionElement(centroidEl, {x: -1000, y: -1000}, thingSize);
   } else {
-    positionEl(centroidEl, centroid.last, thingSize);
+    positionElement(centroidEl, centroid.last, thingSize);
   }
 
   setText(`threePtrArea`, pc(threeFinger.area.relativeDifference()));
   setText(`twoPtrDistance`, pc(twoFinger.distance.relativeDifference()));
   setText(`twoPtrRotation`, pc(twoFinger.rotation.difference()));
-  setText(`centroidAngle`, val(state.centroidAngle));
+  setText(`centroidAngle`, value(state.centroidAngle));
 };
 
-const stopTrackingPoint = (ev: PointerEvent) => {
-  state.pointers.delete(ev.pointerId.toString());
+const stopTrackingPoint = (event: PointerEvent) => {
+  state.pointers.delete(event.pointerId.toString());
   update();
 };
 
-const trackPoint = (ev: PointerEvent) => {
-  if (ev.pointerType === `mouse`) return;
-  ev.preventDefault();
+const trackPoint = (event: PointerEvent) => {
+  if (event.pointerType === `mouse`) return;
+  event.preventDefault();
   const {pointers} = state;
 
   // Track point, associated with pointerId
-  pointers.seen(ev.pointerId.toString(), {x: ev.x, y: ev.y});
+  pointers.seen(event.pointerId.toString(), {x: event.x, y: event.y});
   update();
 };
 
 /**
  * Position element
  */
-const positionEl = (el: HTMLElement | null, point: Points.Point, size: number) => {
-  if (!el) return;
-  el.style.left = (point.x - size / 2) + `px`;
-  el.style.top = (point.y - size / 2) + `px`;
+const positionElement = (element: HTMLElement | null, point: Points.Point, size: number) => {
+  if (!element) return;
+  element.style.left = (point.x - size / 2) + `px`;
+  element.style.top = (point.y - size / 2) + `px`;
 };
 
 const setup = () => {
-  document.addEventListener(`pointerup`, ev => stopTrackingPoint(ev));
-  document.addEventListener(`pointerleave`, ev => stopTrackingPoint(ev));
-  document.addEventListener(`pointerdown`, ev => trackPoint(ev));
-  document.addEventListener(`pointermove`, ev => trackPoint(ev));
-  document.addEventListener(`contextmenu`, ev => ev.preventDefault());
+  document.addEventListener(`pointerup`, event => stopTrackingPoint(event));
+  document.addEventListener(`pointerleave`, event => stopTrackingPoint(event));
+  document.addEventListener(`pointerdown`, event => trackPoint(event));
+  document.addEventListener(`pointermove`, event => trackPoint(event));
+  document.addEventListener(`contextmenu`, event => event.preventDefault());
 };
 setup();
 

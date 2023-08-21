@@ -2,7 +2,7 @@ import * as Dom from '../../ixfx/dom.js';
 import {DataTable} from '../../ixfx/dom.js';
 import {Points} from '../../ixfx/geometry.js';
 import {pointTracker} from '../../ixfx/data.js';
-import {drawDot, drawLine, getCtx, setText} from '../../util.js';
+import {drawDot, drawLine, getContext, setText} from '../../util.js';
 import {Rects} from 'ixfx/lib/geometry';
 
 const settings = Object.freeze({
@@ -37,17 +37,17 @@ const handlePoint = (pt: Points.Point) => {
 
   const r = tracker.seen(pt);
 
-  const ctx = getCtx();
-  if (!ctx) return;
+  const context = getContext();
+  if (!context) return;
 
   const firstPoint = (lastPoint.x === -1 && lastPoint.y === -1);
 
   if (firstPoint) {
-    drawDot(ctx, pt, `red`);
+    drawDot(context, pt, `red`);
   } else if (!firstPoint) {
     // Draw line
-    drawLine(ctx, lastPoint, pt);
-    drawDot(ctx, pt);
+    drawLine(context, lastPoint, pt);
+    drawDot(context, pt);
   }
 
   updateState({lastPoint: pt});
@@ -67,13 +67,13 @@ const handlePoint = (pt: Points.Point) => {
  * Setup and run main loop 
  */
 const setup = () => {
-  Dom.fullSizeCanvas(`#canvas`, args => {
+  Dom.fullSizeCanvas(`#canvas`, arguments_ => {
     // Update state with new size of canvas
-    updateState({bounds: args.bounds});
+    updateState({bounds: arguments_.bounds});
   });
 
-  document.addEventListener(`click`, evt => {
-    handlePoint({x: evt.x, y: evt.y});
+  document.addEventListener(`click`, event => {
+    handlePoint({x: event.x, y: event.y});
   });
 };
 setup();
@@ -82,7 +82,7 @@ function formatter(data: object, path: string) {
   if (path === `centroid` || path === `average`) {
     return Points.toString(Points.apply(data as Points.Point, Math.round));
   }
-  return undefined;
+  return;
 }
 
 /**

@@ -24,9 +24,9 @@ let state: State = {
 const displayState = () => {
   const {webkitForce, normalised, pointerPressure} = state;
 
-  updateEl(`webkitForce`, webkitForce);
-  updateEl(`pointerPressure`, pointerPressure);
-  updateEl(`normalised`, normalised);
+  updateElement(`webkitForce`, webkitForce);
+  updateElement(`pointerPressure`, pointerPressure);
+  updateElement(`normalised`, normalised);
 };
 
 const useState = () => {
@@ -36,18 +36,18 @@ const useState = () => {
   displayState();
 
   // Use data to change background
-  const el = document.getElementById(`thing`);
-  if (!el) return;
-  el.style.backgroundColor = `hsl(100, ${Math.round(normalised * 100)}%, 50%)`;
+  const element = document.querySelector(`#thing`) as HTMLElement;
+  if (!element) return;
+  element.style.backgroundColor = `hsl(100, ${Math.round(normalised * 100)}%, 50%)`;
 };
 
 const setup = () => {
-  const el = document.getElementById(`thing`);
-  if (!el) return;
+  const element = document.querySelector(`#thing`) as HTMLElement;
+  if (!element) return;
 
   // Listen for pressure or force events on element,
   // setting state and using it.
-  pressureOrForce(el, state => {
+  pressureOrForce(element, state => {
     updateState(state);
     useState();
   });
@@ -64,8 +64,8 @@ function updateState(s: Partial<State>) {
   });
 }
 
-function updateEl(id: string, text: number | string | undefined) {
-  const el = document.getElementById(id) as HTMLElement;
+function updateElement(id: string, text: number | string | undefined) {
+  const element = document.querySelector(`#${id}`) as HTMLElement;
   if (text === undefined) text = `?`;
-  el.innerHTML = text.toString();
+  element.innerHTML = text.toString();
 }

@@ -45,13 +45,13 @@ setInterval(() => {
     capacity: 50,
     timestamp: true,
   }),
-  plot: new Plot2.Plot(document.getElementById(`plotCanvas`) as HTMLCanvasElement, {
+  plot: new Plot2.Plot(document.querySelector(`#plotCanvas`) as HTMLCanvasElement, {
     autoSize: true,
     axisColour: Colour.getCssVariable(`fg`),
   }),
-  txtCode: document.getElementById(`txtCode`) as HTMLTextAreaElement,
-  dlgHelp: document.getElementById(`dlgHelp`) as HTMLDialogElement,
-  selBoard: document.getElementById(`board`) as HTMLSelectElement
+  txtCode: document.querySelector(`#txtCode`) as HTMLTextAreaElement,
+  dlgHelp: document.querySelector(`#dlgHelp`) as HTMLDialogElement,
+  selBoard: document.querySelector(`#board`) as HTMLSelectElement
 });
 
 const onConnected = (connected: boolean) => {
@@ -60,24 +60,24 @@ const onConnected = (connected: boolean) => {
   if (connected) {
     plot.clear();
     plot.frozen = false;
-    document.getElementById(`btnConnect`)?.setAttribute(`disabled`, `true`);
-    document.getElementById(`btnSend`)?.removeAttribute(`disabled`);
+    document.querySelector(`#btnConnect`)?.setAttribute(`disabled`, `true`);
+    document.querySelector(`#btnSend`)?.removeAttribute(`disabled`);
   } else {
-    document.getElementById(`btnSend`)?.setAttribute(`disabled`, `true`);
-    document.getElementById(`btnConnect`)?.removeAttribute(`disabled`);
+    document.querySelector(`#btnSend`)?.setAttribute(`disabled`, `true`);
+    document.querySelector(`#btnConnect`)?.removeAttribute(`disabled`);
   }
 };
 
-const onData = (evt: IoDataEvent) => {
+const onData = (event: IoDataEvent) => {
   const {log, plot} = settings;
 
-  const data = evt.data.trim(); // Remove line breaks etc
+  const data = event.data.trim(); // Remove line breaks etc
 
   if (!data.startsWith(`{`) || !data.endsWith(`}`)) {
-    if (!state.jsonWarning) {
-      console.warn(`Plotter expects JSON response. Got: ${data}`);
+    if (state.jsonWarning) {
       updateState({jsonWarning: true});
     } else {
+      console.warn(`Plotter expects JSON response. Got: ${data}`);
       updateState({jsonWarning: true});
     }
     log.log(data);
@@ -91,8 +91,8 @@ const onData = (evt: IoDataEvent) => {
       plot.plot(d);
       plot.update();
     }
-  } catch (ex) {
-    console.warn(ex);
+  } catch (error) {
+    console.warn(error);
   }
 };
 
@@ -129,8 +129,8 @@ const connect = async () => {
       log.clear();
       updateState({clearedWelcome: true});
     }
-  } catch (ex) {
-    console.error(ex);
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -149,8 +149,8 @@ const send = () => {
     plot.clear();
     p.writeScript(codeWithSuffix);
     localStorage.setItem(`last-${state.board}`, code);
-  } catch (ex) {
-    log.error(ex);
+  } catch (error) {
+    log.error(error);
   }
 };
 
@@ -170,48 +170,49 @@ const setup = () => {
   // Setup UI
   Dom.Forms.textAreaKeyboard(txtCode);
 
-  document.getElementById(`btnClear`)?.addEventListener(`click`, () => {
+  document.querySelector(`#btnClear`)?.addEventListener(`click`, () => {
     log.clear();
     plot.clear();
   });
-  document.getElementById(`btnHelp`)?.addEventListener(`click`, async (evt) => {
-    const contentEl = dlgHelp.querySelector(`section`);
-    if (!contentEl) return;
+  document.querySelector(`#btnHelp`)?.addEventListener(`click`, async (event) => {
+    const contentElement = dlgHelp.querySelector(`section`);
+    if (!contentElement) return;
     dlgHelp.showModal();
     try {
       let resp = await fetch(`README.md`);
       if (resp.ok) {
         const md = await resp.text();
-        contentEl.innerHTML = snarkdown(md);
+        contentElement.innerHTML = snarkdown(md);
       } else {
-        contentEl.innerHTML = `Could not load help :/`;
+        contentElement.innerHTML = `Could not load help :/`;
         console.log(resp);
       }
-    } catch (ex) {
-      console.log(ex);
-      contentEl.innerHTML = `Could not load help :/`;
+    } catch (error) {
+      console.log(error);
+      contentElement.innerHTML = `Could not load help :/`;
     }
   });
-  document.getElementById(`btnHelpClose`)?.addEventListener(`click`, (evt) => {
+  document.querySelector(`#btnHelpClose`)?.addEventListener(`click`, (event) => {
     dlgHelp.close();
   });
 
-  document.getElementById(`btnFreeze`)?.addEventListener(`click`, () => {
+  document.querySelector(`#btnFreeze`)?.addEventListener(`click`, () => {
     updateState({frozen: !state.frozen});
   });
-  document.getElementById(`btnSend`)?.addEventListener(`click`, send);
-  document.getElementById(`txtCode`)?.addEventListener(`keyup`, (evt) => {
-    if (evt.key === `Enter` && evt.ctrlKey) {
+  document.querySelector(`#btnSend`)?.addEventListener(`click`, send);
+  document.querySelector(`#txtCode`)?.addEventListener(`keyup`, event => {
+    const keyEvent = event as KeyboardEvent;
+    if (keyEvent.key === `Enter` && keyEvent.ctrlKey) {
       send();
     }
   });
 
-  document.getElementById(`btnConnect`)?.addEventListener(`click`, connect);
+  document.querySelector(`#btnConnect`)?.addEventListener(`click`, connect);
   onConnected(false);
 
   logWelcome();
 
-  selBoard.addEventListener(`change`, (evt) => {
+  selBoard.addEventListener(`change`, (event) => {
     updateInitialCode();
   });
 };
@@ -226,18 +227,14 @@ function updateInitialCode() {
 
   // Show last code
   const lastCode = localStorage.getItem(`last-${state.board}`);
-  if (lastCode === null) {
-    txtCode.value = initialCode.trim();
-  } else {
-    txtCode.value = lastCode;
-  }
+  txtCode.value = lastCode === null ? initialCode.trim() : lastCode;
 }
 
 /**
  * Update state
  */
 function updateState(s: Partial<State>) {
-  const prevEspruino = state.p;
+  const previousEspruino = state.p;
 
   state = Object.freeze({
     ...state,
@@ -245,9 +242,9 @@ function updateState(s: Partial<State>) {
   });
 
   if (s.p) {
-    if (prevEspruino) {
-      prevEspruino.removeEventListener(`change`, onEspruinoChange);
-      prevEspruino.removeEventListener(`data`, onData);
+    if (previousEspruino) {
+      previousEspruino.removeEventListener(`change`, onEspruinoChange);
+      previousEspruino.removeEventListener(`data`, onData);
     }
 
     // Listen for events
@@ -258,10 +255,10 @@ function updateState(s: Partial<State>) {
   }
 }
 
-function onEspruinoChange(evt: StateChangeEvent<any>) {
+function onEspruinoChange(event: StateChangeEvent<any>) {
   const {log} = settings;
-  log.log(`${evt.priorState} -> ${evt.newState}`);
-  onConnected(evt.newState === `connected`);
+  log.log(`${event.priorState} -> ${event.newState}`);
+  onConnected(event.newState === `connected`);
 }
 
 // Test

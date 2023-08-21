@@ -1,8 +1,13 @@
 import {log, Forms} from '../ixfx/dom.js'
 
+const test = `asdf`;
+let x = `asf`;
+if (x == `asdf`) {
+  console.log(`asf`);
+}
 const settings = Object.freeze({
-  pointerEl: document.getElementById(`pointerArea`),
-  currentEl: document.getElementById(`current`),
+  pointerEl: document.querySelector(`#pointerArea`),
+  currentEl: document.querySelector(`#current`),
   log: log(`#log`)
 });
 
@@ -12,79 +17,80 @@ const clearPointers = () => {
   currentEl.innerHTML = ``;
 };
 
+const round = (v: number) => Math.round(v);
+
 /**
  * 
  * @param {PointerEvent} ev 
  */
-const updatePointer = (ev: PointerEvent) => {
+const updatePointer = (event: PointerEvent) => {
   const {currentEl, log} = settings;
-  const {isPrimary, pointerType, pointerId, type, shiftKey, ctrlKey, metaKey} = ev;
-  const {movementX, movementY, x, y, offsetX, offsetY, screenX, screenY} = ev;
+  const {isPrimary, pointerType, pointerId, type, shiftKey, ctrlKey, metaKey} = event;
+  const {movementX, movementY, x, y, offsetX, offsetY, screenX, screenY, } = event;
 
-  log.log(`${ev.type} ${JSON.stringify(pointerEventSimplify(ev))}`);
-  console.log(ev);
-  let el = document.getElementById(`ptr-${pointerId}`);
+  log.log(`${event.type} ${JSON.stringify(pointerEventSimplify(event))}`);
+  console.log(event);
+  let element = document.querySelector(`#ptr-${pointerId}`);
 
-  if (el === null) {
-    el = document.createElement(`div`);
-    el.id = `ptr-${pointerId}`;
-    currentEl?.append(el);
+  if (element === null) {
+    element = document.createElement(`div`);
+    element.id = `ptr-${pointerId}`;
+    currentEl?.append(element);
   }
 
   const keys = [];
   if (shiftKey) keys.push(`shift`);
   if (metaKey) keys.push(`meta`);
   if (ctrlKey) keys.push(`ctrl`);
-  const keyStr = keys.map(k => `<kbd>${k}</kbd>`).join(` `);
+  const keyString = keys.map(k => `<kbd>${k}</kbd>`).join(` `);
 
-  const r = (v: number) => Math.round(v);
 
-  let penStr = ``;
+  let penString = ``;
   if (pointerType === `pen`) {
-    const {pressure, twist, tangentialPressure, tiltX, tiltY} = ev;
-    penStr += `pressure: ${pressure}<br />twist: ${twist} tangentialPressure: ${tangentialPressure}<br />tilt: ${tiltX},${tiltY}<br />`;
-    if (`altitudeAngle` in ev && `azimuthAngle` in ev) {
-      penStr += `altitudeAngle ${ev.altitudeAngle}<br />azimuthAngle: ${ev.azimuthAngle})<br />`;
+    const {pressure, twist, tangentialPressure, tiltX, tiltY} = event;
+    penString += `pressure: ${pressure}<br />twist: ${twist} tangentialPressure: ${tangentialPressure}<br />tilt: ${tiltX},${tiltY}<br />`;
+    if (`altitudeAngle` in event && `azimuthAngle` in event) {
+      penString += `altitudeAngle ${event.altitudeAngle}<br />azimuthAngle: ${event.azimuthAngle})<br />`;
     }
-    penStr += `<br />`;
+    penString += `<br />`;
   }
 
-  const coordsStr = `<table class="coords">
+  const coordsString = `<table class="coords">
   <thead><td></td><td></td><td>offset</td><td>screen</td><td>movement</td></thead>
-  <tr><td>x</td><td>${r(x)}</td><td>${r(offsetX)}</td><td>${r(screenX)}</td><td>${movementX}</td></tr>
-  <tr><td>y</td><td>${r(y)}</td><td>${r(offsetY)}</td><td>${r(screenY)}</td><td>${movementY}</td></tr>
+  <tr><td>x</td><td>${round(x)}</td><td>${round(offsetX)}</td><td>${round(screenX)}</td><td>${movementX}</td></tr>
+  <tr><td>y</td><td>${round(y)}</td><td>${round(offsetY)}</td><td>${round(screenY)}</td><td>${movementY}</td></tr>
   </table>`;
-  el.innerHTML = `
+  element.innerHTML = `
   <h1>${pointerId} ${pointerType} ${isPrimary ? `(primary)` : ``}</h1>
   ${type}<br />
-  ${penStr}
-  ${coordsStr}<br />
-  ${keyStr}<br >
+  ${penString}
+  ${coordsString}<br />
+  ${keyString}<br >
   `;
 };
 
-const pointerEventSimplify = (ev: PointerEvent) => {
-  const {button, buttons, ctrlKey, isPrimary, metaKey, movementX, movementY, offsetX, offsetY, pageX, pageY, pointerId, pointerType, screenX, screenY, shiftKey, x, y} = ev;
+const pointerEventSimplify = (event: PointerEvent) => {
+  const {button, buttons, ctrlKey, isPrimary, metaKey, movementX, movementY, offsetX, offsetY, pageX, pageY, pointerId, pointerType, screenX, screenY, shiftKey, x, y} = event;
 
   let r = {button, buttons, ctrlKey, isPrimary, metaKey, movementX, movementY, offsetX, offsetY, pageX, pageY, pointerId, pointerType, screenX, screenY, shiftKey, x, y};
 
-  if (ev.pointerType !== 'mouse') {
+  if (event.pointerType !== `mouse`) {
     r = {
       ...r,
       // @ts-ignore
-      pressure: ev.pressure,
-      tangentialPressure: ev.tangentialPressure,
-      tiltX: ev.tiltX,
-      tiltY: ev.tiltY,
-      twist: ev.twist
+      pressure: event.pressure,
+      tangentialPressure: event.tangentialPressure,
+      tiltX: event.tiltX,
+      tiltY: event.tiltY,
+      twist: event.twist
     }
   }
   // @ts-ignore
-  if (`altitudeAngle` in ev) r.altitudeAngle = ev.altitudeAngle;
+  if (`altitudeAngle` in event) r.altitudeAngle = event.altitudeAngle;
   // @ts-ignore
-  if (`azimuthAngle` in ev) r.azimuthAngle = ev.azimuthAngle;
+  if (`azimuthAngle` in event) r.azimuthAngle = event.azimuthAngle;
   // @ts-ignore
-  if (`webkitForce` in ev) r.webkitForce = ev.webkitForce;
+  if (`webkitForce` in event) r.webkitForce = event.webkitForce;
   return r;
 };
 
@@ -98,58 +104,58 @@ const setup = () => {
   const chkPointerdown = Forms.checkbox(`#evPointerdown`);
   const chkPointerup = Forms.checkbox(`#evPointerup`);
 
-  pointerEl.addEventListener(`pointermove`, ev => {
+  pointerEl.addEventListener(`pointermove`, event => {
     if (!chkPointermove.checked) return;
-    updatePointer(ev);
+    updatePointer(event as PointerEvent);
   });
 
-  pointerEl.addEventListener(`pointerenter`, ev => {
+  pointerEl.addEventListener(`pointerenter`, event => {
     if (!chkPointerenter.checked) return;
-    updatePointer(ev);
+    updatePointer(event as PointerEvent);
   });
 
-  pointerEl.addEventListener(`pointerleave`, ev => {
+  pointerEl.addEventListener(`pointerleave`, event => {
     if (!chkPointerleave.checked) return;
 
-    updatePointer(ev);
+    updatePointer(event as PointerEvent);
   });
 
-  pointerEl.addEventListener(`pointerover`, ev => {
+  pointerEl.addEventListener(`pointerover`, event => {
     if (!chkPointerover.checked) return;
-    updatePointer(ev);
+    updatePointer(event as PointerEvent);
   });
 
-  pointerEl.addEventListener(`pointerdown`, ev => {
+  pointerEl.addEventListener(`pointerdown`, event => {
     if (!chkPointerdown.checked) return;
-    updatePointer(ev);
+    updatePointer(event as PointerEvent);
   });
 
-  pointerEl.addEventListener(`pointerup`, ev => {
+  pointerEl.addEventListener(`pointerup`, event => {
     if (!chkPointerup.checked) return;
-    updatePointer(ev);
+    updatePointer(event as PointerEvent);
   });
 
-  pointerEl.addEventListener(`webkitmouseforcedown`, ev => {
+  pointerEl.addEventListener(`webkitmouseforcedown`, event => {
     if (!chkPointerdown.checked) return;
-    updatePointer(ev as PointerEvent);
+    updatePointer(event as PointerEvent);
 
   });
-  pointerEl.addEventListener(`webkitmouseforceup`, ev => {
+  pointerEl.addEventListener(`webkitmouseforceup`, event => {
     if (!chkPointerup.checked) return;
-    updatePointer(ev as PointerEvent);
+    updatePointer(event as PointerEvent);
 
   });
-  pointerEl.addEventListener(`webkitforcechanged`, ev => {
-    console.log(ev);
+  pointerEl.addEventListener(`webkitforcechanged`, event => {
+    console.log(event);
   });
 
 
-  document.getElementById(`btnCurrentReset`)?.addEventListener(`click`, () => {
+  document.querySelector(`#btnCurrentReset`)?.addEventListener(`click`, () => {
     clearPointers();
   });
 
 
-  document.getElementById(`btnClearLog`)?.addEventListener(`click`, () => {
+  document.querySelector(`#btnClearLog`)?.addEventListener(`click`, () => {
     log.clear();
   });
 };

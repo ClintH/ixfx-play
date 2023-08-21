@@ -3,42 +3,38 @@ import {round} from '../../ixfx/numbers.js';
 
 const settings = {
   rounder: round(2),
-  penEl: document.getElementById(`penArea`),
-  helpEl: document.getElementById(`helpArea`),
+  penEl: document.querySelector(`#penArea`) as HTMLElement,
+  helpEl: document.querySelector(`#helpArea`) as HTMLElement,
   eventKeys: `width height pointerType tiltX tiltY twist tangentialPressure pointerId x y movementX movementY`.split(` `)
 } as const;
 
-const updatePointer = (ev: PointerEvent) => {
+const updatePointer = (event: PointerEvent) => {
   const {eventKeys, rounder} = settings;
-  const {shiftKey, metaKey, ctrlKey} = ev;
+  const {shiftKey, metaKey, ctrlKey} = event;
 
-  eventKeys.forEach(k => {
-    const el = document.getElementById(k);
-    if (el !== null) {
+  for (const k of eventKeys) {
+    const element = document.querySelector(`#${k}`);
+    if (element !== null) {
       // @ts-ignore
-      const v = ev[k];
-      if (typeof v === `number`) {
-        el.innerText = rounder(v).toString();
-      } else {
-        el.innerText = v;
-      }
+      const v = event[k];
+      element.textContent = typeof v === `number` ? rounder(v).toString() : v;
     }
-  });
+  }
 
   const keys = [];
   if (shiftKey) keys.push(`shift`);
   if (metaKey) keys.push(`meta`);
   if (ctrlKey) keys.push(`ctrl`);
-  const keyStr = keys.map(k => `<kbd>${k}</kbd>`).join(` `);
+  const keyString = keys.map(k => `<kbd>${k}</kbd>`).join(` `);
 
 
-  setHtml(`keys`, keyStr);
-  setHtml(`pressure`, pc(ev.pressure));
+  setHtml(`keys`, keyString);
+  setHtml(`pressure`, pc(event.pressure));
 
   // @ts-ignore
-  const altAngle = ev.altitudeAngle ?? 0;
+  const altAngle = event.altitudeAngle ?? 0;
   // @ts-ignore
-  const aziAngle = ev.azimuthAngle ?? 0;
+  const aziAngle = event.azimuthAngle ?? 0;
   setHtml(`altitudeAngle`, rounder(altAngle));
   setHtml(`azimuthAngle`, rounder(aziAngle));
 
@@ -48,39 +44,27 @@ const setup = () => {
   const {penEl, helpEl} = settings;
   if (!penEl) return;
 
-  penEl.addEventListener(`pointermove`, ev => {
-    updatePointer(ev);
+  penEl.addEventListener(`pointermove`, event => {
+    updatePointer(event);
   });
 
-  penEl.addEventListener(`pointerenter`, ev => {
+  penEl.addEventListener(`pointerenter`, event => {});
 
-  });
+  penEl.addEventListener(`pointerleave`, event => {});
 
-  penEl.addEventListener(`pointerleave`, ev => {
+  penEl.addEventListener(`pointercancel`, event => {});
 
-  });
+  penEl.addEventListener(`pointerover`, event => {});
 
-  penEl.addEventListener(`pointercancel`, ev => {
+  penEl.addEventListener(`pointerdown`, event => {});
 
-  });
+  penEl.addEventListener(`pointerup`, event => {});
 
-  penEl.addEventListener(`pointerover`, ev => {
-
-  });
-
-  penEl.addEventListener(`pointerdown`, ev => {
-
-  });
-
-  penEl.addEventListener(`pointerup`, ev => {
-
-  });
-
-  document.getElementById(`btnHelpClose`)?.addEventListener(`click`, () => {
+  document.querySelector(`#btnHelpClose`)?.addEventListener(`click`, () => {
     if (helpEl) helpEl.style.display = `none`;
   });
 
-  document.getElementById(`btnHelpShow`)?.addEventListener(`click`, () => {
+  document.querySelector(`#btnHelpShow`)?.addEventListener(`click`, () => {
     if (helpEl) helpEl.style.display = `block`;
   });
 
