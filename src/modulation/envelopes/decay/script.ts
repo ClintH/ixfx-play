@@ -1,10 +1,10 @@
 import * as Flow from '../../../ixfx/flow.js';
-import * as Modulation from '../../../ixfx/modulation.js';
+import {Envelopes} from '../../../ixfx/modulation.js';
 
 const settings = {
   // Set up envelope
-  env: Modulation.adsr({
-    ...Modulation.defaultAdsrOpts(),
+  env: Envelopes.adsr({
+    ...Envelopes.defaultAdsrOpts(),
     attackDuration: 2000,
     releaseDuration: 5000,
     sustainLevel: 1,
