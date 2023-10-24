@@ -1,4 +1,5 @@
 import {
+  DispatchList,
   Elapsed_exports,
   StateMachine_exports,
   TaskQueue,
@@ -13,23 +14,27 @@ import {
   frequencyTimerSource,
   hasElapsedMs,
   interval,
-  intervalToMs,
-  isInterval,
   msElapsedTimer,
   relativeTimer,
   repeat,
   repeatReduce,
   retry,
   runOnce,
-  sleep,
   throttle,
   ticksElapsedTimer,
   timeout,
   updateOutdated,
   waitFor
-} from "./chunk-XL7M3HI2.js";
-import "./chunk-4DC2CRSB.js";
+} from "./chunk-6YLYFKO3.js";
+import "./chunk-EIQV725C.js";
+import "./chunk-ZSSYQQHP.js";
+import {
+  sleep
+} from "./chunk-DUNDLGZO.js";
+import "./chunk-BIZA3WZ7.js";
+import "./chunk-VE7DK22H.js";
 export {
+  DispatchList,
   Elapsed_exports as Elapsed,
   StateMachine_exports as StateMachine,
   TaskQueue,
@@ -44,8 +49,6 @@ export {
   frequencyTimerSource,
   hasElapsedMs,
   interval,
-  intervalToMs,
-  isInterval,
   msElapsedTimer,
   relativeTimer,
   repeat,

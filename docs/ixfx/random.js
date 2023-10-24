@@ -17,11 +17,16 @@ import {
   shortGuid,
   string,
   weighted,
+  weightedIndex,
   weightedInteger,
   weightedIntegerSource,
   weightedSource
-} from "./chunk-XL7M3HI2.js";
-import "./chunk-4DC2CRSB.js";
+} from "./chunk-6YLYFKO3.js";
+import "./chunk-EIQV725C.js";
+import "./chunk-ZSSYQQHP.js";
+import "./chunk-DUNDLGZO.js";
+import "./chunk-BIZA3WZ7.js";
+import "./chunk-VE7DK22H.js";
 export {
   randomElement as arrayElement,
   randomIndex as arrayIndex,
@@ -41,6 +46,7 @@ export {
   shortGuid,
   string,
   weighted,
+  weightedIndex,
   weightedInteger,
   weightedIntegerSource,
   weightedSource

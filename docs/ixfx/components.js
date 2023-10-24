@@ -1,59 +1,63 @@
 import {
   getSorter
-} from "./chunk-XL7M3HI2.js";
+} from "./chunk-6YLYFKO3.js";
+import "./chunk-EIQV725C.js";
+import "./chunk-ZSSYQQHP.js";
+import "./chunk-DUNDLGZO.js";
+import "./chunk-BIZA3WZ7.js";
 import {
   __decorateClass,
   __publicField
-} from "./chunk-4DC2CRSB.js";
+} from "./chunk-VE7DK22H.js";
 
 // src/components/HistogramVis.ts
 import { LitElement, css, html } from "lit";
 import { customElement } from "lit/decorators/custom-element.js";
 import { property } from "lit/decorators/property.js";
 import { repeat } from "lit/directives/repeat.js";
-var jsonData = (obj) => {
-  if (obj === null || obj === void 0 || obj === `undefined`)
+var jsonData = (object) => {
+  if (object === null || object === void 0 || object === `undefined`)
     return;
   try {
-    if (typeof obj === `string`) {
-      if (obj.length === 0)
+    if (typeof object === `string`) {
+      if (object.length === 0)
         return;
-      const o = JSON.parse(obj);
+      const o = JSON.parse(object);
       if (!Array.isArray(o)) {
         console.error(`Histogram innerText should be JSON array`);
         return;
       }
-      for (let i = 0; i < o.length; i++) {
-        if (!Array.isArray(o[i])) {
+      for (const [index, element] of o.entries()) {
+        if (!Array.isArray(element)) {
           console.error(`Histogram array should consist of inner arrays`);
           return;
         }
-        if (o[i].length !== 2) {
+        if (element.length !== 2) {
           console.error(
             `Histogram inner arrays should consist of two elements`
           );
           return;
         }
-        if (typeof o[i][0] !== `string`) {
+        if (typeof element[0] !== `string`) {
           console.error(
-            `First element of inner array should be a string (index ${i})`
+            `First element of inner array should be a string (index ${index})`
           );
           return;
         }
-        if (typeof o[i][1] !== `number`) {
+        if (typeof element[1] !== `number`) {
           console.error(
-            `Second element of inner array should be a number (index ${i})`
+            `Second element of inner array should be a number (index ${index})`
           );
           return;
         }
       }
       return o;
     }
-  } catch (ex) {
-    console.log(obj);
-    console.error(ex);
+  } catch (error) {
+    console.log(object);
+    console.error(error);
   }
-  return void 0;
+  return;
 };
 var HistogramVis = class extends LitElement {
   constructor() {
@@ -79,19 +83,21 @@ var HistogramVis = class extends LitElement {
     const colEnd = colStart + 1;
     const dataLabel = html`<div class="data">${freq}</div>`;
     const xAxis = html`${key}`;
-    return html` <div
-        class="bar"
-        style="grid-area: ${rowStart} / ${colStart} / ${rowEnd} / ${colEnd}"
-      >
-        <div class="barTrack" style="height: ${(percentage ?? 0) * 100}%"></div>
-        ${this.showDataLabels ? dataLabel : ``}
-      </div>
+    return html`
       <div
-        class="xAxisLabels"
-        style="grid-area: ${rowStart + 2} / ${colStart} / ${rowEnd + 2} / ${colEnd}"
-      >
-        ${this.showXAxis ? xAxis : ``}
-      </div>`;
+             class="bar"
+             style="grid-area: ${rowStart} / ${colStart} / ${rowEnd} / ${colEnd}"
+           >
+             <div class="barTrack" style="height: ${(percentage ?? 0) * 100}%"></div>
+             ${this.showDataLabels ? dataLabel : ``}
+           </div>
+           <div
+             class="xAxisLabels"
+             style="grid-area: ${rowStart + 2} / ${colStart} / ${rowEnd + 2} / ${colEnd}"
+           >
+             ${this.showXAxis ? xAxis : ``}
+           </div>
+    `;
   }
   render() {
     if ((this.data === void 0 || this.data.length === 0) && this.json === void 0) {
@@ -104,26 +110,30 @@ var HistogramVis = class extends LitElement {
       data: kv,
       percentage: kv[1] / highestCount
     }));
-    const xAxis = html`<div
-      class="xAxis"
-      style="grid-area: 2 / 1 / 3 / ${d.length + 1}"
-    ></div>`;
+    const xAxis = html`
+      <div
+            class="xAxis"
+            style="grid-area: 2 / 1 / 3 / ${d.length + 1}"
+          ></div>
+    `;
     const height = this.height ? `height: ${this.height};` : ``;
-    const h = html` <style>
-        div.chart {
-          grid-template-columns: repeat(${d.length}, minmax(2px, 1fr));
-        }
-      </style>
-      <div class="container" style="${height}">
-        <div class="chart">
-          ${repeat(
+    const h = html`
+      <style>
+             div.chart {
+               grid-template-columns: repeat(${d.length}, minmax(2px, 1fr));
+             }
+           </style>
+           <div class="container" style="${height}">
+             <div class="chart">
+               ${repeat(
       bars,
       (bar) => bar.data[0],
       (b, index) => this.barTemplate(b, index, length)
     )}
-          ${this.showXAxis ? xAxis : ``}
-        </div>
-      </div>`;
+               ${this.showXAxis ? xAxis : ``}
+             </div>
+           </div>
+    `;
     return h;
   }
 };
@@ -226,10 +236,10 @@ var FrequencyHistogramPlot = class {
       console.warn(`FrequencyHistogramPlot this.el undefined`);
       return;
     }
-    if (this.#sorter !== void 0) {
-      this.el.data = this.#sorter(data);
-    } else {
+    if (this.#sorter === void 0) {
       this.el.data = [...data];
+    } else {
+      this.el.data = this.#sorter(data);
     }
   }
 };
