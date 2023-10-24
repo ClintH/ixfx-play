@@ -29,7 +29,6 @@ let state: State = Object.freeze({
   p: undefined,
   frozen: false,
 });
-
 const settings = Object.freeze({
   puckIntro: `
 Puck.accelOn(12.5);
@@ -47,7 +46,9 @@ setInterval(() => {
   }),
   plot: new Plot2.Plot(document.querySelector(`#plotCanvas`) as HTMLCanvasElement, {
     autoSize: true,
-    axisColour: Colour.getCssVariable(`fg`),
+    axisStrokeColour: Colour.getCssVariable(`fg`),
+    axisTextColour: Colour.getCssVariable(`fg`),
+    legendTextColour: `white`
   }),
   txtCode: document.querySelector(`#txtCode`) as HTMLTextAreaElement,
   dlgHelp: document.querySelector(`#dlgHelp`) as HTMLDialogElement,

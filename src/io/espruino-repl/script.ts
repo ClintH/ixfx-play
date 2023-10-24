@@ -191,7 +191,6 @@ const setup = () => {
         historyIndex = Math.min(history.data.length - 1, historyIndex + 1);
       }
       updateState({historyIndex});
-      //console.log(historyIndex + `. ` + history.data[historyIndex]);
       inputSet(history.data[historyIndex]);
       event.preventDefault();
     } else if (event.key === `Enter`) {
