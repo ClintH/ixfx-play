@@ -35,7 +35,9 @@ setInterval(() => {
     }),
     plot: new Plot2.Plot(document.querySelector(`#plotCanvas`), {
         autoSize: true,
-        axisColour: Colour.getCssVariable(`fg`),
+        axisStrokeColour: Colour.getCssVariable(`fg`),
+        axisTextColour: Colour.getCssVariable(`fg`),
+        legendTextColour: `white`
     }),
     txtCode: document.querySelector(`#txtCode`),
     dlgHelp: document.querySelector(`#dlgHelp`),
