@@ -1,6 +1,6 @@
 {
   "name": "ixfx-play",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "type": "module",
   "scripts": {
@@ -16,16 +16,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.2.1",
+    "concurrently": "^8.2.2",
     "copyfiles": "^2.4.1",
-    "cpx2": "^5.0.0",
-    "eslint": "^8.48.0",
-    "ixfx": "0.11.7",
-    "rimraf": "^5.0.1",
+    "cpx2": "^6.0.0",
+    "eslint": "^8.52.0",
+    "rimraf": "^5.0.5",
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "@typescript-eslint/parser": "^6.6.0",
+    "@typescript-eslint/parser": "^6.9.0",
     "eslint-plugin-unicorn": "^48.0.1"
   }
 }
