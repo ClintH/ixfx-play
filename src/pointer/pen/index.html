@@ -8,7 +8,7 @@
   <link href="style.css" rel="stylesheet">
 </head>
 <body>
-  <section id="ïnfoAreaA">
+  <section id="infoAreaA" class="infoArea">
     <div>
       <h1>Basic</h1>
       <table>
@@ -63,19 +63,20 @@
       </table>
     </div>
     <div>
-      <p>Works best with a stylus input. Support for different fields will vary based on platform and browser.</p>
+      
     </div>
   </section>
   <section id="penArea">
-    <p>
-      Pen input here...
-    </p>
+    
+    <p>Scribble here.</p>
+    <p><em>Works best with a stylus input. Support for different fields will vary based on platform and browser.</em></p>
 
     <button style="top:1em;position:absolute" id="btnHelpShow">Info</button>
   </section>
-  <section id="infoAreaB">
+  <section id="infoAreaB" class="infoArea">
     <div>
       <h1>Tilt</h1>
+      <canvas id="plotTilt"></canvas>
       <table>
         <tr title="The plane angle (in degrees, in the range of -90 to 90) between the Y–Z plane and the plane containing both the pointer (e.g. pen stylus) axis and the Y axis">
           <td>x</td>

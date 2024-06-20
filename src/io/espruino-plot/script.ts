@@ -1,16 +1,16 @@
-import {Espruino, StateChangeEvent, IoDataEvent} from "../../ixfx/io.js";
+import { Espruino, StateChangeEvent, IoDataEvent } from "../../ixfx/io.js";
 import snarkdown from "./snarkdown.es.js";
 import * as Dom from "../../ixfx/dom.js";
-import {Plot2, Colour} from "../../ixfx/visual.js";
+import { Plot2, Colour } from "../../ixfx/visual.js";
 import Split from "./Split.js";
-
-Split([`#editor`, `#data`], {
-  sizes: [50, 50],
+console.log(`asdf`);
+Split([ `#editor`, `#data` ], {
+  sizes: [ 50, 50 ],
   direction: `horizontal`,
 });
 
-Split([`#plot`, `#stream`], {
-  sizes: [50, 50],
+Split([ `#plot`, `#stream` ], {
+  sizes: [ 50, 50 ],
   direction: `vertical`,
 });
 
@@ -56,7 +56,7 @@ setInterval(() => {
 });
 
 const onConnected = (connected: boolean) => {
-  const {plot} = settings;
+  const { plot } = settings;
 
   if (connected) {
     plot.clear();
@@ -70,16 +70,16 @@ const onConnected = (connected: boolean) => {
 };
 
 const onData = (event: IoDataEvent) => {
-  const {log, plot} = settings;
+  const { log, plot } = settings;
 
   const data = event.data.trim(); // Remove line breaks etc
-
+  console.log(data);
   if (!data.startsWith(`{`) || !data.endsWith(`}`)) {
     if (state.jsonWarning) {
-      updateState({jsonWarning: true});
+      updateState({ jsonWarning: true });
     } else {
-      console.warn(`Plotter expects JSON response. Got: ${data}`);
-      updateState({jsonWarning: true});
+      console.warn(`Plotter expects JSON response. Got: ${ data }`);
+      updateState({ jsonWarning: true });
     }
     log.log(data);
     return;
@@ -98,7 +98,7 @@ const onData = (event: IoDataEvent) => {
 };
 
 const logWelcome = () => {
-  const {log} = settings;
+  const { log } = settings;
   log.log(`eg: Bluetooth.println(JSON.stringify(v));`);
   log.log(`eg: let v =  { light: Puck.light() };`);
   log.log(
@@ -108,27 +108,27 @@ const logWelcome = () => {
 };
 
 const connect = async () => {
-  const {log, selBoard} = settings;
+  const { log, selBoard } = settings;
   let p;
 
   const boardSel = selBoard.value;
   if (boardSel === `pico` || boardSel === `puck`) {
-    updateState({board: boardSel});
+    updateState({ board: boardSel });
     localStorage.setItem(`board`, boardSel);
   }
 
   try {
     if (state.board === `puck`) {
       const p = await Espruino.connectBle();
-      updateState({p});
+      updateState({ p });
     } else if (state.board === `pico`) {
       const p = await Espruino.serial();
-      updateState({p});
+      updateState({ p });
     }
 
     if (!state.clearedWelcome) {
       log.clear();
-      updateState({clearedWelcome: true});
+      updateState({ clearedWelcome: true });
     }
   } catch (error) {
     console.error(error);
@@ -136,8 +136,8 @@ const connect = async () => {
 };
 
 const send = () => {
-  const {p} = state;
-  const {log, plot, txtCode} = settings;
+  const { p } = state;
+  const { log, plot, txtCode } = settings;
   if (p === undefined) return; // No Espruino
 
   // @ts-ignore
@@ -149,19 +149,19 @@ const send = () => {
   try {
     plot.clear();
     p.writeScript(codeWithSuffix);
-    localStorage.setItem(`last-${state.board}`, code);
+    localStorage.setItem(`last-${ state.board }`, code);
   } catch (error) {
     log.error(error);
   }
 };
 
 const setup = () => {
-  const {log, plot, txtCode, dlgHelp, selBoard} = settings;
+  const { log, plot, txtCode, dlgHelp, selBoard } = settings;
 
   const defaultBoard = localStorage.getItem(`board`);
   if (defaultBoard === `pico` || defaultBoard === `puck`) {
     selBoard.value = defaultBoard;
-    updateState({board: defaultBoard});
+    updateState({ board: defaultBoard });
   }
 
   // Setup plotter
@@ -198,7 +198,7 @@ const setup = () => {
   });
 
   document.querySelector(`#btnFreeze`)?.addEventListener(`click`, () => {
-    updateState({frozen: !state.frozen});
+    updateState({ frozen: !state.frozen });
   });
   document.querySelector(`#btnSend`)?.addEventListener(`click`, send);
   document.querySelector(`#txtCode`)?.addEventListener(`keyup`, event => {
@@ -221,13 +221,13 @@ setup();
 updateInitialCode();
 
 function updateInitialCode() {
-  const {txtCode, selBoard} = settings;
+  const { txtCode, selBoard } = settings;
 
   const initialCode =
     selBoard.value === `pico` ? settings.picoIntro : settings.puckIntro;
 
   // Show last code
-  const lastCode = localStorage.getItem(`last-${state.board}`);
+  const lastCode = localStorage.getItem(`last-${ state.board }`);
   txtCode.value = lastCode === null ? initialCode.trim() : lastCode;
 }
 
@@ -257,8 +257,8 @@ function updateState(s: Partial<State>) {
 }
 
 function onEspruinoChange(event: StateChangeEvent<any>) {
-  const {log} = settings;
-  log.log(`${event.priorState} -> ${event.newState}`);
+  const { log } = settings;
+  log.log(`${ event.priorState } -> ${ event.newState }`);
   onConnected(event.newState === `connected`);
 }
 

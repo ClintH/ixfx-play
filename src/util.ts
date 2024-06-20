@@ -1,7 +1,7 @@
-import {Points} from "./ixfx/geometry";
+import { Point, Points } from "./ixfx/geometry";
 
 export function setText(id: string, text: number | string | undefined, fallback?: string) {
-  const element = document.querySelector(`#${id}`) as HTMLElement;
+  const element = document.querySelector(`#${ id }`) as HTMLElement;
   if (text) {
     element.textContent = text.toString();
   } else if (fallback) {
@@ -10,7 +10,7 @@ export function setText(id: string, text: number | string | undefined, fallback?
 }
 
 export const setHtml = (id: string, text: string | number | undefined, fallback?: string) => {
-  const element = document.querySelector(`#${id}`);
+  const element = document.querySelector(`#${ id }`);
   if (element !== null) {
     if (text) {
       element.innerHTML = text.toString();
@@ -20,18 +20,12 @@ export const setHtml = (id: string, text: string | number | undefined, fallback?
   }
 };
 
-export const getContext = (id = `canvas`) => {
-  const canvasElement = document.querySelector(`#canvas`) as HTMLCanvasElement;
-  const context = canvasElement?.getContext(`2d`);
-  if (!context || !canvasElement) return;
-  return context;
-};
-
 /**
- * Draws a line from a -> b
+ * Draws a line from a -> b.
+ * Coordinates in absolute units
  * @returns 
  */
-export const drawLine = (context: CanvasRenderingContext2D, a: Points.Point, b: Points.Point) => {
+export const drawLine = (context: CanvasRenderingContext2D, a: Point, b: Point) => {
   context.beginPath();
   context.strokeStyle = `black`;
   context.moveTo(a.x, a.y);
@@ -39,7 +33,14 @@ export const drawLine = (context: CanvasRenderingContext2D, a: Points.Point, b: 
   context.stroke();
 };
 
-export const drawDot = (context: CanvasRenderingContext2D, a: Points.Point, fillStyle = `black`) => {
+/**
+ * Draws a filled dot.
+ * Coordinates in absolute units.
+* @param context 
+ * @param a 
+ * @param fillStyle 
+ */
+export const drawDot = (context: CanvasRenderingContext2D, a: Point, fillStyle = `black`) => {
   context.fillStyle = fillStyle;
   context.save();
   context.translate(a.x, a.y);

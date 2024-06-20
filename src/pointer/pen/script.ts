@@ -1,7 +1,18 @@
-import {pc, setHtml} from "../../util.js";
-import {round} from '../../ixfx/numbers.js';
+import { pc, setHtml } from "../../util.js";
+import { round } from '../../ixfx/numbers.js';
+import * as Visual from '../../ixfx/visual.js';
+import { scaler } from "../../ixfx/data.js";
 
 const settings = {
+  tiltScale: scaler(-90, 90, -1, 1),
+  tiltPlot: Visual.BipolarView.init(`#plotTilt`, {
+    yAxisBottomNegative: false,
+    bgColour: `transparent`,
+    axisColour: `greenyellow`,
+    whiskerColour: `white`,
+    labelColour: `--fg`,
+    displayLastValues: 50,
+  }),
   rounder: round(2),
   penEl: document.querySelector(`#penArea`) as HTMLElement,
   helpEl: document.querySelector(`#helpArea`) as HTMLElement,
@@ -9,14 +20,14 @@ const settings = {
 } as const;
 
 const updatePointer = (event: PointerEvent) => {
-  const {eventKeys, rounder} = settings;
-  const {shiftKey, metaKey, ctrlKey} = event;
+  const { eventKeys, rounder, tiltPlot, tiltScale } = settings;
+  const { shiftKey, metaKey, ctrlKey } = event;
 
   for (const k of eventKeys) {
-    const element = document.querySelector(`#${k}`);
+    const element = document.querySelector(`#${ k }`);
     if (element !== null) {
       // @ts-ignore
-      const v = event[k];
+      const v = event[ k ];
       element.textContent = typeof v === `number` ? rounder(v).toString() : v;
     }
   }
@@ -25,7 +36,7 @@ const updatePointer = (event: PointerEvent) => {
   if (shiftKey) keys.push(`shift`);
   if (metaKey) keys.push(`meta`);
   if (ctrlKey) keys.push(`ctrl`);
-  const keyString = keys.map(k => `<kbd>${k}</kbd>`).join(` `);
+  const keyString = keys.map(k => `<kbd>${ k }</kbd>`).join(` `);
 
 
   setHtml(`keys`, keyString);
@@ -38,11 +49,13 @@ const updatePointer = (event: PointerEvent) => {
   setHtml(`altitudeAngle`, rounder(altAngle));
   setHtml(`azimuthAngle`, rounder(aziAngle));
 
+  tiltPlot(tiltScale(event.tiltX), tiltScale(event.tiltY));
 };
 
 const setup = () => {
-  const {penEl, helpEl} = settings;
+  const { penEl, helpEl } = settings;
   if (!penEl) return;
+
 
   penEl.addEventListener(`pointermove`, event => {
     updatePointer(event);

@@ -1,0 +1,78 @@
+
+*,
+*:before,
+*:after,
+html,
+body {
+  box-sizing: border-box;
+}
+
+:root {
+  --hue: 0;
+  --bg: hsl(var(--hue), 10%, 0%);
+  --fg: hsl(var(--hue), 10%, 90%);
+  --fg-low: hsla(var(--hue), 10%, 80%, 0.5);
+  --fg-high: hsl(var(--hue), 10%, 100%);
+  --padding-l: 2.2em;
+  --padding: 1.2em;
+  --padding-m: 0.5em;
+  --padding-s: 0.3em
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  font-size: 12px;
+  font-family: 'Overpass Mono', monospace;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+a:link,
+a:visited {
+  color: var(--fg);
+}
+
+
+#error {
+  bottom: 0;
+  position: absolute;
+  background: rgba(245, 110, 110, 0.2);
+  color: white;
+}
+
+
+#badge {
+  bottom: 0;
+  right: 0;
+  position: absolute;
+}
+
+.hidden {
+  display: none;
+}
+
+#overlay {
+  position: absolute;
+  top:0;
+  left:0;
+  z-index: 1;
+}
+
+#canvas,#buffer {
+  position:absolute;
+  left:-50vw;
+  top:-50vh;
+}
+#buffer {
+  display:none;
+  z-index: 0;
+}
+#canvas {
+  z-index: 0;
+}
+
+#toolbox {
+  z-index: 10;
+}

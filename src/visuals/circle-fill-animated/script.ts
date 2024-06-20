@@ -1,39 +1,41 @@
 /* eslint-disable unicorn/no-array-callback-reference */
-
-import * as Dom from '../../ixfx/dom.js';
-import {repeat, debounce} from '../../ixfx/flow.js';
+import { CanvasHelper } from '../../ixfx/dom.js';
+import { repeat, debounce } from '../../ixfx/flow.js';
 import * as Random from '../../ixfx/random.js';
-import {Points, Polar} from '../../ixfx/geometry.js';
-import {pingPongPercent} from '../../ixfx/generators.js';
+import { Colour } from '../../ixfx/visual.js';
+import { Point, Points, Polar } from '../../ixfx/geometry.js';
+import * as Numbers from '../../ixfx/numbers.js';
 
 const settings = Object.freeze({
+  canvas: new CanvasHelper(`#canvas`, {
+    fill: `viewport`,
+    onResize(context, size, helper) {
+      onCodeUpdated();
+    },
+  }),
   piPi: Math.PI * 2,
   pointSize: 0.005,
-  pointColour: `hsla(70, 100%, 50%, 50%)`,
+  pointColour: Colour.resolveToString(`--point-fill`),
   radius: 0.5,
-  origin: {x: 0.5, y: 0.5},
-  pingPong: pingPongPercent(0.001)
+  origin: { x: 0.5, y: 0.5 },
+  pingPong: Numbers.pingPongPercent(0.001)
 });
 
 type State = Readonly<{
-  bounds: {width: number, height: number}
-  scaleBy: number
   randomSource: Random.RandomSource
   numberOfPoints: number
-  startPoints: Points.Point[]
-  endPoints: Points.Point[]
+  startPoints: Point[]
+  endPoints: Point[]
   startExpression: string
   endExpression: string
   animationPoint: number
 }>
 
 let state: State = {
-  bounds: {width: 0, height: 0},
-  scaleBy: 1,
   randomSource: Math.random,
   numberOfPoints: 500,
-  startPoints: [] as Points.Point[],
-  endPoints: [] as Points.Point[],
+  startPoints: [] as Point[],
+  endPoints: [] as Point[],
   startExpression: `r()`,
   endExpression: `1 - r()`,
   animationPoint: 0
@@ -43,9 +45,9 @@ const evaluateExpression = (txt: string, contextLabel: string) => {
   try {
     // @ts-ignore
     window.r = state.randomSource;
-    let distance = eval(txt);
+    let result = eval(txt);
     clearError();
-    return distance;
+    return result;
   } catch (error) {
     handleError(error, contextLabel);
   }
@@ -53,29 +55,28 @@ const evaluateExpression = (txt: string, contextLabel: string) => {
 
 // Expressions or # particles changed
 const onCodeUpdated = () => {
-  const {radius, piPi, origin} = settings;
-  const {numberOfPoints, scaleBy} = state;
+  const { canvas, radius, piPi, origin } = settings;
+  const { numberOfPoints } = state;
+
   const startExpr = () => evaluateExpression(state.startExpression, `start expression`);
   const endExpr = () => evaluateExpression(state.endExpression, `end expression`);
 
   // Get start and end distances
-  const startDistances = /** @type number[] */([...repeat(numberOfPoints, startExpr)]);
+  const startDistances = /** @type number[] */([ ...repeat(numberOfPoints, startExpr) ]);
 
   // If eval failed, exit
   if (startDistances.length < numberOfPoints) return;
-  let endDistances = /** @type number[] */([...repeat(numberOfPoints, endExpr)]);
+  let endDistances = /** @type number[] */([ ...repeat(numberOfPoints, endExpr) ]);
 
   // If eval failed, use the same as start
-  if (endDistances.length < numberOfPoints) endDistances = [...startDistances];
+  if (endDistances.length < numberOfPoints) endDistances = [ ...startDistances ];
 
   // Create random angles
-  const angles = [...repeat(numberOfPoints, () => Math.random() * piPi)];
+  const angles = [ ...repeat(numberOfPoints, () => Math.random() * piPi) ];
 
-  const absOrigin = Points.multiply(origin, state.bounds.width, state.bounds.height);
+  const absOrigin = canvas.toAbsolute(origin);
 
-  //console.log(`radius: ${radius} scaleBy: ${scaleBy} d: ${d}`);
-
-  const makePoint = (d: number, index: number) => Polar.toCartesian(d * radius * scaleBy, angles[index], absOrigin);
+  const makePoint = (d: number, index: number) => Polar.toCartesian(d * radius * canvas.dimensionMin, angles[ index ], absOrigin);
 
   // Make into points
   const startPoints = startDistances.map(makePoint);
@@ -83,55 +84,43 @@ const onCodeUpdated = () => {
 
   updateState({
     startPoints,
-    endPoints
+    endPoints,
   });
   drawState();
 };
 
 const computeState = () => {
-  const {pingPong} = settings;
+  const { pingPong } = settings;
   const v = pingPong.next().value;
 
-  updateState({animationPoint: v});
+  updateState({ animationPoint: v });
 };
 
-
 const drawState = () => {
-  const {pointColour, pointSize} = settings;
-  const {animationPoint, startPoints, endPoints, bounds, numberOfPoints} = state;
+  const { canvas, pointColour, pointSize } = settings;
+  const { animationPoint, startPoints, endPoints, numberOfPoints } = state;
+  const { ctx, width, height } = canvas;
 
   // Haven't computed points yet
   if (startPoints.length === 0 || startPoints.length === 0) return;
 
-  const canvasElement = document.querySelector(`#canvas`) as HTMLCanvasElement;
-  const context = canvasElement.getContext(`2d`);
-  if (!context || !canvasElement) return;
-
   // Make background transparent
-  context.clearRect(0, 0, bounds.width, bounds.height);
+  ctx.clearRect(0, 0, width, height);
 
-  const size = pointSize * state.scaleBy;
+  const size = pointSize * canvas.dimensionMin;
   for (let index = 0; index < numberOfPoints; index++) {
     // Compute particle
-    const p = Points.interpolate(animationPoint, startPoints[index], endPoints[index]);
+    const p = Points.interpolate(animationPoint, startPoints[ index ], endPoints[ index ], true);
 
     // Draw
-    drawPoint(context, p, pointColour, size);
+    drawPoint(ctx, p, pointColour, size);
   }
 };
-
 
 /**
  * Setup and run main loop 
  */
 const setup = () => {
-  Dom.fullSizeCanvas(`#canvas`, arguments_ => {
-    updateState({
-      bounds: arguments_.bounds,
-      scaleBy: Math.min(arguments_.bounds.width, arguments_.bounds.height)
-    });
-    onCodeUpdated();
-  });
 
   const loop = () => {
     computeState();
@@ -142,7 +131,7 @@ const setup = () => {
 
   const numberParticlesElement = document.querySelector(`#numberParticles`) as HTMLInputElement
   numberParticlesElement?.addEventListener(`change`, () => {
-    updateState({numberOfPoints: Number.parseInt(numberParticlesElement.value)});
+    updateState({ numberOfPoints: Number.parseInt(numberParticlesElement.value) });
   });
 
   inputChangeDebounce(`startExpr`, (v: string) => {
@@ -162,13 +151,13 @@ const setup = () => {
     const v = sourceElement.value;
 
     if (v === `Gaussian`) {
-      updateState({randomSource: Random.gaussian});
+      updateState({ randomSource: Random.gaussian });
     } else if (v.startsWith(`Weighted (`)) {
       const easing = v.slice(10, - 1);
       // @ts-ignore
-      updateState({randomSource: Random.weightedFn(easing)});
+      updateState({ randomSource: Random.weightedSource(easing) });
     } else {
-      updateState({randomSource: Math.random});
+      updateState({ randomSource: Math.random });
     }
   });
 
@@ -193,7 +182,7 @@ function updateState(s: Partial<typeof state>) {
 /**
  * Draws a point (in pixel coordinates)
  */
-function drawPoint(context: CanvasRenderingContext2D, position: Points.Point, fillStyle = `black`, size = 1) {
+function drawPoint(context: CanvasRenderingContext2D, position: Point, fillStyle = `black`, size = 1) {
   context.fillStyle = fillStyle;
   context.beginPath();
   context.arc(position.x, position.y, size, 0, settings.piPi);
@@ -204,8 +193,8 @@ function drawPoint(context: CanvasRenderingContext2D, position: Points.Point, fi
  * Invokes `callback` with value of HTML element when it changes
  */
 function inputChangeDebounce(id: string, callback: (value: string) => void) {
-  const element = document.querySelector(`#${id}`) as HTMLInputElement;
-  if (!element) throw new Error(`${id} not found`);
+  const element = document.querySelector(`#${ id }`) as HTMLInputElement;
+  if (!element) throw new Error(`${ id } not found`);
   const debouncer = debounce((event: any) => {
     callback(element.value);
   }, 500);
@@ -219,7 +208,7 @@ function handleError(ex: unknown, headline: string) {
   const errorElement = document.querySelector(`#error`);
   if (!errorElement) return;
   errorElement.classList.remove(`hidden`);
-  errorElement.innerHTML = `<h1>Error with ${headline}</h1><p>${ex}</p>`;
+  errorElement.innerHTML = `<h1>Error with ${ headline }</h1><p>${ ex }</p>`;
 }
 
 function clearError() {

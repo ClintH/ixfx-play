@@ -15,8 +15,10 @@
   <body>
     <section>
       <p>
-        Enter in a <em>start</em> and <em>end</em> expression for point
-        distance. <code>r()</code> yields a number from the random source.
+        <em>start</em> and <em>end</em> expressions determine animation positions for each particle, on a 0..1 scale.
+      </p>
+      <p>
+         <code>r()</code> yields a number from the random source.
       </p>
       <details>
         <summary>Example expressions</summary>
@@ -46,6 +48,7 @@
         </select>
         <label for="startExpr">Start</label>
         <input type="text" id="startExpr" value="r()" />
+  
         <label for="endExpr">End</label>
         <input type="text" id="endExpr" value="1-r()" />
         <label>Particles</label>

@@ -1,7 +1,7 @@
-import {Espruino} from '../../ixfx/io.js';
-import {Forms} from '../../ixfx/dom.js';
-import {adsrIterable} from '../../ixfx/modulation.js';
-import {IterableAsync} from '../../ixfx/util.js';
+import { Espruino } from '../../ixfx/io.js';
+import { Forms } from '../../ixfx/dom.js';
+import { adsrIterable } from '../../ixfx/modulation.js';
+import { Async } from '../../ixfx/iterables.js';
 
 const effects = [
   `strong click 100%`, `strong click 60%`, `strong click 30%`,
@@ -73,36 +73,36 @@ let state: State = Object.freeze({
 });
 
 const setupTrigger = () => {
-  const {effects, selEffectsEl} = settings;
+  const { effects, selEffectsEl } = settings;
   const selEffects = Forms.select(selEffectsEl, (value) => {
     console.log(value);
   });
 
   // Prefix effect name by its index
-  const effectsPrefixed = effects.map((effect, index) => `${index + 1}. ${effect}`);
+  const effectsPrefixed = effects.map((effect, index) => `${ index + 1 }. ${ effect }`);
   selEffects.setOpts(effectsPrefixed);
 
   Forms.button(`#btnTrigger`, () => {
     const index = selEffects.index + 1;
     if (state.espruino) {
-      state.espruino.write(`trigger(${index})\n`);
+      state.espruino.write(`trigger(${ index })\n`);
     }
   });
 };
 
 const setupSequencer = () => {
-  const {effects, seqArrayEl} = settings;
+  const { effects, seqArrayEl } = settings;
   const steps = 8;
   const selectEls: Forms.SelectHandler[] = [];
 
-  const effectsPrefixed = effects.map((effect, index) => `${index + 1}. ${effect}`);
+  const effectsPrefixed = effects.map((effect, index) => `${ index + 1 }. ${ effect }`);
 
   const getSeq = () => {
     const seq = [];
     for (let index_ = 0; index_ < steps; index_++) {
-      const index = selectEls[index_].index;
+      const index = selectEls[ index_ ].index;
       if (index === 0) break;
-      seq[index_] = selectEls[index_].index;
+      seq[ index_ ] = selectEls[ index_ ].index;
     }
     return seq;
   };
@@ -114,12 +114,12 @@ const setupSequencer = () => {
   let dirty = true;
 
   for (let index = 0; index < steps; index++) {
-    const element = Forms.select(`#selSeq${index}`, () => {
+    const element = Forms.select(`#selSeq${ index }`, () => {
       dirty = true;
       updateCodePreview();
-    }, {shouldAddChoosePlaceholder: true});
+    }, { shouldAddChoosePlaceholder: true });
     element.setOpts(effectsPrefixed);
-    selectEls[index] = element;
+    selectEls[ index ] = element;
   }
 
   Forms.button(`#btnSeqReset`, () => {
@@ -129,12 +129,12 @@ const setupSequencer = () => {
   });
 
   Forms.button(`#btnSeqStart`, () => {
-    const {espruino} = state;
+    const { espruino } = state;
     if (espruino === null) return;
 
     if (dirty) {
       // Call sequence(steps) on the Espruino
-      espruino?.write(`setSequence(${JSON.stringify(getSeq())}\n)`);
+      espruino?.write(`setSequence(${ JSON.stringify(getSeq()) }\n)`);
       dirty = false;
     }
 
@@ -150,7 +150,7 @@ const setupSequencer = () => {
 };
 
 const setupEnvelope = () => {
-  const {btnEnvSendEl, txtEnvEl, envArraysEl, durationLimit, numEnvResolutionEl} = settings;
+  const { btnEnvSendEl, txtEnvEl, envArraysEl, durationLimit, numEnvResolutionEl } = settings;
 
   let amplitudes: number[] = [];
   let durations: number[] = [];
@@ -163,27 +163,27 @@ const setupEnvelope = () => {
     const sampleRate = Number.parseInt(numEnvResolutionEl.value);
 
     try {
-      const o = eval(`(${txtEnvEl.value.trim()})`);
+      const o = eval(`(${ txtEnvEl.value.trim() })`);
       console.log(o);
       o.shouldLoop = false;
 
-      if (o.attackDuration > durationLimit) throw new Error(`attackDuration cannot be longer than ${durationLimit}ms.`);
-      if (o.decayDuration > durationLimit) throw new Error(`decayDuration cannot be longer than ${durationLimit}ms.`);
-      if (o.releaseDuration > durationLimit) throw new Error(`releaseDuration cannot be longer than ${durationLimit}ms.`);
+      if (o.attackDuration > durationLimit) throw new Error(`attackDuration cannot be longer than ${ durationLimit }ms.`);
+      if (o.decayDuration > durationLimit) throw new Error(`decayDuration cannot be longer than ${ durationLimit }ms.`);
+      if (o.releaseDuration > durationLimit) throw new Error(`releaseDuration cannot be longer than ${ durationLimit }ms.`);
 
-      const data = await IterableAsync.toArray(adsrIterable({env: o, sampleRateMs: sampleRate}));
+      const data = await Async.toArray(adsrIterable({ env: o, sampleRateMs: sampleRate }));
       console.log(data);
 
       amplitudes = data.map(d => Math.round(d * 127));
       durations = data.map(d => sampleRate);
 
-      const line1 = `let amplitudes = ${JSON.stringify(amplitudes)};`;
-      const line2 = `let durations = ${JSON.stringify(durations)};`;
+      const line1 = `let amplitudes = ${ JSON.stringify(amplitudes) };`;
+      const line2 = `let durations = ${ JSON.stringify(durations) };`;
       envArraysEl.innerHTML = line1 + `<br />` + line2;
       btnEnvSendEl.disabled = false;
     } catch (error) {
       console.log(error);
-      envArraysEl.innerHTML = `<h1>:(</h1><p>There is an error in the envelope definition.</p><p>${error}</p>`;
+      envArraysEl.innerHTML = `<h1>:(</h1><p>There is an error in the envelope definition.</p><p>${ error }</p>`;
       btnEnvSendEl.disabled = true;
       amplitudes = [];
       durations = [];
@@ -221,7 +221,7 @@ const setupEnvelope = () => {
 
   Forms.button(btnEnvSendEl, () => {
     if (state.espruino && amplitudes.length > 0 && durations.length > 0) {
-      state.espruino.write(`rtpMode(${JSON.stringify(amplitudes)}, ${JSON.stringify(durations)})\n`);
+      state.espruino.write(`rtpMode(${ JSON.stringify(amplitudes) }, ${ JSON.stringify(durations) })\n`);
     }
   });
 
@@ -251,7 +251,7 @@ const setup = () => {
 
       // Listen for events
       p.addEventListener(`change`, event => {
-        console.log(`${event.priorState} -> ${event.newState}`);
+        console.log(`${ event.priorState } -> ${ event.newState }`);
         onConnected(event.newState === `connected`);
       });
 
@@ -262,7 +262,7 @@ const setup = () => {
 
       onConnected(true);
 
-      updateState({espruino: p});
+      updateState({ espruino: p });
 
     } catch (error) {
       console.error(error);

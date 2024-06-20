@@ -1,8 +1,8 @@
-import {Points, radianToDegree, Triangles} from "../../ixfx/geometry.js";
-import {reconcileChildren, DataTable} from '../../ixfx/dom.js';
-import {numberTracker, pointsTracker, PointTracker, pointTracker, TrackedPointMap} from "../../ixfx/data.js";
-import {setText, pc, value} from "../../util.js";
-import {NumberTracker} from "../../ixfx/data.js";
+import { Point, Points, radianToDegree, Triangles } from "../../ixfx/geometry.js";
+import { reconcileChildren, DataTable } from '../../ixfx/dom.js';
+import { numberTracker, pointsTracker, PointTracker, pointTracker, TrackedPointMap } from "../../ixfx/data.js";
+import { setText, pc, value } from "../../util.js";
+import { NumberTracker } from "../../ixfx/data.js";
 const settings = Object.freeze({
   currentPointsEl: document.querySelector(`#current-points`) as HTMLElement,
   startPointsEl: document.querySelector(`#start-points`) as HTMLElement,
@@ -25,7 +25,7 @@ type State = Readonly<{
 }>
 let state: State = {
   /** @type {TrackedPointMap} */
-  pointers: pointsTracker({storeIntermediate: false}),
+  pointers: pointsTracker({ storeIntermediate: false }),
   twoFinger: {
     rotation: numberTracker(),
     distance: numberTracker()
@@ -38,11 +38,11 @@ let state: State = {
   centroidAngle: 0
 };
 
-const gestureTwoFinger = (a: Points.Point, b: Points.Point) => {
+const gestureTwoFinger = (a: Point, b: Point) => {
   if (a === undefined) throw new Error(`point a undefined`);
   if (b === undefined) throw new Error(`point b undefined`);
 
-  const {twoFinger} = state;
+  const { twoFinger } = state;
 
   // Absolute distance between points
   const distanceAbs = Points.distance(a, b); // clamp(Points.distance(a, b) / maxDimension)
@@ -53,12 +53,12 @@ const gestureTwoFinger = (a: Points.Point, b: Points.Point) => {
   twoFinger.rotation.seen(rotationAbs / 180);
 };
 
-const gestureThreeFinger = (a: Points.Point, b: Points.Point, c: Points.Point) => {
+const gestureThreeFinger = (a: Point, b: Point, c: Point) => {
   if (a === undefined) throw new Error(`point a undefined`);
   if (b === undefined) throw new Error(`point b undefined`);
   if (c === undefined) throw new Error(`point c undefined`);
 
-  const tri = Triangles.fromPoints([a, b, c]);
+  const tri = Triangles.fromPoints([ a, b, c ]);
   state.threeFinger.area.seen(Triangles.area(tri));
 };
 
@@ -79,16 +79,16 @@ const gestureCentroid = (pointers: TrackedPointMap) => {
 
 
 const update = () => {
-  const {pointers} = state;
+  const { pointers } = state;
 
   gestureCentroid(pointers);
 
   // Pointers sorted by age, oldest first
-  const byAge = [...pointers.trackedByAge()];
+  const byAge = [ ...pointers.trackedByAge() ];
 
   if (byAge.length >= 2) {
     // Got at least two touches
-    gestureTwoFinger(byAge[0].last, byAge[1].last);
+    gestureTwoFinger(byAge[ 0 ].last, byAge[ 1 ].last);
   } else {
     // Reset state regarding two-finger gestures
     state.twoFinger.distance.reset();
@@ -97,7 +97,7 @@ const update = () => {
 
   if (byAge.length >= 3) {
     // Got at least three touches
-    gestureThreeFinger(byAge[0].last, byAge[1].last, byAge[2].last);
+    gestureThreeFinger(byAge[ 0 ].last, byAge[ 1 ].last, byAge[ 2 ].last);
   } else {
     state.threeFinger.area.reset();
   }
@@ -121,9 +121,9 @@ const update = () => {
 };
 
 const draw = () => {
-  const {centroidEl, startCentroidEl, thingSize, currentPointsEl, startPointsEl} = settings;
-  const {pointers} = state;
-  const {centroid, twoFinger, threeFinger} = state;
+  const { centroidEl, startCentroidEl, thingSize, currentPointsEl, startPointsEl } = settings;
+  const { pointers } = state;
+  const { centroid, twoFinger, threeFinger } = state;
 
   // Create or remove elements based on tracked points
   if (!currentPointsEl) return;
@@ -152,12 +152,12 @@ const draw = () => {
   if (centroidTravelElement) centroidTravelElement.textContent = value(centroid.distanceFromStart());
 
   if (centroid.initial === undefined) {
-    positionElement(startCentroidEl, {x: -1000, y: -1000}, thingSize);
+    positionElement(startCentroidEl, { x: -1000, y: -1000 }, thingSize);
   } else {
     positionElement(startCentroidEl, centroid.initial, thingSize);
   }
   if (centroid.last === undefined) {
-    positionElement(centroidEl, {x: -1000, y: -1000}, thingSize);
+    positionElement(centroidEl, { x: -1000, y: -1000 }, thingSize);
   } else {
     positionElement(centroidEl, centroid.last, thingSize);
   }
@@ -176,17 +176,17 @@ const stopTrackingPoint = (event: PointerEvent) => {
 const trackPoint = (event: PointerEvent) => {
   if (event.pointerType === `mouse`) return;
   event.preventDefault();
-  const {pointers} = state;
+  const { pointers } = state;
 
   // Track point, associated with pointerId
-  pointers.seen(event.pointerId.toString(), {x: event.x, y: event.y});
+  pointers.seen(event.pointerId.toString(), { x: event.x, y: event.y });
   update();
 };
 
 /**
  * Position element
  */
-const positionElement = (element: HTMLElement | null, point: Points.Point, size: number) => {
+const positionElement = (element: HTMLElement | null, point: Point, size: number) => {
   if (!element) return;
   element.style.left = (point.x - size / 2) + `px`;
   element.style.top = (point.y - size / 2) + `px`;
