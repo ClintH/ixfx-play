@@ -1,20 +1,25 @@
 /* eslint-disable unicorn/no-array-callback-reference */
-import * as Dom from '../../ixfx/dom.js';
+import { CanvasHelper } from '../../ixfx/dom.js';
 import { repeat, debounce } from '../../ixfx/flow.js';
 import * as Random from '../../ixfx/random.js';
+import { Colour } from '../../ixfx/visual.js';
 import { Points, Polar } from '../../ixfx/geometry.js';
-import { pingPongPercent } from '../../ixfx/generators.js';
+import * as Numbers from '../../ixfx/numbers.js';
 const settings = Object.freeze({
+    canvas: new CanvasHelper(`#canvas`, {
+        fill: `viewport`,
+        onResize(context, size, helper) {
+            onCodeUpdated();
+        },
+    }),
     piPi: Math.PI * 2,
     pointSize: 0.005,
-    pointColour: `hsla(70, 100%, 50%, 50%)`,
+    pointColour: Colour.resolveToString(`--point-fill`),
     radius: 0.5,
     origin: { x: 0.5, y: 0.5 },
-    pingPong: pingPongPercent(0.001)
+    pingPong: Numbers.pingPongPercent(0.001)
 });
 let state = {
-    bounds: { width: 0, height: 0 },
-    scaleBy: 1,
     randomSource: Math.random,
     numberOfPoints: 500,
     startPoints: [],
@@ -27,9 +32,9 @@ const evaluateExpression = (txt, contextLabel) => {
     try {
         // @ts-ignore
         window.r = state.randomSource;
-        let distance = eval(txt);
+        let result = eval(txt);
         clearError();
-        return distance;
+        return result;
     }
     catch (error) {
         handleError(error, contextLabel);
@@ -37,8 +42,8 @@ const evaluateExpression = (txt, contextLabel) => {
 };
 // Expressions or # particles changed
 const onCodeUpdated = () => {
-    const { radius, piPi, origin } = settings;
-    const { numberOfPoints, scaleBy } = state;
+    const { canvas, radius, piPi, origin } = settings;
+    const { numberOfPoints } = state;
     const startExpr = () => evaluateExpression(state.startExpression, `start expression`);
     const endExpr = () => evaluateExpression(state.endExpression, `end expression`);
     // Get start and end distances
@@ -52,15 +57,14 @@ const onCodeUpdated = () => {
         endDistances = [...startDistances];
     // Create random angles
     const angles = [...repeat(numberOfPoints, () => Math.random() * piPi)];
-    const absOrigin = Points.multiply(origin, state.bounds.width, state.bounds.height);
-    //console.log(`radius: ${radius} scaleBy: ${scaleBy} d: ${d}`);
-    const makePoint = (d, index) => Polar.toCartesian(d * radius * scaleBy, angles[index], absOrigin);
+    const absOrigin = canvas.toAbsolute(origin);
+    const makePoint = (d, index) => Polar.toCartesian(d * radius * canvas.dimensionMin, angles[index], absOrigin);
     // Make into points
     const startPoints = startDistances.map(makePoint);
     const endPoints = endDistances.map(makePoint);
     updateState({
         startPoints,
-        endPoints
+        endPoints,
     });
     drawState();
 };
@@ -70,36 +74,26 @@ const computeState = () => {
     updateState({ animationPoint: v });
 };
 const drawState = () => {
-    const { pointColour, pointSize } = settings;
-    const { animationPoint, startPoints, endPoints, bounds, numberOfPoints } = state;
+    const { canvas, pointColour, pointSize } = settings;
+    const { animationPoint, startPoints, endPoints, numberOfPoints } = state;
+    const { ctx, width, height } = canvas;
     // Haven't computed points yet
     if (startPoints.length === 0 || startPoints.length === 0)
         return;
-    const canvasElement = document.querySelector(`#canvas`);
-    const context = canvasElement.getContext(`2d`);
-    if (!context || !canvasElement)
-        return;
     // Make background transparent
-    context.clearRect(0, 0, bounds.width, bounds.height);
-    const size = pointSize * state.scaleBy;
+    ctx.clearRect(0, 0, width, height);
+    const size = pointSize * canvas.dimensionMin;
     for (let index = 0; index < numberOfPoints; index++) {
         // Compute particle
-        const p = Points.interpolate(animationPoint, startPoints[index], endPoints[index]);
+        const p = Points.interpolate(animationPoint, startPoints[index], endPoints[index], true);
         // Draw
-        drawPoint(context, p, pointColour, size);
+        drawPoint(ctx, p, pointColour, size);
     }
 };
 /**
  * Setup and run main loop
  */
 const setup = () => {
-    Dom.fullSizeCanvas(`#canvas`, arguments_ => {
-        updateState({
-            bounds: arguments_.bounds,
-            scaleBy: Math.min(arguments_.bounds.width, arguments_.bounds.height)
-        });
-        onCodeUpdated();
-    });
     const loop = () => {
         computeState();
         drawState();
@@ -129,7 +123,7 @@ const setup = () => {
         else if (v.startsWith(`Weighted (`)) {
             const easing = v.slice(10, -1);
             // @ts-ignore
-            updateState({ randomSource: Random.weightedFn(easing) });
+            updateState({ randomSource: Random.weightedSource(easing) });
         }
         else {
             updateState({ randomSource: Math.random });

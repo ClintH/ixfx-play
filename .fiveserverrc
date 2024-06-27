@@ -1,6 +1,7 @@
 {
   "port": 4500,
   "open": "docs/index.html",
+  "host": "0.0.0.0",
   "watch": ["src/**/*"],
   "mount": {
     "/src": "./docs"

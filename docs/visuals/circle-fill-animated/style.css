@@ -9,11 +9,12 @@ body {
 
 :root {
   --hue: 70;
-  --bg: hsl(var(--hue), 10%, 30%);
-  --fg: hsl(var(--hue), 50%, 70%);
+  --bg: hsl(var(--hue), 10%, 20%);
+  --fg: hsl(var(--hue), 20%, 60%);
   --padding: 1em;
   --padding-m: 0.5em;
-  --padding-s: 0.3em
+  --padding-s: 0.3em;
+  --point-fill: hsla(var(--hue), 100%, 70%, 0.8);
 }
 
 body {
@@ -22,6 +23,7 @@ body {
   font-family: 'Overpass Mono', monospace;
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 a:link,

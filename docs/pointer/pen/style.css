@@ -10,6 +10,7 @@
   --faint: hsl(var(--hue) 100% 15%);
   --fg: hsl(var(--hue) 100% 90%);
   --padding: 0.3em;
+  --padding-l: 1.2em;
 }
 
 html,
@@ -30,7 +31,12 @@ body {
   display: flex;
 }
 
+body > div {
+  border: 1px solid greenyellow;
+}
+
 #penArea {
+  flex-grow: 1;
   background-color: hsl(var(--hue) 100% 5%);
   display: flex;
   flex-direction: column;
@@ -39,7 +45,6 @@ body {
   -webkit-user-select: none;
   align-items: center;
   justify-content: center;
-  width: 100%;
 }
 
 .mono {
@@ -50,10 +55,10 @@ section {
   padding: var(--padding);
 }
 
-#ïnfoAreaA,
-#infoAreaB {
-  flex-grow: 1;
-  max-width: 12em;
+.infoArea {
+  flex-grow:2;
+  padding: var(--padding-l);
+  max-width: 20em;
 }
 
 .cell {

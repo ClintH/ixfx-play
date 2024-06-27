@@ -3,6 +3,7 @@ import snarkdown from "./snarkdown.es.js";
 import * as Dom from "../../ixfx/dom.js";
 import { Plot2, Colour } from "../../ixfx/visual.js";
 import Split from "./Split.js";
+console.log(`asdf`);
 Split([`#editor`, `#data`], {
     sizes: [50, 50],
     direction: `horizontal`,
@@ -59,6 +60,7 @@ const onConnected = (connected) => {
 const onData = (event) => {
     const { log, plot } = settings;
     const data = event.data.trim(); // Remove line breaks etc
+    console.log(data);
     if (!data.startsWith(`{`) || !data.endsWith(`}`)) {
         if (state.jsonWarning) {
             updateState({ jsonWarning: true });

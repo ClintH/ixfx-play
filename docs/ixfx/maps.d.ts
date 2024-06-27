@@ -1,17 +1,9 @@
-import { S as SimpleEventEmitter } from './Events-f066e560.js';
-import { I as IsEqual } from './IsEqual-267e4380.js';
-import { E as EitherKey } from './Map-5cfbfc2c.js';
-import { T as ToString } from './Util-82e375df.js';
-import { I as ICircularArray } from './IMapOfMutableExtended-16486249.js';
-import './Trees-6d4cfc30.js';
-import './Arrays-205913df.js';
-import './Easing-e712c8ff.js';
-import './Types-bc8c421d.js';
-import './MinMaxAvg-bf5430b4.js';
-import 'd3-color';
-import './index-47887a5a.js';
-import './index-5d08300f.js';
-import './QueueMutable-a55e58f6.js';
+import { S as SimpleEventEmitter } from './Events-QY1ngixJ.js';
+import { I as Interval } from './IntervalType-CQa4mlKV.js';
+import { I as IsEqual } from './IsEqual-EdZcaNvH.js';
+import { E as EitherKey } from './Types-S6h-aw9z.js';
+import { I as ICircularArray } from './CircularArray-sm3CThg9.js';
+import { T as ToString } from './ToString-Wn1YmnlL.js';
 
 /**
  * Expiring map options
@@ -127,7 +119,6 @@ declare class ExpiringMap<K, V> extends SimpleEventEmitter<ExpiringMapEvents<K, 
     #private;
     private capacity;
     private store;
-    private keyCount;
     private evictPolicy;
     private autoDeleteElapsedMs;
     private autoDeletePolicy;
@@ -174,6 +165,11 @@ declare class ExpiringMap<K, V> extends SimpleEventEmitter<ExpiringMapEvents<K, 
      */
     delete(key: K): boolean;
     /**
+     * Clears the contents of the map.
+     * Note: does not fire `removed` event
+     */
+    clear(): void;
+    /**
      * Updates the lastSet/lastGet time for a value
      * under `k`.
      *
@@ -186,12 +182,18 @@ declare class ExpiringMap<K, V> extends SimpleEventEmitter<ExpiringMapEvents<K, 
     /**
      * Deletes all values where elapsed time has past
      * for get/set or either.
+     * ```js
+     * // Delete all keys (and associated values) not accessed for a minute
+     * em.deleteWithElapsed({mins:1}, `get`);
+     * // Delete things that were set 1s ago
+     * em.deleteWithElapsed(1000, `set`);
+     * ```
      *
-     * Remove items are returned
-     * @param time
-     * @param prop get/set/either
+     * @param interval Interval
+     * @param property Basis for deletion 'get','set' or 'either'
+     * @returns Items removed
      */
-    deleteWithElapsed(time: number, prop: `get` | `set` | `either`): [k: K, v: V][];
+    deleteWithElapsed(interval: Interval, property: `get` | `set` | `either`): Array<[k: K, v: V]>;
     /**
      * Sets the `key` to be `value`.
      *
@@ -386,7 +388,7 @@ interface IMapImmutable<K, V> extends IMapBase<K, V> {
  *
  * @param dataOrMap Optional initial data in the form of an array of `{ key: value }` or `[ key, value ]`
  */
-declare const immutable: <K, V>(dataOrMap?: ReadonlyMap<K, V> | EitherKey<K, V> | undefined) => IMapImmutable<K, V>;
+declare const immutable: <K, V>(dataOrMap?: ReadonlyMap<K, V> | EitherKey<K, V>) => IMapImmutable<K, V>;
 
 /**
  * A mutable map.
@@ -465,6 +467,10 @@ interface IMapOfMutable<V> extends IMapOf<V> {
      * Clears the map
      */
     clear(): void;
+    /**
+     * Returns the number of keys
+     */
+    get lengthKeys(): number;
     /**
      * Deletes all values under `key` that match `value`.
      * @param key Key
@@ -621,23 +627,23 @@ type MapArrayOpts<V> = MapMultiOpts<V> & {
  * @template V Data type of items
  * @returns {@link IMapOfMutableExtended}
  */
-declare const ofArrayMutable: <V>(opts?: MapArrayOpts<V>) => IMapOfMutableExtended<V, readonly V[]>;
+declare const ofArrayMutable: <V>(opts?: MapArrayOpts<V>) => IMapOfMutableExtended<V, ReadonlyArray<V>>;
 
 declare class MapOfSimpleBase<V> {
     protected map: Map<string, ReadonlyArray<V>>;
-    protected readonly groupBy: ToString<V>;
+    protected readonly groupBy: (value: V) => string;
     protected valueEq: IsEqual<V>;
     /**
      * Constructor
      * @param groupBy Creates keys for values when using `addValue`. By default uses JSON.stringify
      * @param valueEq Compare values. By default uses JS logic for equality
      */
-    constructor(groupBy?: ToString<V>, valueEq?: IsEqual<V>, initial?: [string, readonly V[]][]);
+    constructor(groupBy?: (value: V) => string, valueEq?: IsEqual<V>, initial?: Array<[string, ReadonlyArray<V>]>);
     /**
      * Iterate over all entries
      */
     entriesFlat(): IterableIterator<[key: string, value: V]>;
-    entries(): IterableIterator<[key: string, value: V[]]>;
+    entries(): IterableIterator<[key: string, value: Array<V>]>;
     firstKeyByValue(value: V, eq?: IsEqual<V>): string | undefined;
     /**
      * Get all values under `key`
@@ -686,6 +692,7 @@ declare class MapOfSimpleBase<V> {
      * @returns
      */
     count(key: string): number;
+    get lengthKeys(): number;
 }
 
 /**
@@ -762,7 +769,7 @@ declare class MapOfSimpleMutable<V> extends MapOfSimpleBase<V> implements IMapOf
  * @template V Type of items
  * @returns New instance
  */
-declare const ofSimpleMutable: <V>(groupBy?: ToString<V>, valueEq?: IsEqual<V>) => IMapOfMutable<V>;
+declare const ofSimpleMutable: <V>(groupBy?: (value: V) => string, valueEq?: IsEqual<V>) => IMapOfMutable<V>;
 
 /**
  * @internal
@@ -776,6 +783,10 @@ declare class MapOfMutableImpl<V, M> extends SimpleEventEmitter<MapArrayEvents<V
      * Returns the type name. For in-built implementations, it will be one of: array, set or circular
      */
     get typeName(): string;
+    /**
+     * Returns the number of keys
+     */
+    get lengthKeys(): number;
     /**
      * Returns the length of the longest child list
      */
@@ -844,10 +855,10 @@ type MapMultiOpts<V> = {
      *
      * @type {(ToString<V>|undefined)}
      */
-    readonly groupBy?: ToString<V> | undefined;
+    readonly groupBy?: ((value: V) => string) | undefined;
 };
 type MapSetOpts<V> = MapMultiOpts<V> & {
-    readonly hash: ToString<V>;
+    readonly hash: (value: V) => string;
 };
 
 /**
@@ -877,7 +888,7 @@ type MapSetOpts<V> = MapMultiOpts<V> & {
  * @param opts
  * @returns
  */
-declare const ofSetMutable: <V>(opts?: MapSetOpts<V> | undefined) => IMapOfMutableExtended<V, ReadonlyMap<string, V>>;
+declare const ofSetMutable: <V>(opts?: MapSetOpts<V>) => IMapOfMutableExtended<V, ReadonlyMap<string, V>>;
 
 type MapCircularOpts<V> = MapMultiOpts<V> & {
     readonly capacity: number;
@@ -979,6 +990,19 @@ declare class NumberMap<K> extends Map<K, number> {
  */
 declare const getClosestIntegerKey: (data: ReadonlyMap<number, any>, target: number) => number;
 /**
+ * Returns the first value in `data` that matches a key from `keys`.
+ * ```js
+ * // Iterate, yielding: `a.b.c.d`, `b.c.d`, `c.d`, `d`
+ * const keys = Text.segmentsFromEnd(`a.b.c.d`);
+ * // Gets first value that matches a key (starting from most precise)
+ * const value = getFromKeys(data, keys);
+ * ```
+ * @param data
+ * @param keys
+ * @returns
+ */
+declare const getFromKeys: <T>(data: ReadonlyMap<string, T>, keys: Iterable<string>) => T | undefined;
+/**
  * Returns true if map contains `value` under `key`, using `comparer` function. Use {@link hasAnyValue} if you don't care
  * what key value might be under.
  *
@@ -1071,7 +1095,7 @@ declare const firstEntryByIterableValue: <K, V>(map: IWithEntries<K, V>, value: 
  * @param values
  * @returns
  */
-declare const addKeepingExisting: <V>(set: ReadonlyMap<string, V> | undefined, hasher: ToString<V>, ...values: readonly V[]) => Map<any, any>;
+declare const addKeepingExisting: <V>(set: ReadonlyMap<string, V> | undefined, hasher: ToString<V>, ...values: ReadonlyArray<V>) => Map<any, any>;
 /**
  * Returns a array of entries from a map, sorted by value.
  *
@@ -1092,7 +1116,7 @@ declare const addKeepingExisting: <V>(set: ReadonlyMap<string, V> | undefined, h
  * @param comparer
  * @returns
  */
-declare const sortByValue: <K, V>(map: ReadonlyMap<K, V>, comparer?: ((a: V, b: V) => number) | undefined) => void;
+declare const sortByValue: <K, V>(map: ReadonlyMap<K, V>, comparer?: (a: V, b: V) => number) => [K, V][];
 /**
  * Returns an array of entries from a map, sorted by a property of the value
  *
@@ -1106,7 +1130,7 @@ declare const sortByValue: <K, V>(map: ReadonlyMap<K, V>, comparer?: ((a: V, b: 
  * @param prop Property of value
  * @param compareFn Comparer. If unspecified, uses a default.
  */
-declare const sortByValueProperty: <K, V, Z>(map: ReadonlyMap<K, V>, prop: string, compareFn?: ((a: Z, b: Z) => number) | undefined) => [K, V][];
+declare const sortByValueProperty: <K, V, Z>(map: ReadonlyMap<K, V>, property: string, compareFunction?: (a: Z, b: Z) => number) => [K, V][];
 /**
  * Returns _true_ if any key contains `value`, based on the provided `comparer` function. Use {@link hasKeyValue}
  * if you only want to find a value under a certain key.
@@ -1149,7 +1173,7 @@ declare function filter<V>(map: ReadonlyMap<string, V>, predicate: (v: V) => boo
  * @param map
  * @returns
  */
-declare const toArray: <V>(map: ReadonlyMap<string, V>) => readonly V[];
+declare const toArray: <V>(map: ReadonlyMap<string, V>) => ReadonlyArray<V>;
 /**
  * Returns a Map from an iterable. By default throws an exception
  * if iterable contains duplicate values.
@@ -1166,7 +1190,7 @@ declare const toArray: <V>(map: ReadonlyMap<string, V>) => readonly V[];
  * @param allowOverwrites When set to _true_, items with same id will silently overwrite each other, with last write wins. _false_ by default.
  * @returns
  */
-declare const fromIterable: <V>(data: Iterable<V>, keyFn?: (itemToMakeStringFor: V) => string, allowOverwrites?: boolean) => ReadonlyMap<string, V>;
+declare const fromIterable: <V>(data: Iterable<V>, keyFunction?: (itemToMakeStringFor: V) => string, allowOverwrites?: boolean) => ReadonlyMap<string, V>;
 /**
  * Returns a Map from an object, or array of objects.
  * Assumes the top-level properties of the object is the key.
@@ -1206,19 +1230,35 @@ declare const fromObject: <V>(data: any) => ReadonlyMap<string, V>;
  */
 declare const addObject: <V>(map: Map<string, V>, data: any) => void;
 /**
- * Returns the first found item that matches `predicate` or _undefined_.
+ * Returns the first found value that matches `predicate` or _undefined_.
  *
- * If you want all matches, use {@link filter}.
+ * Use {@link some} if you don't care about the value, just whether it appears.
+ * Use {@link filter} to get all value(s) that match `predicate`.
  *
  * @example First person over thirty
  * ```js
  * const overThirty = find(people, person => person.age > 30);
  * ```
  * @param map Map to search
- * @param predicate Function that returns true for a matching item
- * @returns Found item or _undefined_
+ * @param predicate Function that returns true for a matching value
+ * @returns Found value or _undefined_
  */
 declare const find: <V>(map: ReadonlyMap<string, V>, predicate: (v: V) => boolean) => V | undefined;
+/**
+ * Returns _true_ if `predicate` yields _true_ for any value in `map`.
+ * Use {@link find} if you want the matched value.
+ * ```js
+ * const map = new Map();
+ * map.set(`fruit`, `apple`);
+ * map.set(`colour`, `red`);
+ * Maps.some(map, v => v === `red`);    // true
+ * Maps.some(map, v => v === `orange`); // false
+ * ```
+ * @param map
+ * @param predicate
+ * @returns
+ */
+declare const some: <V>(map: ReadonlyMap<string, V>, predicate: (v: V) => boolean) => boolean;
 /**
  * Converts a map to a simple object, transforming from type `T` to `K` as it does so. If no transforms are needed, use {@link toObject}.
  *
@@ -1227,7 +1267,7 @@ declare const find: <V>(map: ReadonlyMap<string, V>, predicate: (v: V) => boolea
  * map.set(`name`, `Alice`);
  * map.set(`pet`, `dog`);
  *
- * const o = mapToObjTransform(map, v => {
+ * const o = mapToObjectTransform(map, v => {
  *  ...v,
  *  registered: true
  * });
@@ -1242,9 +1282,7 @@ declare const find: <V>(map: ReadonlyMap<string, V>, predicate: (v: V) => boolea
  * @typeParam K Value type of destination map
  * @returns
  */
-declare const mapToObjTransform: <T, K>(m: ReadonlyMap<string, T>, valueTransform: (value: T) => K) => {
-    readonly [key: string]: K;
-};
+declare const mapToObjectTransform: <T, K>(m: ReadonlyMap<string, T>, valueTransform: (value: T) => K) => Readonly<Record<string, K>>;
 /**
  * Zips together an array of keys and values into an object. Requires that
  * `keys` and `values` are the same length.
@@ -1277,7 +1315,7 @@ declare const zipKeyValue: <V>(keys: ReadonlyArray<string>, values: ArrayLike<V 
  * mapOfInts.get(`a`); // Yields 10 (a proper number)
  * ```
  *
- * If you want to combine values into a single object, consider instead  {@link mapToObjTransform}.
+ * If you want to combine values into a single object, consider instead  {@link mapToObjectTransform}.
  * @param source
  * @param transformer
  * @typeParam K Type of keys (generally a string)
@@ -1305,9 +1343,7 @@ declare const transformMap: <K, V, R>(source: ReadonlyMap<K, V>, transformer: (v
  * @param m
  * @returns
  */
-declare const toObject: <T>(m: ReadonlyMap<string, T>) => {
-    readonly [key: string]: T;
-};
+declare const toObject: <T>(m: ReadonlyMap<string, T>) => Readonly<Record<string, T>>;
 /**
  * Converts Map to Array with a provided `transformer` function. Useful for plucking out certain properties
  * from contained values and for creating a new map based on transformed values from an input map.
@@ -1338,7 +1374,7 @@ declare const toObject: <T>(m: ReadonlyMap<string, T>) => {
  * @param transformer A function that takes a key and item, returning a new item.
  * @returns
  */
-declare const mapToArray: <K, V, R>(m: ReadonlyMap<K, V>, transformer: (key: K, item: V) => R) => readonly R[];
+declare const mapToArray: <K, V, R>(m: ReadonlyMap<K, V>, transformer: (key: K, item: V) => R) => ReadonlyArray<R>;
 /**
  * Returns a result of a merged into b.
  * B is always the 'newer' data that takes
@@ -1379,6 +1415,34 @@ type MergeReconcile<V> = (a: V, b: V) => V;
  * @param reconcile
  * @param maps
  */
-declare const mergeByKey: <K, V>(reconcile: MergeReconcile<V>, ...maps: readonly ReadonlyMap<K, V>[]) => ReadonlyMap<K, V>;
+declare const mergeByKey: <K, V>(reconcile: MergeReconcile<V>, ...maps: ReadonlyArray<ReadonlyMap<K, V>>) => ReadonlyMap<K, V>;
 
-export { ExpiringMap, ExpiringMapEvent, ExpiringMapEvents, Opts as ExpiringMapOpts, IMapImmutable, IMapMutable, IMapOf, IMapOfMutable, IMapOfMutableExtended, IMappish, IWithEntries, MapArrayEvents, MapArrayOpts, MapCircularOpts, MapMultiOpts, MapOfMutableImpl, MapOfSimpleMutable, MapSetOpts, MergeReconcile, MultiValue, NumberMap, addKeepingExisting, addObject, deleteByValue, create as expiringMap, filter, find, firstEntryByIterablePredicate, firstEntryByIterableValue, fromIterable, fromObject, getClosestIntegerKey, hasAnyValue, hasKeyValue, immutable, ofSimpleMutable as mapOfSimpleMutable, mapToArray, mapToObjTransform, mergeByKey, mutable, ofArrayMutable, ofCircularMutable, ofSetMutable, sortByValue, sortByValueProperty, toArray, toObject, transformMap, zipKeyValue };
+type GetOrGenerate<K, V, Z> = (key: K, args?: Z) => Promise<V>;
+/**
+ * @inheritDoc getOrGenerate
+ * @param map
+ * @param fn
+ * @returns
+ */
+declare const getOrGenerateSync: <K, V, Z>(map: IMappish<K, V>, fn: (key: K, args?: Z) => V) => (key: K, args?: Z) => V;
+/**
+ * Returns a function that fetches a value from a map, or generates and sets it if not present.
+ * Undefined is never returned, because if `fn` yields that, an error is thrown.
+ *
+ * See {@link getOrGenerateSync} for a synchronous version.
+ *
+ * ```
+ * const m = getOrGenerate(new Map(), (key) => {
+ *  return key.toUppercase();
+ * });
+ *
+ * // Not contained in map, so it will run the uppercase function,
+ * // setting the value to the key 'hello'.
+ * const v = await m(`hello`);  // Yields 'HELLO'
+ * const v1 = await m(`hello`); // Value exists, so it is returned ('HELLO')
+ * ```
+ *
+ */
+declare const getOrGenerate: <K, V, Z>(map: IMappish<K, V>, fn: (key: K, args?: Z) => Promise<V> | V) => GetOrGenerate<K, V, Z>;
+
+export { ExpiringMap, type ExpiringMapEvent, type ExpiringMapEvents, type Opts as ExpiringMapOpts, type GetOrGenerate, type IMapImmutable, type IMapMutable, type IMapOf, type IMapOfMutable, type IMapOfMutableExtended, type IMappish, type IWithEntries, type MapArrayEvents, type MapArrayOpts, type MapCircularOpts, type MapMultiOpts, MapOfMutableImpl, MapOfSimpleMutable, type MapSetOpts, type MergeReconcile, type MultiValue, NumberMap, addKeepingExisting, addObject, deleteByValue, create as expiringMap, filter, find, firstEntryByIterablePredicate, firstEntryByIterableValue, fromIterable, fromObject, getClosestIntegerKey, getFromKeys, getOrGenerate, getOrGenerateSync, hasAnyValue, hasKeyValue, immutable, ofSimpleMutable as mapOfSimpleMutable, mapToArray, mapToObjectTransform, mergeByKey, mutable, ofArrayMutable, ofCircularMutable, ofSetMutable, some, sortByValue, sortByValueProperty, toArray, toObject, transformMap, zipKeyValue };

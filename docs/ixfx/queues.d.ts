@@ -1,3 +1,5 @@
-export { I as IQueueMutable, b as QueueDiscardPolicy, a as QueueOpts, m as mutable } from './QueueMutable-a55e58f6.js';
-export { a as IPriorityQueueMutable, I as IQueueImmutable, b as immutable, p as priority } from './index-5d08300f.js';
-import './IsEqual-267e4380.js';
+export { I as IQueueMutable, a as IQueueMutableWithEvents, b as QueueDiscardPolicy, c as QueueMutable, d as QueueMutableEvents, Q as QueueOpts, m as mutable } from './QueueMutable-rsWqz3fd.js';
+export { b as IPriorityQueueMutable, I as IQueueImmutable, P as PriorityItem, a as immutable, p as priority } from './index-4tjSRf0s.js';
+import './Events-QY1ngixJ.js';
+import './IntervalType-CQa4mlKV.js';
+import './IsEqual-EdZcaNvH.js';

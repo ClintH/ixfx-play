@@ -1,7 +1,7 @@
 import { Espruino } from '../../ixfx/io.js';
 import { Forms } from '../../ixfx/dom.js';
 import { adsrIterable } from '../../ixfx/modulation.js';
-import { IterableAsync } from '../../ixfx/util.js';
+import { Async } from '../../ixfx/iterables.js';
 const effects = [
     `strong click 100%`, `strong click 60%`, `strong click 30%`,
     `sharp click 100%`, `sharp click 60%`, `sharp click 30%`,
@@ -149,7 +149,7 @@ const setupEnvelope = () => {
                 throw new Error(`decayDuration cannot be longer than ${durationLimit}ms.`);
             if (o.releaseDuration > durationLimit)
                 throw new Error(`releaseDuration cannot be longer than ${durationLimit}ms.`);
-            const data = await IterableAsync.toArray(adsrIterable({ env: o, sampleRateMs: sampleRate }));
+            const data = await Async.toArray(adsrIterable({ env: o, sampleRateMs: sampleRate }));
             console.log(data);
             amplitudes = data.map(d => Math.round(d * 127));
             durations = data.map(d => sampleRate);

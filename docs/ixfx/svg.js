@@ -3,19 +3,22 @@ import {
   applyOpts,
   applyPathOpts,
   applyStrokeOpts,
-  clear2 as clear,
+  clear,
   createEl,
   createOrResolve,
   getBounds,
   makeHelper,
   remove,
   setBounds
-} from "./chunk-6YLYFKO3.js";
-import "./chunk-EIQV725C.js";
-import "./chunk-ZSSYQQHP.js";
-import "./chunk-DUNDLGZO.js";
-import "./chunk-BIZA3WZ7.js";
-import "./chunk-VE7DK22H.js";
+} from "./chunk-OHCLNLMB.js";
+import "./chunk-CGA5QY4R.js";
+import "./chunk-AXKOEIVS.js";
+import "./chunk-B6BKOHRA.js";
+import "./chunk-AMNZ6Q65.js";
+import "./chunk-GIOS32YZ.js";
+import "./chunk-5VWJ6TUI.js";
+import "./chunk-2OY2BTO2.js";
+import "./chunk-4VA37QKG.js";
 export {
   SvgElements_exports as Elements,
   applyOpts,

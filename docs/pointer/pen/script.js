@@ -1,13 +1,24 @@
 import { pc, setHtml } from "../../util.js";
 import { round } from '../../ixfx/numbers.js';
+import * as Visual from '../../ixfx/visual.js';
+import { scaler } from "../../ixfx/data.js";
 const settings = {
+    tiltScale: scaler(-90, 90, -1, 1),
+    tiltPlot: Visual.BipolarView.init(`#plotTilt`, {
+        yAxisBottomNegative: false,
+        bgColour: `transparent`,
+        axisColour: `greenyellow`,
+        whiskerColour: `white`,
+        labelColour: `--fg`,
+        displayLastValues: 50,
+    }),
     rounder: round(2),
     penEl: document.querySelector(`#penArea`),
     helpEl: document.querySelector(`#helpArea`),
     eventKeys: `width height pointerType tiltX tiltY twist tangentialPressure pointerId x y movementX movementY`.split(` `)
 };
 const updatePointer = (event) => {
-    const { eventKeys, rounder } = settings;
+    const { eventKeys, rounder, tiltPlot, tiltScale } = settings;
     const { shiftKey, metaKey, ctrlKey } = event;
     for (const k of eventKeys) {
         const element = document.querySelector(`#${k}`);
@@ -33,6 +44,7 @@ const updatePointer = (event) => {
     const aziAngle = event.azimuthAngle ?? 0;
     setHtml(`altitudeAngle`, rounder(altAngle));
     setHtml(`azimuthAngle`, rounder(aziAngle));
+    tiltPlot(tiltScale(event.tiltX), tiltScale(event.tiltY));
 };
 const setup = () => {
     const { penEl, helpEl } = settings;

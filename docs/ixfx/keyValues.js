@@ -1,24 +1,22 @@
 import {
-  byValueString,
   getSorter,
-  isPrimitive,
-  minMaxAvg2 as minMaxAvg,
-  sortByKey,
-  sortByValueNumber,
-  sortByValueString
-} from "./chunk-6YLYFKO3.js";
-import "./chunk-EIQV725C.js";
-import "./chunk-ZSSYQQHP.js";
-import "./chunk-DUNDLGZO.js";
-import "./chunk-BIZA3WZ7.js";
-import "./chunk-VE7DK22H.js";
+  minMaxAvg
+} from "./chunk-TESMO54W.js";
+import "./chunk-XDXQPTVT.js";
+import "./chunk-TZZOFPLH.js";
+import "./chunk-6H3BXRAO.js";
+import "./chunk-GIOS32YZ.js";
+import "./chunk-KUFENX75.js";
+import "./chunk-QRUAJLXP.js";
+import "./chunk-3ZEQSJPN.js";
+import "./chunk-5VWJ6TUI.js";
+import "./chunk-AAXTH4Z6.js";
+import "./chunk-HOGLR6UM.js";
+import "./chunk-SGQC7FGM.js";
+import "./chunk-2OY2BTO2.js";
+import "./chunk-4VA37QKG.js";
 export {
-  byValueString,
   getSorter,
-  isPrimitive,
-  minMaxAvg,
-  sortByKey,
-  sortByValueNumber,
-  sortByValueString
+  minMaxAvg
 };
 //# sourceMappingURL=keyValues.js.map

@@ -18,15 +18,9 @@ export const setHtml = (id, text, fallback) => {
         }
     }
 };
-export const getContext = (id = `canvas`) => {
-    const canvasElement = document.querySelector(`#canvas`);
-    const context = canvasElement?.getContext(`2d`);
-    if (!context || !canvasElement)
-        return;
-    return context;
-};
 /**
- * Draws a line from a -> b
+ * Draws a line from a -> b.
+ * Coordinates in absolute units
  * @returns
  */
 export const drawLine = (context, a, b) => {
@@ -36,6 +30,13 @@ export const drawLine = (context, a, b) => {
     context.lineTo(b.x, b.y);
     context.stroke();
 };
+/**
+ * Draws a filled dot.
+ * Coordinates in absolute units.
+* @param context
+ * @param a
+ * @param fillStyle
+ */
 export const drawDot = (context, a, fillStyle = `black`) => {
     context.fillStyle = fillStyle;
     context.save();

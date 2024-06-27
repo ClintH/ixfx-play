@@ -1,9 +1,10 @@
-import * as Dom from '../../ixfx/dom.js';
+import { CanvasHelper } from '../../ixfx/dom.js';
 import { DataTable } from '../../ixfx/dom.js';
 import { Points } from '../../ixfx/geometry.js';
 import { pointTracker } from '../../ixfx/data.js';
-import { drawDot, drawLine, getContext, setText } from '../../util.js';
+import { drawDot, drawLine, setText } from '../../util.js';
 const settings = Object.freeze({
+    canvas: new CanvasHelper(`#canvas`, { fill: `viewport` }),
     tracker: pointTracker({
         id: `pt`,
         storeIntermediate: true
@@ -23,20 +24,18 @@ let state = Object.freeze({
  * New click point
  */
 const handlePoint = (pt) => {
-    const { dtInitial, dtLast, tracker } = settings;
+    const { canvas, dtInitial, dtLast, tracker } = settings;
     const { lastPoint } = state;
+    const { ctx } = canvas;
     const r = tracker.seen(pt);
-    const context = getContext();
-    if (!context)
-        return;
     const firstPoint = (lastPoint.x === -1 && lastPoint.y === -1);
     if (firstPoint) {
-        drawDot(context, pt, `red`);
+        drawDot(ctx, pt, `red`);
     }
     else if (!firstPoint) {
         // Draw line
-        drawLine(context, lastPoint, pt);
-        drawDot(context, pt);
+        drawLine(ctx, lastPoint, pt);
+        drawDot(ctx, pt);
     }
     updateState({ lastPoint: pt });
     dtInitial.update(r.fromInitial);
@@ -44,18 +43,12 @@ const handlePoint = (pt) => {
     setText(`totalLength`, Math.round(tracker.length));
     setText(`elapsed`, Math.round(tracker.elapsed / 1000) + `s`);
 };
-/**
- * Setup and run main loop
- */
-const setup = () => {
-    Dom.fullSizeCanvas(`#canvas`, arguments_ => {
-        // Update state with new size of canvas
-        updateState({ bounds: arguments_.bounds });
-    });
+function setup() {
     document.addEventListener(`click`, event => {
         handlePoint({ x: event.x, y: event.y });
     });
-};
+}
+;
 setup();
 function formatter(data, path) {
     if (path === `centroid` || path === `average`) {
