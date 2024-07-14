@@ -10,15 +10,15 @@ import {
   makeHelper,
   remove,
   setBounds
-} from "./chunk-OHCLNLMB.js";
+} from "./chunk-GKSHN5ZH.js";
 import "./chunk-CGA5QY4R.js";
-import "./chunk-AXKOEIVS.js";
+import "./chunk-MWW5GJKZ.js";
 import "./chunk-B6BKOHRA.js";
-import "./chunk-AMNZ6Q65.js";
-import "./chunk-GIOS32YZ.js";
+import "./chunk-VJWZGNDD.js";
+import "./chunk-UH4IORRN.js";
 import "./chunk-5VWJ6TUI.js";
 import "./chunk-2OY2BTO2.js";
-import "./chunk-4VA37QKG.js";
+import "./chunk-AFNFQUHK.js";
 export {
   SvgElements_exports as Elements,
   applyOpts,

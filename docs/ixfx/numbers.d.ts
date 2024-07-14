@@ -1,7 +1,6 @@
-import './NumberTracker-H3s2ZmQk.js';
-export { a as applyToValues, c as count, f as filter, g as isApproximately, e as isValid, l as linearSpace, d as numericPercent, b as numericRange, n as numericRangeRaw, q as quantiseEvery, r as relativeDifference, h as round, j as roundUpToMultiple, t as tracker } from './index-Z5qiE97J.js';
-export { a as average, b as averageWeighted, d as dotProduct, m as max, c as maxFast, e as maxIndex, f as min, g as minFast, h as minIndex, t as total, i as totalFast, v as validNumbers, w as weight } from './AverageWeighted-_MkZMh6Q.js';
+import './NumberTracker-YxkFQGX5.js';
+export { a as applyToValues, k as average, b as averageWeighted, c as count, j as dotProduct, f as filter, h as isApproximately, g as isValid, l as linearSpace, q as max, s as maxFast, o as maxIndex, m as min, x as minFast, p as minIndex, e as numericPercent, d as numericRange, n as numericRangeRaw, y as quantiseEvery, z as relativeDifference, A as round, B as roundUpToMultiple, r as total, u as totalFast, t as tracker, v as validNumbers, w as weight } from './index-wKYOgh08.js';
 export { J as JitterOpts, a as Jitterer, j as jitter, b as jitterAbsolute, p as pingPong, c as pingPongPercent } from './Jitter-Ue5L368Z.js';
 export { i as randomInteger, b as randomUniqueInteger } from './Integer-RRpbU78-.js';
-import './GetOrGenerate-kIk9vbTz.js';
+import './GetOrGenerate-WG7g4q9M.js';
 import './Types-Tj0rQbez.js';

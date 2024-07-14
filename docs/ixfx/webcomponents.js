@@ -8,7 +8,7 @@ import "./chunk-SMLGKS2N.js";
 import "./chunk-HOGLR6UM.js";
 import "./chunk-SGQC7FGM.js";
 import "./chunk-2OY2BTO2.js";
-import "./chunk-4VA37QKG.js";
+import "./chunk-AFNFQUHK.js";
 
 // src/web-components/DataDisplay.ts
 var DataDisplayComponent = class _DataDisplayComponent extends HTMLElement {

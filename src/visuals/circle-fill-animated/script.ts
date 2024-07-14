@@ -3,7 +3,7 @@ import { CanvasHelper } from '../../ixfx/dom.js';
 import { repeat, debounce } from '../../ixfx/flow.js';
 import * as Random from '../../ixfx/random.js';
 import { Colour } from '../../ixfx/visual.js';
-import { Point, Points, Polar } from '../../ixfx/geometry.js';
+import { Points, Polar, Point } from '../../ixfx/geometry.js';
 import * as Numbers from '../../ixfx/numbers.js';
 
 const settings = Object.freeze({
