@@ -5,14 +5,15 @@ import {
   isInteger,
   jsComparer,
   numericComparer,
-  runningiOS
-} from "./chunk-SB3LUXV4.js";
-import "./chunk-G3ODKBFX.js";
+  runningiOS,
+  throwResult
+} from "./chunk-N37UR7MZ.js";
+import "./chunk-KQLC3QPI.js";
 import "./chunk-3ZEQSJPN.js";
 import "./chunk-5VWJ6TUI.js";
 import {
   guards_exports
-} from "./chunk-2P4HKZVW.js";
+} from "./chunk-QZ7DQTW7.js";
 import {
   mapKeys
 } from "./chunk-HOGLR6UM.js";
@@ -27,7 +28,7 @@ import {
   toStringDefault,
   toStringOrdered
 } from "./chunk-SGQC7FGM.js";
-import "./chunk-2OY2BTO2.js";
+import "./chunk-JIDOUNL5.js";
 import "./chunk-AFNFQUHK.js";
 export {
   guards_exports as Guards,
@@ -46,6 +47,7 @@ export {
   mapKeys,
   numericComparer,
   runningiOS,
+  throwResult,
   toStringDefault,
   toStringOrdered
 };

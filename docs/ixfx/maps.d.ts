@@ -1,8 +1,8 @@
-import { S as SimpleEventEmitter } from './Events-QY1ngixJ.js';
+import { S as SimpleEventEmitter } from './Events-MevXuVvQ.js';
 import { I as Interval } from './IntervalType-CQa4mlKV.js';
 import { I as IsEqual } from './IsEqual-EdZcaNvH.js';
-import { E as EitherKey } from './MapFns-IcfzUBoB.js';
-export { M as MergeReconcile, c as addKeepingExisting, m as addObject, d as deleteByValue, j as filter, n as find, f as firstEntryByIterablePredicate, b as firstEntryByIterableValue, k as fromIterable, l as fromObject, g as getClosestIntegerKey, a as getFromKeys, i as hasAnyValue, h as hasKeyValue, u as mapToArray, p as mapToObjectTransform, v as mergeByKey, o as some, s as sortByValue, e as sortByValueProperty, t as toArray, r as toObject, q as transformMap, z as zipKeyValue } from './MapFns-IcfzUBoB.js';
+import { E as EitherKey } from './MapFns-bJf6VOuJ.js';
+export { M as MergeReconcile, c as addKeepingExisting, m as addObject, d as deleteByValue, j as filter, n as find, f as firstEntryByIterablePredicate, b as firstEntryByIterableValue, k as fromIterable, l as fromObject, g as getClosestIntegerKey, a as getFromKeys, i as hasAnyValue, h as hasKeyValue, u as mapToArray, p as mapToObjectTransform, v as mergeByKey, o as some, s as sortByValue, e as sortByValueProperty, t as toArray, r as toObject, q as transformMap, z as zipKeyValue } from './MapFns-bJf6VOuJ.js';
 import { I as ICircularArray } from './CircularArray-sm3CThg9.js';
 import { T as ToString } from './ToString-Wn1YmnlL.js';
 export { G as GetOrGenerate, a as IMappish, I as IWithEntries, b as getOrGenerate, g as getOrGenerateSync } from './GetOrGenerate-WG7g4q9M.js';
@@ -56,10 +56,10 @@ type ExpiringMapEvents<K, V> = {
 };
 /**
  * Create a ExpiringMap instance
- * @param opts
+ * @param options Options when creating map
  * @returns
  */
-declare const create: <K, V>(opts?: Opts) => ExpiringMap<K, V>;
+declare const create: <K, V>(options?: Opts) => ExpiringMap<K, V>;
 /***
  * A map that can have a capacity limit. The elapsed time for each get/set
  * operation is maintained allowing for items to be automatically removed.
@@ -625,11 +625,11 @@ type MapArrayOpts<V> = MapMultiOpts<V> & {
  * ```js
  * const map = ofArrayMutable({comparer: (a, b) => a.name === b.name });
  * ```
- * @param opts
+ * @param options Optiosn for mutable array
  * @template V Data type of items
  * @returns {@link IMapOfMutableExtended}
  */
-declare const ofArrayMutable: <V>(opts?: MapArrayOpts<V>) => IMapOfMutableExtended<V, ReadonlyArray<V>>;
+declare const ofArrayMutable: <V>(options?: MapArrayOpts<V>) => IMapOfMutableExtended<V, ReadonlyArray<V>>;
 
 declare class MapOfSimpleBase<V> {
     protected map: Map<string, ReadonlyArray<V>>;
@@ -887,10 +887,10 @@ type MapSetOpts<V> = MapMultiOpts<V> & {
  * map.add(`hello`, {age:40, name: `Mary`});
  * map.add(`hello`, {age:29, name: `Mary`}); // Value ignored as same name exists
  * ```
- * @param opts
+ * @param options
  * @returns
  */
-declare const ofSetMutable: <V>(opts?: MapSetOpts<V>) => IMapOfMutableExtended<V, ReadonlyMap<string, V>>;
+declare const ofSetMutable: <V>(options?: MapSetOpts<V>) => IMapOfMutableExtended<V, ReadonlyMap<string, V>>;
 
 type MapCircularOpts<V> = MapMultiOpts<V> & {
     readonly capacity: number;
@@ -911,10 +911,10 @@ type MapCircularOpts<V> = MapMultiOpts<V> & {
  * ```
  *
  *
- * @param opts
+ * @param options
  * @returns
  */
-declare const ofCircularMutable: <V>(opts: MapCircularOpts<V>) => IMapOfMutableExtended<V, ICircularArray<V>>;
+declare const ofCircularMutable: <V>(options: MapCircularOpts<V>) => IMapOfMutableExtended<V, ICircularArray<V>>;
 
 /**
  * Simple map for numbers.

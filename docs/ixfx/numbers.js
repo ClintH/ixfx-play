@@ -8,31 +8,35 @@ import {
   numericRangeRaw,
   relativeDifference,
   tracker
-} from "./chunk-CJHU3T2B.js";
+} from "./chunk-N5HYURL3.js";
 import {
   jitter,
   jitterAbsolute,
   pingPong,
   pingPongPercent
-} from "./chunk-DTFMSWNK.js";
+} from "./chunk-TTX527YE.js";
 import {
   count,
   integer,
   integerUniqueGen
-} from "./chunk-HZXWT7HZ.js";
+} from "./chunk-FCEXFCW7.js";
 import {
   averageWeighted
-} from "./chunk-ZFW25DXG.js";
-import "./chunk-O4F6U6KT.js";
+} from "./chunk-FFP764T4.js";
+import "./chunk-FVMOM6Z4.js";
 import "./chunk-R2SBCFPC.js";
-import "./chunk-L27CAJGW.js";
-import "./chunk-KY2YJSDP.js";
+import "./chunk-UEAUFROA.js";
+import "./chunk-CHBOXPIA.js";
+import {
+  minMaxAvg
+} from "./chunk-BXWBMVS6.js";
+import "./chunk-YEZDB5LJ.js";
 import {
   linearSpace,
   quantiseEvery
-} from "./chunk-EO6AODLL.js";
-import "./chunk-T5BRTWW5.js";
-import "./chunk-MWW5GJKZ.js";
+} from "./chunk-OHBN76WG.js";
+import "./chunk-3RVYHJO6.js";
+import "./chunk-4NG2GB4D.js";
 import "./chunk-RRVLDWW5.js";
 import {
   average,
@@ -48,20 +52,22 @@ import {
   validNumbers,
   weight
 } from "./chunk-IALMVFKW.js";
-import "./chunk-CONPMDAT.js";
-import "./chunk-B6BKOHRA.js";
+import "./chunk-4LUNZR7B.js";
+import "./chunk-REDAXMKO.js";
 import "./chunk-VJWZGNDD.js";
-import "./chunk-KED2FGNI.js";
-import "./chunk-LDUIWGOR.js";
+import "./chunk-WIEQUAVY.js";
+import "./chunk-37WZU5ZM.js";
+import "./chunk-TZZOFPLH.js";
+import "./chunk-2XNNMGQC.js";
 import "./chunk-UH4IORRN.js";
 import "./chunk-3ZEQSJPN.js";
 import "./chunk-5VWJ6TUI.js";
 import {
   round,
   roundUpToMultiple
-} from "./chunk-3NK3ODTY.js";
+} from "./chunk-2EX73MGI.js";
 import "./chunk-SGQC7FGM.js";
-import "./chunk-2OY2BTO2.js";
+import "./chunk-JIDOUNL5.js";
 import "./chunk-IQEKYUOH.js";
 import "./chunk-AFNFQUHK.js";
 export {
@@ -82,6 +88,7 @@ export {
   min,
   minFast,
   minIndex,
+  minMaxAvg,
   numericPercent,
   numericRange,
   numericRangeRaw,

@@ -5,8 +5,6 @@ import {
   Normalise_exports,
   Pool_exports,
   compareDataExecute,
-  fieldResolve,
-  fieldResolver,
   frequencyMutable,
   graphs_exports,
   intervalTracker,
@@ -18,21 +16,16 @@ import {
   noiseFilter,
   piPi,
   proportion,
-  pull,
-  reactiveUpdate,
+  resolve,
+  resolveFields,
   softmax
-} from "./chunk-IYSIZ3MI.js";
+} from "./chunk-SNSLUFZY.js";
 import {
   Bipolar_exports,
   flip
-} from "./chunk-2H7NNINZ.js";
-import "./chunk-ZFW25DXG.js";
-import {
-  interpolate,
-  interpolateAngle,
-  interpolatorInterval,
-  interpolatorStepped
-} from "./chunk-O4F6U6KT.js";
+} from "./chunk-2J7LUMRE.js";
+import "./chunk-FFP764T4.js";
+import "./chunk-FVMOM6Z4.js";
 import {
   NumberTracker,
   PrimitiveTracker,
@@ -40,11 +33,11 @@ import {
 } from "./chunk-R2SBCFPC.js";
 import {
   arrays_exports
-} from "./chunk-I35SCU7G.js";
-import "./chunk-L27CAJGW.js";
-import "./chunk-KY2YJSDP.js";
-import "./chunk-QB5BZLNL.js";
-import "./chunk-LM2POA4U.js";
+} from "./chunk-BHCE37EK.js";
+import "./chunk-UEAUFROA.js";
+import "./chunk-CHBOXPIA.js";
+import "./chunk-NBBVKVFQ.js";
+import "./chunk-BXWBMVS6.js";
 import {
   PointTracker,
   TrackedPointMap,
@@ -52,23 +45,30 @@ import {
   pointsTracker,
   trackUnique,
   trackUniqueInstances
-} from "./chunk-TWQHDH3G.js";
+} from "./chunk-KZGM4G5G.js";
 import {
   Pathed_exports,
   Process_exports,
   Table,
   isEmptyEntries,
   isEqualContextString,
+  mapObjectByObject,
   mapObjectShallow
-} from "./chunk-VKL5W73U.js";
-import "./chunk-Z5CX23RO.js";
-import "./chunk-CGA5QY4R.js";
-import "./chunk-EO6AODLL.js";
+} from "./chunk-RBLOJS6A.js";
+import {
+  interpolate,
+  interpolateAngle,
+  interpolatorInterval,
+  interpolatorStepped
+} from "./chunk-YEZDB5LJ.js";
+import "./chunk-EX6BFSZ7.js";
+import "./chunk-COIMNZ4Q.js";
+import "./chunk-OHBN76WG.js";
 import {
   wrap,
   wrapInteger,
   wrapRange
-} from "./chunk-T5BRTWW5.js";
+} from "./chunk-3RVYHJO6.js";
 import {
   scale,
   scaleClamped,
@@ -76,56 +76,56 @@ import {
   scalePercentages,
   scaler,
   scalerPercent
-} from "./chunk-MWW5GJKZ.js";
-import "./chunk-FWUJM2MQ.js";
+} from "./chunk-4NG2GB4D.js";
+import "./chunk-SJ3R4FCY.js";
 import "./chunk-ZNCB3DZ2.js";
 import {
   TrackedValueMap,
   TrackerBase
 } from "./chunk-RRVLDWW5.js";
 import "./chunk-IALMVFKW.js";
-import "./chunk-54QDRFLV.js";
-import "./chunk-MBIH4UNT.js";
-import "./chunk-CONPMDAT.js";
+import "./chunk-RNUQGND2.js";
+import "./chunk-XONNGZY5.js";
+import "./chunk-4LUNZR7B.js";
 import {
   clamp,
   clampIndex
-} from "./chunk-B6BKOHRA.js";
-import "./chunk-A3UDCEP6.js";
-import "./chunk-AL5TF55L.js";
+} from "./chunk-REDAXMKO.js";
+import "./chunk-C6FK33KH.js";
+import "./chunk-AK2RMORX.js";
 import "./chunk-VJWZGNDD.js";
 import "./chunk-AMGGFK7I.js";
-import "./chunk-KED2FGNI.js";
-import "./chunk-RUAFJLQS.js";
-import "./chunk-FVSZ5SVQ.js";
-import "./chunk-G46LVJ4U.js";
-import "./chunk-2IZZMN3E.js";
-import "./chunk-7OSJNF5B.js";
-import "./chunk-ONNID4LF.js";
-import "./chunk-4Z4ZTA5P.js";
-import "./chunk-LDUIWGOR.js";
+import "./chunk-WIEQUAVY.js";
+import "./chunk-JR5DG2GR.js";
+import "./chunk-SP37NBBE.js";
+import "./chunk-KSOSZLHF.js";
+import "./chunk-RLUQAN6Q.js";
+import "./chunk-BS3QYH4U.js";
+import "./chunk-5PZ2TXZH.js";
+import "./chunk-QZPNGNL4.js";
+import "./chunk-37WZU5ZM.js";
 import "./chunk-MZFSDYZE.js";
-import "./chunk-JHWLBJ5B.js";
+import "./chunk-YWGG2NOJ.js";
 import "./chunk-TZZOFPLH.js";
-import "./chunk-K442B2P3.js";
+import "./chunk-2XNNMGQC.js";
 import "./chunk-UH4IORRN.js";
-import "./chunk-SB3LUXV4.js";
-import "./chunk-G3ODKBFX.js";
+import "./chunk-N37UR7MZ.js";
+import "./chunk-KQLC3QPI.js";
 import "./chunk-3ZEQSJPN.js";
 import "./chunk-5VWJ6TUI.js";
-import "./chunk-2P4HKZVW.js";
+import "./chunk-QZ7DQTW7.js";
 import {
   changedDataFields,
   compareArrays,
   compareData,
   compareKeys
 } from "./chunk-EHDC2PRM.js";
-import "./chunk-3NK3ODTY.js";
+import "./chunk-2EX73MGI.js";
 import "./chunk-SMLGKS2N.js";
 import "./chunk-HOGLR6UM.js";
 import "./chunk-SGQC7FGM.js";
-import "./chunk-2OY2BTO2.js";
-import "./chunk-CYFMI4AA.js";
+import "./chunk-JIDOUNL5.js";
+import "./chunk-NWAKPUUW.js";
 import "./chunk-4IJNRUE7.js";
 import "./chunk-BWJ5AMOD.js";
 import "./chunk-IQEKYUOH.js";
@@ -156,8 +156,6 @@ export {
   compareData,
   compareDataExecute,
   compareKeys,
-  fieldResolve,
-  fieldResolver,
   flip,
   frequencyMutable,
   interpolate,
@@ -168,6 +166,7 @@ export {
   isEmptyEntries,
   isEqualContextString,
   keysToNumbers,
+  mapObjectByObject,
   mapObjectShallow,
   movingAverage,
   movingAverageLight,
@@ -178,8 +177,8 @@ export {
   pointTracker,
   pointsTracker,
   proportion,
-  pull,
-  reactiveUpdate,
+  resolve,
+  resolveFields,
   scale,
   scaleClamped,
   scalePercent,

@@ -7,27 +7,29 @@ import {
   flatten,
   groupBy,
   interleave,
+  intersection,
   mergeByKey,
   sample,
   until
-} from "./chunk-I35SCU7G.js";
+} from "./chunk-BHCE37EK.js";
 import {
   zip
-} from "./chunk-L27CAJGW.js";
+} from "./chunk-UEAUFROA.js";
 import {
   isContentsTheSame,
   isEqual
-} from "./chunk-KY2YJSDP.js";
+} from "./chunk-CHBOXPIA.js";
 import {
   minMaxAvg
-} from "./chunk-LM2POA4U.js";
+} from "./chunk-BXWBMVS6.js";
 import {
   insertAt,
   remove
-} from "./chunk-A3UDCEP6.js";
+} from "./chunk-C6FK33KH.js";
 import {
-  sortByNumericProperty
-} from "./chunk-AL5TF55L.js";
+  sortByNumericProperty,
+  sortByProperty
+} from "./chunk-AK2RMORX.js";
 import {
   pairwise,
   pairwiseReduce
@@ -41,11 +43,11 @@ import {
   randomIndex,
   randomPluck,
   shuffle
-} from "./chunk-KED2FGNI.js";
+} from "./chunk-WIEQUAVY.js";
 import {
   containsDuplicateInstances
 } from "./chunk-MZFSDYZE.js";
-import "./chunk-JHWLBJ5B.js";
+import "./chunk-YWGG2NOJ.js";
 import "./chunk-TZZOFPLH.js";
 import {
   filterAB,
@@ -53,18 +55,18 @@ import {
   guardIndex,
   without,
   withoutUndefined
-} from "./chunk-K442B2P3.js";
+} from "./chunk-2XNNMGQC.js";
 import {
   guardArray
 } from "./chunk-UH4IORRN.js";
-import "./chunk-SB3LUXV4.js";
-import "./chunk-G3ODKBFX.js";
+import "./chunk-N37UR7MZ.js";
+import "./chunk-KQLC3QPI.js";
 import "./chunk-3ZEQSJPN.js";
 import "./chunk-5VWJ6TUI.js";
-import "./chunk-2P4HKZVW.js";
+import "./chunk-QZ7DQTW7.js";
 import "./chunk-HOGLR6UM.js";
 import "./chunk-SGQC7FGM.js";
-import "./chunk-2OY2BTO2.js";
+import "./chunk-JIDOUNL5.js";
 import "./chunk-AFNFQUHK.js";
 export {
   chunks,
@@ -81,6 +83,7 @@ export {
   guardIndex,
   insertAt,
   interleave,
+  intersection,
   isContentsTheSame,
   isEqual,
   mergeByKey,
@@ -95,6 +98,7 @@ export {
   sample,
   shuffle,
   sortByNumericProperty,
+  sortByProperty,
   unique,
   until,
   without,

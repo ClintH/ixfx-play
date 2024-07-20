@@ -1,10 +1,10 @@
 export { J as JitterOpts, a as Jitterer, j as jitter, b as jitterAbsolute, p as pingPong, c as pingPongPercent } from './Jitter-Ue5L368Z.js';
-export { n as Adsr, q as AdsrIterableOpts, A as AdsrOpts, l as AdsrTimingOpts, C as CompleteEvent, k as EnvelopeOpts, E as Envelopes, m as Events, F as Forces, O as Oscillators, a as Sources, S as StateChangeEvent, c as WaveOptions, g as WaveShaperFeedback, W as WaveformShaper, b as Waveforms, o as adsr, p as adsrIterable, e as arcShape, j as defaultAdsrOpts, f as sineBipolarShape, d as sineShape, s as squareShaper, t as triangleShaper, w as wave, h as waveFromSource } from './index-WS4gDqQw.js';
-export { a as Easings } from './Easing-L32lo98C.js';
+export { q as Adsr, v as AdsrIterableOpts, A as AdsrOpts, o as AdsrTimingOpts, C as CompleteEvent, n as EnvelopeOpts, E as Envelopes, p as Events, F as Forces, k as ModSettable, j as ModSettableFeedback, M as ModSettableOptions, l as ModSource, O as Oscillators, a as Sources, S as StateChangeEvent, c as WaveOptions, g as WaveShaperFeedback, W as WaveformShaper, b as Waveforms, r as adsr, u as adsrIterable, e as arcShape, m as defaultAdsrOpts, f as sineBipolarShape, d as sineShape, s as squareShaper, t as triangleShaper, w as wave, h as waveFromSource } from './index-2SGOM1RP.js';
+export { E as Easings } from './Easing-yyYzToch.js';
 import './Types-Tj0rQbez.js';
 import './IntervalType-CQa4mlKV.js';
-import './Events-QY1ngixJ.js';
+import './Events-MevXuVvQ.js';
 import './PointType-0vgoM_lJ.js';
 import './RectTypes-kjDrC-8b.js';
-import './Timer-cyfYpGKE.js';
+import './Timer-yyoKmZ0R.js';
 import './Types-hTo2TZbv.js';
