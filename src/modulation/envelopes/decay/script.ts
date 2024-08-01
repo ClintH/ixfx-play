@@ -1,17 +1,18 @@
 import * as Flow from '../../../ixfx/flow.js';
-import {Envelopes} from '../../../ixfx/modulation.js';
+import { Envelopes } from '../../../ixfx/modulation.js';
 
 const settings = {
   // Set up envelope
-  env: Envelopes.adsr({
-    ...Envelopes.defaultAdsrOpts(),
+  env: new Envelopes.Adsr({
     attackDuration: 2000,
     releaseDuration: 5000,
     sustainLevel: 1,
-    retrigger: false /* env continues from where it is */
+    retrigger: window.location.hash.includes(`retrigger`)
   }),
   run: Flow.continuously(update)
 };
+
+console.log(`Retrigger: ${ settings.env.retrigger }`);
 
 type State = Readonly<{
   scaled: number
@@ -29,10 +30,10 @@ let state: State = {
 
 // Update state - this is called repeatedly via settings.run
 function update(): boolean {
-  const {env} = settings;
+  const { env } = settings;
 
   // Get state from envelope
-  const [stage, scaled, raw] = env.compute();
+  const [ stage, scaled, raw ] = env.compute();
   saveState({
     scaled,
     stage,
@@ -52,12 +53,12 @@ const percentage = (v: number) => Math.floor(v * 100) + `%`;
 // Update visuals
 const use = () => {
   // Grab relevant fields from settings & state
-  const {scaled, stage, raw, triggered} = state;
+  const { scaled, stage, raw, triggered } = state;
   const isComplete = Number.isNaN(scaled); // Are we done?
-  const hsl = (v: number) => `hsl(60, ${v * 100}%, 40%)`; // Produces a hsl(60, sat%, lightness%) string
+  const hsl = (v: number) => `hsl(60, ${ v * 100 }%, 40%)`; // Produces a hsl(60, sat%, lightness%) string
 
   // Print values from envelope
-  console.log(`scaled: ${scaled.toPrecision(2)}\traw: ${raw.toPrecision(2)}\tstage: ${stage}`);
+  console.log(`scaled: ${ scaled.toPrecision(2) }\traw: ${ raw.toPrecision(2) }\tstage: ${ stage }`);
 
   // Update left side
   const withoutElement = document.querySelector(`#without`) as HTMLElement;
@@ -73,14 +74,14 @@ const use = () => {
   if (withElement) {
     withElement.style.backgroundColor = isComplete ? hsl(0) : hsl(scaled);
     const stageElement = document.querySelector(`#envStage`);
-    if (stageElement) stageElement.textContent = isComplete ? `` : `${stage} ${percentage(raw)}`;
+    if (stageElement) stageElement.textContent = isComplete ? `` : `${ stage } ${ percentage(raw) }`;
   }
 };
 
 // Called on pointerdown or keydown. Triggers the envelope and
 // starts the run loop if it's not running
 const trigger = (event: KeyboardEvent | PointerEvent) => {
-  const {env, run} = settings;
+  const { env, run } = settings;
   event.preventDefault();
 
   // Returns if already triggered. 
@@ -97,7 +98,7 @@ const trigger = (event: KeyboardEvent | PointerEvent) => {
 // Called on pointerup or keyup. Releases envelope and 
 // makes sure run loop is still running to animate result
 const release = (event: PointerEvent | KeyboardEvent) => {
-  const {env, run} = settings;
+  const { env, run } = settings;
   event.preventDefault();
   saveState({
     triggered: false // Mark not triggered

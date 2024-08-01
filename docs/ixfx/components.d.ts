@@ -1,7 +1,23 @@
 import * as lit_html from 'lit-html';
 import * as lit from 'lit';
-import { LitElement } from 'lit';
-import { K as KeyValue } from './PrimitiveTypes-HWqXs_XP.js';
+import { LitElement, PropertyValues } from 'lit';
+import { K as KeyValue } from './PrimitiveTypes-F6miV4Zn.js';
+import { Ref } from 'lit/directives/ref.js';
+import { C as CanvasHelper } from './CanvasHelper-BMdwHWEB.js';
+import { a as RectPositioned, R as Rect } from './RectTypes-Brg8Cmy-.js';
+import { C as Colourish } from './Colour-B60StqKZ.js';
+import { D as DrawingHelper } from './Drawing-BmSQo1F4.js';
+import './Scaler-C_gjBH0I.js';
+import './PointType-DYug3Yo5.js';
+import './Events-DJgOvcWD.js';
+import './IntervalType-B4PbUkjV.js';
+import 'colorjs.io';
+import './Types-CR0Pe5zY.js';
+import './LineType-FU9c78oU.js';
+import './PathType-BjzQ3mag.js';
+import './CircleType-HV1S_Vyw.js';
+import './ArcType-BQP6bHin.js';
+import './IStackImmutable-BNEmWxct.js';
 
 type Bar = {
     readonly percentage: number;
@@ -89,4 +105,115 @@ declare class FrequencyHistogramPlot {
     update(data: ReadonlyArray<readonly [key: string, count: number]>): void;
 }
 
-export { FrequencyHistogramPlot, HistogramVis };
+/**
+ * Attributes
+ * * streaming: true/false (default: true)
+ * * max-length: number (default: 500). How many data points per series to store
+ * * data-width: when streaming, how much horizontal width per point
+ * * fixed-max/fixed-min: global input scaling (default: NaN, ie. disabled)
+ *
+ * * line-width: stroke width of drawing line (default:2)
+ *
+ * * render: 'dot' or 'line' (default: 'dot')
+ *
+ * Styling variables
+ * * --legend-fg: legend foreground text
+ */
+declare class PlotElement extends LitElement {
+    #private;
+    streaming: boolean;
+    maxLength: number;
+    dataWidth: number;
+    fixedMax: number;
+    fixedMin: number;
+    lineWidth: number;
+    renderStyle: string;
+    autoRedraw: boolean;
+    padding: number;
+    paused: boolean;
+    canvasEl: Ref<HTMLCanvasElement>;
+    constructor();
+    get series(): PlotSeries[];
+    get seriesCount(): number;
+    /**
+     * Delete a series.
+     * Returns _true_ if there was a series to delete
+     * @param name
+     * @returns
+     */
+    deleteSeries(name: string): boolean;
+    /**
+     * Keeps the series, but deletes its data
+     * @param name
+     * @returns
+     */
+    clearSeries(name: string): boolean;
+    /**
+     * Delete all data & series
+     */
+    clear(): void;
+    /**
+     * Keeps all series, but deletes their data
+     */
+    clearData(): void;
+    render(): lit_html.TemplateResult<1>;
+    connectedCallback(): void;
+    protected firstUpdated(_changedProperties: PropertyValues): void;
+    updateColours(): void;
+    plot(value: number, seriesName?: string): PlotSeries;
+    plotObject(value: object): void;
+    colourGenerator(series: string): Colourish;
+    draw(): void;
+    drawLegend(cl: RectPositioned, d: DrawingHelper): void;
+    drawLineSeries(data: number[], cp: Rect, d: DrawingHelper, colour: string): void;
+    drawDotSeries(data: number[], cp: Rect, d: DrawingHelper, colour: string): void;
+    computePlot(c: CanvasHelper, plotHeight: number, axisYwidth: number, padding: number): {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    };
+    computeAxisYWidth(c: CanvasHelper): number;
+    computeLegend(c: CanvasHelper, maxWidth: number, padding: number): {
+        bounds: {
+            width: number;
+            height: number;
+        };
+        parts: {
+            width: number;
+            height: number;
+            x: number;
+            y: number;
+        }[];
+    };
+    getSeries(name: string): PlotSeries | undefined;
+    static styles: lit.CSSResult;
+}
+declare class PlotSeries {
+    name: string;
+    colour: Colourish;
+    private plot;
+    data: number[];
+    minSeen: number;
+    maxSeen: number;
+    constructor(name: string, colour: Colourish, plot: PlotElement);
+    clear(): void;
+    /**
+     * Returns a copy of the data scaled by the current
+     * range of the data
+     * @returns
+     */
+    getScaled(): number[];
+    getScaledBy(scaler: (v: number) => number): number[];
+    push(value: number): void;
+    resetScale(): void;
+}
+
+declare function init(): void;
+declare global {
+    interface HTMLElementTagNameMap {
+        "plot-element": PlotElement;
+    }
+}
+
+export { FrequencyHistogramPlot, HistogramVis, PlotElement, PlotSeries, init };

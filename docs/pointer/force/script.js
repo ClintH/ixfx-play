@@ -1,7 +1,7 @@
 /**
  * Demonstrates a 'pinch to zoom' style gesture
  */
-import { pressureOrForce } from "./pressureOrForce.js";
+import { pressureOrForce } from "./pressure-or-force.js";
 const settings = Object.freeze({
     // Max expected value for webkitForce
     webkitForceMax: 3,

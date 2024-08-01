@@ -2,15 +2,15 @@ import * as Flow from '../../../ixfx/flow.js';
 import { Envelopes } from '../../../ixfx/modulation.js';
 const settings = {
     // Set up envelope
-    env: Envelopes.adsr({
-        ...Envelopes.defaultAdsrOpts(),
+    env: new Envelopes.Adsr({
         attackDuration: 2000,
         releaseDuration: 5000,
         sustainLevel: 1,
-        retrigger: false /* env continues from where it is */
+        retrigger: window.location.hash.includes(`retrigger`)
     }),
     run: Flow.continuously(update)
 };
+console.log(`Retrigger: ${settings.env.retrigger}`);
 let state = {
     scaled: 0,
     stage: ``,

@@ -1,6 +1,6 @@
 import { Espruino } from '../../ixfx/io.js';
 import { Forms } from '../../ixfx/dom.js';
-import { adsrIterable } from '../../ixfx/modulation.js';
+import { Envelopes } from '../../ixfx/modulation.js';
 import { Async } from '../../ixfx/iterables.js';
 
 const effects = [
@@ -171,7 +171,8 @@ const setupEnvelope = () => {
       if (o.decayDuration > durationLimit) throw new Error(`decayDuration cannot be longer than ${ durationLimit }ms.`);
       if (o.releaseDuration > durationLimit) throw new Error(`releaseDuration cannot be longer than ${ durationLimit }ms.`);
 
-      const data = await Async.toArray(adsrIterable({ env: o, sampleRateMs: sampleRate }));
+
+      const data = await Async.toArray(Envelopes.adsrIterable({ env: o, sampleRateMs: sampleRate }));
       console.log(data);
 
       amplitudes = data.map(d => Math.round(d * 127));

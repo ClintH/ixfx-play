@@ -1,10 +1,10 @@
 /* eslint-disable unicorn/no-array-callback-reference */
 import { CanvasHelper } from '../../ixfx/dom.js';
-import { repeat, debounce } from '../../ixfx/flow.js';
+import { repeatSync, debounce } from '../../ixfx/flow.js';
 import * as Random from '../../ixfx/random.js';
 import { Colour } from '../../ixfx/visual.js';
 import { Points, Polar, Point } from '../../ixfx/geometry.js';
-import * as Numbers from '../../ixfx/numbers.js';
+import * as Mod from '../../ixfx/modulation.js';
 
 const settings = Object.freeze({
   canvas: new CanvasHelper(`#canvas`, {
@@ -18,7 +18,7 @@ const settings = Object.freeze({
   pointColour: Colour.resolveToString(`--point-fill`),
   radius: 0.5,
   origin: { x: 0.5, y: 0.5 },
-  pingPong: Numbers.pingPongPercent(0.001)
+  pingPong: Mod.pingPongPercent(0.001)
 });
 
 type State = Readonly<{
@@ -62,17 +62,17 @@ const onCodeUpdated = () => {
   const endExpr = () => evaluateExpression(state.endExpression, `end expression`);
 
   // Get start and end distances
-  const startDistances = /** @type number[] */([ ...repeat(numberOfPoints, startExpr) ]);
+  const startDistances = /** @type number[] */([ ...repeatSync(startExpr, { count: numberOfPoints }) ]);
 
   // If eval failed, exit
   if (startDistances.length < numberOfPoints) return;
-  let endDistances = /** @type number[] */([ ...repeat(numberOfPoints, endExpr) ]);
+  let endDistances = /** @type number[] */([ ...repeatSync(endExpr, { count: numberOfPoints }) ]);
 
   // If eval failed, use the same as start
   if (endDistances.length < numberOfPoints) endDistances = [ ...startDistances ];
 
   // Create random angles
-  const angles = [ ...repeat(numberOfPoints, () => Math.random() * piPi) ];
+  const angles = [ ...repeatSync(() => Math.random() * piPi, { count: numberOfPoints }) ];
 
   const absOrigin = canvas.toAbsolute(origin);
 

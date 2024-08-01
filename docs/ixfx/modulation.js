@@ -1,82 +1,108 @@
 import {
-  Envelope_exports,
   Forces_exports,
   Oscillator_exports,
-  adsr,
-  adsrIterable,
   arcShape,
-  defaultAdsrOpts,
-  sineBipolarShape,
-  sineShape,
-  sources_exports,
-  squareShaper,
-  triangleShaper,
-  wave,
-  waveFromSource
-} from "./chunk-DVDQH3RV.js";
-import {
+  crossfade,
+  cubicBezierShape,
+  drift,
+  envelope_exports,
   jitter,
   jitterAbsolute,
-  pingPong,
-  pingPongPercent
-} from "./chunk-TTX527YE.js";
-import {
-  Easing_exports
-} from "./chunk-FCEXFCW7.js";
-import "./chunk-FVMOM6Z4.js";
-import "./chunk-YEZDB5LJ.js";
-import "./chunk-EX6BFSZ7.js";
-import "./chunk-COIMNZ4Q.js";
-import "./chunk-OHBN76WG.js";
-import "./chunk-3RVYHJO6.js";
-import "./chunk-4NG2GB4D.js";
-import "./chunk-IALMVFKW.js";
-import "./chunk-RNUQGND2.js";
-import "./chunk-XONNGZY5.js";
-import "./chunk-4LUNZR7B.js";
-import "./chunk-REDAXMKO.js";
-import "./chunk-AK2RMORX.js";
-import "./chunk-VJWZGNDD.js";
-import "./chunk-AMGGFK7I.js";
-import "./chunk-WIEQUAVY.js";
-import "./chunk-BS3QYH4U.js";
-import "./chunk-5PZ2TXZH.js";
-import "./chunk-QZPNGNL4.js";
-import "./chunk-37WZU5ZM.js";
-import "./chunk-YWGG2NOJ.js";
-import "./chunk-UH4IORRN.js";
-import "./chunk-N37UR7MZ.js";
-import "./chunk-KQLC3QPI.js";
-import "./chunk-3ZEQSJPN.js";
-import "./chunk-5VWJ6TUI.js";
-import "./chunk-QZ7DQTW7.js";
-import "./chunk-2EX73MGI.js";
-import "./chunk-HOGLR6UM.js";
-import "./chunk-SGQC7FGM.js";
-import "./chunk-JIDOUNL5.js";
-import "./chunk-4IJNRUE7.js";
-import "./chunk-BWJ5AMOD.js";
-import "./chunk-IQEKYUOH.js";
-import "./chunk-AFNFQUHK.js";
-export {
-  Easing_exports as Easings,
-  Envelope_exports as Envelopes,
-  Forces_exports as Forces,
-  Oscillator_exports as Oscillators,
-  sources_exports as Sources,
-  adsr,
-  adsrIterable,
-  arcShape,
-  defaultAdsrOpts,
-  jitter,
-  jitterAbsolute,
+  mix,
+  mixModulators,
+  noop,
   pingPong,
   pingPongPercent,
   sineBipolarShape,
   sineShape,
-  squareShaper,
-  triangleShaper,
+  source_exports,
+  spring,
+  springShape,
+  springValue,
+  squareShape,
+  triangleShape,
   wave,
-  waveFromSource
+  waveFromSource,
+  weightedAverage
+} from "./chunk-YEPBZX3M.js";
+import "./chunk-UBWL5KAS.js";
+import "./chunk-OVLG22EY.js";
+import "./chunk-MVQCQHQL.js";
+import "./chunk-VUEFATQ3.js";
+import "./chunk-647FAJGC.js";
+import "./chunk-NGZXMICH.js";
+import "./chunk-FKXNN6PM.js";
+import "./chunk-AGCCB7IA.js";
+import "./chunk-QY7TSMVO.js";
+import {
+  easing_exports,
+  gaussian,
+  tickModulator,
+  ticks,
+  time,
+  timeModulator
+} from "./chunk-4SO3XXQP.js";
+import "./chunk-QGXH7WIG.js";
+import "./chunk-TXNE2NDG.js";
+import "./chunk-YLRZZLGG.js";
+import "./chunk-HCM42F75.js";
+import "./chunk-4IJNRUE7.js";
+import "./chunk-BWJ5AMOD.js";
+import "./chunk-IQEKYUOH.js";
+import "./chunk-W3MH7W5D.js";
+import "./chunk-F6XISRGF.js";
+import "./chunk-56LYTHQU.js";
+import "./chunk-ZJSCF2A4.js";
+import "./chunk-YSD5376E.js";
+import "./chunk-2LQNQUVT.js";
+import "./chunk-CF6OEEVD.js";
+import "./chunk-UK6L3VJJ.js";
+import "./chunk-BGQOJZFW.js";
+import "./chunk-HKC65PTS.js";
+import "./chunk-JEKP7EQY.js";
+import "./chunk-SPSPSDHG.js";
+import "./chunk-MYMJ4JUA.js";
+import "./chunk-7U6QARGK.js";
+import "./chunk-GISMJX5E.js";
+import "./chunk-5VWJ6TUI.js";
+import "./chunk-46F56PDU.js";
+import "./chunk-Q5FM47RE.js";
+import "./chunk-S5D7YRXR.js";
+import "./chunk-HOGLR6UM.js";
+import "./chunk-6UZ3OSJO.js";
+import "./chunk-CSXWZ3IC.js";
+import "./chunk-L5EJU35C.js";
+export {
+  easing_exports as Easings,
+  envelope_exports as Envelopes,
+  Forces_exports as Forces,
+  Oscillator_exports as Oscillators,
+  source_exports as Sources,
+  arcShape,
+  crossfade,
+  cubicBezierShape,
+  drift,
+  gaussian,
+  jitter,
+  jitterAbsolute,
+  mix,
+  mixModulators,
+  noop,
+  pingPong,
+  pingPongPercent,
+  sineBipolarShape,
+  sineShape,
+  spring,
+  springShape,
+  springValue,
+  squareShape,
+  tickModulator,
+  ticks,
+  time,
+  timeModulator,
+  triangleShape,
+  wave,
+  waveFromSource,
+  weightedAverage
 };
 //# sourceMappingURL=modulation.js.map

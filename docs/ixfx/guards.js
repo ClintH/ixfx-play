@@ -1,14 +1,20 @@
 import {
   arrayTest,
   defined,
-  isFunction,
   isPlainObject,
   isPlainObjectOrPrimitive,
   isStringArray,
   nullUndef,
   throwArrayTest,
   throwNullUndef
-} from "./chunk-QZ7DQTW7.js";
+} from "./chunk-46F56PDU.js";
+import {
+  functionTest,
+  isFunction,
+  stringTest,
+  throwFunctionTest,
+  throwStringTest
+} from "./chunk-Q5FM47RE.js";
 import {
   ifNaN,
   integerParse,
@@ -20,11 +26,12 @@ import {
   throwIntegerTest,
   throwNumberTest,
   throwPercentTest
-} from "./chunk-JIDOUNL5.js";
-import "./chunk-AFNFQUHK.js";
+} from "./chunk-CSXWZ3IC.js";
+import "./chunk-L5EJU35C.js";
 export {
   arrayTest,
   defined,
+  functionTest,
   ifNaN,
   integerParse,
   integerTest,
@@ -36,11 +43,14 @@ export {
   nullUndef,
   numberTest,
   percentTest,
+  stringTest,
   throwArrayTest,
   throwFromResult,
+  throwFunctionTest,
   throwIntegerTest,
   throwNullUndef,
   throwNumberTest,
-  throwPercentTest
+  throwPercentTest,
+  throwStringTest
 };
 //# sourceMappingURL=guards.js.map

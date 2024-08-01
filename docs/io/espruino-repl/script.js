@@ -1,6 +1,6 @@
 import { Espruino } from "../../ixfx/io.js";
 import { log } from "../../ixfx/dom.js";
-import { forEachAsync } from "../../ixfx/flow.js";
+import { forEach } from "../../ixfx/flow.js";
 import { Stacks } from "../../ixfx/collections.js";
 const settings = Object.freeze({
     log: log(`#log`, {
@@ -111,7 +111,7 @@ document.querySelector(`#btnDemo`)?.addEventListener(`click`, async () => {
     if (!connected) {
         log.log(`// Connect to an Espruino to run this for real`);
     }
-    await forEachAsync(demos.trim().split(`\n`), async (demo) => {
+    await forEach(demos.trim().split(`\n`), async (demo) => {
         if (!demo)
             return;
         demo = demo.trim();

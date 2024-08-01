@@ -1,20 +1,16 @@
 import {
   changedDataFields
-} from "./chunk-EHDC2PRM.js";
+} from "./chunk-DWAKOV2F.js";
 import {
   round
-} from "./chunk-2EX73MGI.js";
-import "./chunk-SMLGKS2N.js";
+} from "./chunk-S5D7YRXR.js";
 import "./chunk-HOGLR6UM.js";
-import "./chunk-SGQC7FGM.js";
-import "./chunk-JIDOUNL5.js";
-import "./chunk-AFNFQUHK.js";
+import "./chunk-6UZ3OSJO.js";
+import "./chunk-CSXWZ3IC.js";
+import "./chunk-L5EJU35C.js";
 
 // src/web-components/DataDisplay.ts
 var DataDisplayComponent = class _DataDisplayComponent extends HTMLElement {
-  previousValue;
-  _shadow;
-  _container;
   constructor() {
     super();
     this._shadow = this.attachShadow({ mode: `open` });

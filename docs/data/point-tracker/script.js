@@ -1,11 +1,11 @@
 import { CanvasHelper } from '../../ixfx/dom.js';
 import { DataTable } from '../../ixfx/dom.js';
 import { Points } from '../../ixfx/geometry.js';
-import { pointTracker } from '../../ixfx/data.js';
+import { point } from '../../ixfx/trackers.js';
 import { drawDot, drawLine, setText } from '../../util.js';
 const settings = Object.freeze({
     canvas: new CanvasHelper(`#canvas`, { fill: `viewport` }),
-    tracker: pointTracker({
+    tracker: point({
         id: `pt`,
         storeIntermediate: true
     }),

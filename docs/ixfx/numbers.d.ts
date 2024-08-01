@@ -1,8 +1,8 @@
-import './NumberTracker-YxkFQGX5.js';
-export { a as applyToValues, k as average, b as averageWeighted, c as count, j as dotProduct, f as filter, h as isApproximately, g as isValid, l as linearSpace, q as max, s as maxFast, o as maxIndex, m as min, x as minFast, p as minIndex, e as numericPercent, d as numericRange, n as numericRangeRaw, y as quantiseEvery, z as relativeDifference, A as round, B as roundUpToMultiple, r as total, u as totalFast, t as tracker, v as validNumbers, w as weight } from './index-BsRPgaEm.js';
-export { m as minMaxAvg } from './MinMaxAvg-2uOg6Bd4.js';
-export { a as MinMaxAvgOpts, M as MinMaxAvgTotal } from './Types-S_XFjbWq.js';
-export { J as JitterOpts, a as Jitterer, j as jitter, b as jitterAbsolute, p as pingPong, c as pingPongPercent } from './Jitter-Ue5L368Z.js';
-export { i as randomInteger, b as randomUniqueInteger } from './Integer-RRpbU78-.js';
-import './GetOrGenerate-WG7g4q9M.js';
-import './Types-Tj0rQbez.js';
+export { B as Bipolar, I as InterpolateOptions, M as MovingAverageTimedOptions, N as Normalise, a as applyToValues, A as average, b as averageWeighted, c as clamp, d as clampIndex, e as count, z as dotProduct, f as filter, g as flip, l as interpolate, q as interpolateAngle, o as interpolatorInterval, m as interpolatorStepped, r as isApprox, k as isValid, s as linearSpace, F as max, H as maxFast, D as maxIndex, C as min, K as minFast, E as minIndex, v as movingAverage, t as movingAverageLight, u as movingAverageTimed, w as noiseFilter, j as numericPercent, h as numericRange, n as numericRangeRaw, p as piPi, L as proportion, O as quantiseEvery, P as relativeDifference, Q as round, R as scale, T as scaleClamped, V as scalePercent, U as scalePercentages, S as scaler, W as scalerPercent, X as softmax, G as total, J as totalFast, y as validNumbers, x as weight, Z as wrap, Y as wrapInteger, _ as wrapRange } from './index-wo1A0z1n.js';
+export { m as minMaxAvg } from './MinMaxAvg-1MT6_y5i.js';
+export { M as MinMaxAvgOpts, a as MinMaxAvgTotal } from './Types-grp6zrDi.js';
+import './Types-CR0Pe5zY.js';
+import './Types-AjpgZy7P.js';
+import './IntervalType-B4PbUkjV.js';
+import './index-Btxtdk8X.js';
+import './Types-Bw7JwVUD.js';

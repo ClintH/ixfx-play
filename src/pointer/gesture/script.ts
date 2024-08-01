@@ -1,8 +1,7 @@
 import { Point, Points, radianToDegree, Triangles } from "../../ixfx/geometry.js";
 import { reconcileChildren, DataTable } from '../../ixfx/dom.js';
-import { numberTracker, pointsTracker, PointTracker, pointTracker, TrackedPointMap } from "../../ixfx/data.js";
+import * as Trackers from "../../ixfx/trackers.js";
 import { setText, pc, value } from "../../util.js";
-import { NumberTracker } from "../../ixfx/data.js";
 const settings = Object.freeze({
   currentPointsEl: document.querySelector(`#current-points`) as HTMLElement,
   startPointsEl: document.querySelector(`#start-points`) as HTMLElement,
@@ -12,28 +11,28 @@ const settings = Object.freeze({
 });
 
 type State = Readonly<{
-  pointers: TrackedPointMap
+  pointers: Trackers.TrackedPointMap
   twoFinger: {
-    rotation: NumberTracker
-    distance: NumberTracker
+    rotation: Trackers.NumberTracker
+    distance: Trackers.NumberTracker
   },
   threeFinger: {
-    area: NumberTracker
+    area: Trackers.NumberTracker
   },
-  centroid: PointTracker
+  centroid: Trackers.PointTracker
   centroidAngle: number
 }>
 let state: State = {
   /** @type {TrackedPointMap} */
-  pointers: pointsTracker({ storeIntermediate: false }),
+  pointers: Trackers.points({ storeIntermediate: false }),
   twoFinger: {
-    rotation: numberTracker(),
-    distance: numberTracker()
+    rotation: Trackers.number(),
+    distance: Trackers.number()
   },
   threeFinger: {
-    area: numberTracker()
+    area: Trackers.number()
   },
-  centroid: pointTracker(),
+  centroid: Trackers.point(),
   /** @type number */
   centroidAngle: 0
 };
@@ -49,7 +48,7 @@ const gestureTwoFinger = (a: Point, b: Point) => {
   twoFinger.distance.seen(distanceAbs);
 
   // Calculate rotation
-  const rotationAbs = radianToDegree(Points.angle(a, b));
+  const rotationAbs = radianToDegree(Points.angleRadian(a, b));
   twoFinger.rotation.seen(rotationAbs / 180);
 };
 
@@ -62,7 +61,7 @@ const gestureThreeFinger = (a: Point, b: Point, c: Point) => {
   state.threeFinger.area.seen(Triangles.area(tri));
 };
 
-const gestureCentroid = (pointers: TrackedPointMap) => {
+const gestureCentroid = (pointers: Trackers.TrackedPointMap) => {
   if (pointers.size < 2) {
     state.centroid.reset();
     return;
@@ -72,7 +71,7 @@ const gestureCentroid = (pointers: TrackedPointMap) => {
   state.centroid.seen(centroid);
 
   updateState({
-    centroidAngle: radianToDegree(Points.angle(centroid, state.centroid.initial))
+    centroidAngle: radianToDegree(Points.angleRadian(centroid, state.centroid.initial))
   });
 };
 
@@ -111,7 +110,7 @@ const update = () => {
     displayMap.set(v.id, {
       id: v.id,
       length: Math.round(v.length),
-      angle: Math.round(latestPoint ? radianToDegree(Points.angle(latestPoint, v.initial)) : Number.NaN)
+      angle: Math.round(latestPoint ? radianToDegree(Points.angleRadian(latestPoint, v.initial)) : Number.NaN)
     });
   }
 

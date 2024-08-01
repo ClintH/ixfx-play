@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oscillators</title>
+</head>
+<style>
+  :root {
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+
+  html,
+  body {
+    height: 100%;
+    width: 100%;
+    background-color: hsl(60, 0%, 40%);
+    overflow: hidden;
+    overscroll-behavior: contain;
+    margin: 0;
+    font-family: var(--font);
+  }
+
+  section {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  section:nth-child(1) {
+    border-right: 4px solid var(--grayDark);
+  }
+
+  body {
+    display: flex;
+    font-size: 2vw;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  #container {
+    background-color: aliceblue;
+    height:100%;
+    width:100%;
+  }
+  #tools {
+    padding: 1rem;
+  }
+</style>
+
+<body>
+  <div id="tools"><button>Sine</button><button>Sawtooth</button><button>Square</button><button>Triangle</button></div>
+  <div id="container">
+    <plot-element id="plot"></plot-element>
+  </div>
+  <script type="module" src="script.js"></script>
+  
+</body>
+
+</html>

@@ -1,6 +1,6 @@
 import { Points, radianToDegree, Triangles } from "../../ixfx/geometry.js";
 import { reconcileChildren, DataTable } from '../../ixfx/dom.js';
-import { numberTracker, pointsTracker, pointTracker } from "../../ixfx/data.js";
+import * as Trackers from "../../ixfx/trackers.js";
 import { setText, pc, value } from "../../util.js";
 const settings = Object.freeze({
     currentPointsEl: document.querySelector(`#current-points`),
@@ -11,15 +11,15 @@ const settings = Object.freeze({
 });
 let state = {
     /** @type {TrackedPointMap} */
-    pointers: pointsTracker({ storeIntermediate: false }),
+    pointers: Trackers.points({ storeIntermediate: false }),
     twoFinger: {
-        rotation: numberTracker(),
-        distance: numberTracker()
+        rotation: Trackers.number(),
+        distance: Trackers.number()
     },
     threeFinger: {
-        area: numberTracker()
+        area: Trackers.number()
     },
-    centroid: pointTracker(),
+    centroid: Trackers.point(),
     /** @type number */
     centroidAngle: 0
 };
@@ -33,7 +33,7 @@ const gestureTwoFinger = (a, b) => {
     const distanceAbs = Points.distance(a, b); // clamp(Points.distance(a, b) / maxDimension)
     twoFinger.distance.seen(distanceAbs);
     // Calculate rotation
-    const rotationAbs = radianToDegree(Points.angle(a, b));
+    const rotationAbs = radianToDegree(Points.angleRadian(a, b));
     twoFinger.rotation.seen(rotationAbs / 180);
 };
 const gestureThreeFinger = (a, b, c) => {
@@ -54,7 +54,7 @@ const gestureCentroid = (pointers) => {
     const centroid = Points.centroid(...pointers.last());
     state.centroid.seen(centroid);
     updateState({
-        centroidAngle: radianToDegree(Points.angle(centroid, state.centroid.initial))
+        centroidAngle: radianToDegree(Points.angleRadian(centroid, state.centroid.initial))
     });
 };
 const update = () => {
@@ -86,7 +86,7 @@ const update = () => {
         displayMap.set(v.id, {
             id: v.id,
             length: Math.round(v.length),
-            angle: Math.round(latestPoint ? radianToDegree(Points.angle(latestPoint, v.initial)) : Number.NaN)
+            angle: Math.round(latestPoint ? radianToDegree(Points.angleRadian(latestPoint, v.initial)) : Number.NaN)
         });
     }
     DataTable.fromList(`#pointers`, displayMap);
