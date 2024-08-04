@@ -1,6 +1,6 @@
 import { Espruino } from "../../ixfx/io.js";
 import { log } from "../../ixfx/dom.js";
-import { forEach } from "../../ixfx/flow.js";
+import { forEach } from "../../ixfx/iterables.js";
 import { Stacks } from "../../ixfx/collections.js";
 const settings = Object.freeze({
     log: log(`#log`, {
@@ -125,7 +125,7 @@ document.querySelector(`#btnDemo`)?.addEventListener(`click`, async () => {
             await send(demo);
         }
         return;
-    }, connected ? 1000 : 400);
+    }, { interval: connected ? 1000 : 400 });
 });
 document.querySelector(`#btnSend`)?.addEventListener(`click`, () => send());
 document.querySelector(`#btnDisconnect`)?.addEventListener(`click`, () => {

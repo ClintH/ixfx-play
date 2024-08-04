@@ -1,6 +1,6 @@
 import { Espruino, IoEvents, StateChangeEvent } from "../../ixfx/io.js";
 import { log } from "../../ixfx/dom.js";
-import { forEach } from "../../ixfx/flow.js";
+import { forEach } from "../../ixfx/iterables.js";
 import { Stacks } from "../../ixfx/collections.js";
 
 const settings = Object.freeze({
@@ -143,7 +143,7 @@ document.querySelector(`#btnDemo`)?.addEventListener(`click`, async () => {
       }
       return;
     },
-    connected ? 1000 : 400
+    { interval: connected ? 1000 : 400 }
   );
 });
 

@@ -11,8 +11,6 @@ import {
   delay,
   delayLoop,
   everyNth,
-  forEach,
-  forEachSync,
   promiseFromEvent,
   promiseWithResolvers,
   retryFunction,
@@ -22,7 +20,7 @@ import {
   throttle,
   updateOutdated,
   waitFor
-} from "./chunk-CFGMSUMW.js";
+} from "./chunk-UWIXPZLC.js";
 import {
   repeat,
   repeatSync,
@@ -94,8 +92,6 @@ export {
   elapsedTicksAbsolute,
   elapsedToHumanString,
   everyNth,
-  forEach,
-  forEachSync,
   frequencyTimer,
   hasElapsed,
   intervalToMs,
