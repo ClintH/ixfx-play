@@ -1,1 +1,0 @@
-{"version":3,"file":"circle.js","sourceRoot":"","sources":["../../../../src/visuals/draw-machine/heads/circle.ts"],"names":[],"mappings":"AAYA,MAAM,CAAC,MAAM,IAAI,GAAG,CAAC,CAAwB,EAAE,CAAkB,EAAE,EAAE;IACnE,CAAC,CAAC,GAAG,CAAC,CAAC,EAAE;QACP,MAAM,EAAE,CAAC,CAAC,MAAM;QAChB,SAAS,EAAE,OAAQ,CAAC,CAAC,GAAG,GAAG,GAAI,YAAY;KAC5C,CAAC,CAAC;AACL,CAAC,CAAA"}
