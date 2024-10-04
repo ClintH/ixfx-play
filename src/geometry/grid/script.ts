@@ -22,6 +22,7 @@ const tabbedPanels = tabSet({
   ],
   parent: `#tools`,
   onPanelChanging: (_newPanel, _oldPanel) => {
+
     draw.reset();
   },
   preselectId: `visit`
