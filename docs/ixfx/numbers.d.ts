@@ -1,8 +1,10 @@
-export { B as Bipolar, I as InterpolateOptions, M as MovingAverageTimedOptions, N as Normalise, a as applyToValues, A as average, b as averageWeighted, c as clamp, d as clampIndex, e as count, z as dotProduct, f as filter, g as flip, l as interpolate, q as interpolateAngle, o as interpolatorInterval, m as interpolatorStepped, r as isApprox, k as isValid, s as linearSpace, F as max, H as maxFast, D as maxIndex, C as min, K as minFast, E as minIndex, v as movingAverage, t as movingAverageLight, u as movingAverageTimed, w as noiseFilter, j as numericPercent, h as numericRange, n as numericRangeRaw, p as piPi, L as proportion, O as quantiseEvery, P as relativeDifference, Q as round, R as scale, T as scaleClamped, V as scalePercent, U as scalePercentages, S as scaler, W as scalerPercent, X as softmax, G as total, J as totalFast, y as validNumbers, x as weight, Z as wrap, Y as wrapInteger, _ as wrapRange } from './index-wo1A0z1n.js';
+export { B as Bipolar, H as DifferenceKind, M as MovingAverageTimedOptions, N as Normalise, a as applyToValues, t as average, b as averageWeighted, c as clamp, d as clampIndex, e as count, I as differenceFromFixed, J as differenceFromLast, s as dotProduct, f as filter, g as flip, l as isApprox, k as isValid, m as linearSpace, z as max, C as maxFast, x as maxIndex, u as min, E as minFast, y as minIndex, q as movingAverage, o as movingAverageLight, p as movingAverageTimed, r as noiseFilter, j as numericPercent, h as numericRange, n as numericRangeRaw, F as proportion, G as quantiseEvery, K as round, L as scale, P as scaleClamped, R as scalePercent, Q as scalePercentages, O as scaler, S as scalerPercent, T as softmax, A as total, D as totalFast, v as validNumbers, w as weight, V as wrap, U as wrapInteger, W as wrapRange } from './index-By3CzY-d.js';
+export { I as InterpolateOptions, i as interpolate, a as interpolateAngle, b as interpolatorInterval, c as interpolatorStepped, p as piPi } from './Interpolate-BYUZKZgt.js';
 export { m as minMaxAvg } from './MinMaxAvg-1MT6_y5i.js';
 export { M as MinMaxAvgOpts, a as MinMaxAvgTotal } from './Types-grp6zrDi.js';
 import './Types-CR0Pe5zY.js';
 import './Types-AjpgZy7P.js';
 import './IntervalType-B4PbUkjV.js';
-import './index-Btxtdk8X.js';
+import './index-CVS-IuSd.js';
 import './Types-Bw7JwVUD.js';
+import './PointType-BDlA07rn.js';

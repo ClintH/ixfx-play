@@ -1,13 +1,13 @@
-export { F as FrequencyEventMap, a as FrequencyTracker, I as IntervalTracker, O as ObjectTracker, g as PointTrack, P as PointTracker, h as PointTrackerResults, d as TrackUnique, T as TrackedPointMap, f as frequency, b as interval, c as point, p as points, u as unique, e as uniqueInstances } from './index-oXBOsGDb.js';
-export { N as NumberTracker, d as NumberTrackerResults, P as PrimitiveTracker, e as Timestamped, b as TimestampedObject, f as TimestampedPrimitive, c as TrackedValueMap, T as TrackedValueOpts, a as TrackerBase, n as number } from './NumberTracker-xew5C8bg.js';
+export { F as FrequencyEventMap, a as FrequencyTracker, I as IntervalTracker, O as ObjectTracker, h as PointTrack, P as PointTracker, j as PointTrackerResults, d as RateTracker, R as RateTrackerOpts, e as TrackUnique, T as TrackedPointMap, f as frequency, b as interval, c as point, p as points, r as rate, u as unique, g as uniqueInstances } from './index-DBMxKxtv.js';
+export { N as NumberTracker, e as NumberTrackerResults, P as PrimitiveTracker, f as Timestamped, b as TimestampedObject, g as TimestampedPrimitive, d as TrackedValueMap, T as TrackedValueOpts, a as TrackerBase, c as TrimReason, n as number } from './NumberTracker-MX95UoKm.js';
 import './Types-grp6zrDi.js';
 import './ToString-DO94OWoh.js';
 import './KeyValue-vMMe-ezw.js';
 import './PrimitiveTypes-F6miV4Zn.js';
 import './Events-DJgOvcWD.js';
 import './IntervalType-B4PbUkjV.js';
-import './PointRelationTypes-DmpkuPjY.js';
-import './PointType-DYug3Yo5.js';
-import './LineType-FU9c78oU.js';
+import './PointRelationTypes-Dw4GvWQq.js';
+import './PointType-BDlA07rn.js';
+import './LineType-DkIFzpdp.js';
 import './GetOrGenerate-CVpu5gTc.js';
 import './IMappish-qfjdy4T9.js';

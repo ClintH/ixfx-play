@@ -29,76 +29,71 @@ import {
   setCssClass,
   setCssDisplay,
   setCssToggle,
+  tabSet,
   viewportToSpace
-} from "./chunk-G4JRQNY6.js";
-import "./chunk-H6QOKHEZ.js";
-import "./chunk-UZPYPFQS.js";
+} from "./chunk-5HTCDU7H.js";
+import "./chunk-WZTEXWC2.js";
+import "./chunk-7ICNCHYJ.js";
 import {
   Forms_exports
-} from "./chunk-5CCFRORA.js";
+} from "./chunk-HNOA4M2B.js";
 import {
-  CanvasHelper
-} from "./chunk-4OUETERD.js";
-import {
+  CanvasHelper,
   DomRx_exports,
   fullSizeCanvas,
+  imageDataAsGrid,
   parentSizeCanvas
-} from "./chunk-JEO34VCN.js";
-import "./chunk-VN5NY7D5.js";
-import "./chunk-5QJSWMSO.js";
-import "./chunk-VUEFATQ3.js";
-import "./chunk-647FAJGC.js";
-import "./chunk-NGZXMICH.js";
-import "./chunk-FKXNN6PM.js";
-import "./chunk-AGCCB7IA.js";
+} from "./chunk-4UKC26OS.js";
+import "./chunk-JKLCXLZ5.js";
+import "./chunk-65WH6KYI.js";
+import "./chunk-GNXMKKD5.js";
+import "./chunk-DI3THAAW.js";
+import "./chunk-B5XDBTUM.js";
+import "./chunk-UTOEERYG.js";
+import "./chunk-M43OQIGJ.js";
+import "./chunk-KILR2KRP.js";
+import "./chunk-RQSMVGEL.js";
+import "./chunk-EQQ747SO.js";
+import "./chunk-YQTXKH44.js";
+import "./chunk-NAPITDOI.js";
+import "./chunk-SHF5276B.js";
+import "./chunk-332QM2S5.js";
 import {
   setHtml,
   setProperty,
   setText
-} from "./chunk-H6JEZBAA.js";
-import "./chunk-Y4GCTNKN.js";
+} from "./chunk-TIIF2VKF.js";
+import "./chunk-MXBHIKA7.js";
+import "./chunk-TYALAIXN.js";
+import "./chunk-NGZXMICH.js";
 import "./chunk-XFNQJV53.js";
-import "./chunk-W4JV7GMT.js";
-import "./chunk-4SO3XXQP.js";
-import "./chunk-UWIXPZLC.js";
-import "./chunk-QGXH7WIG.js";
-import "./chunk-TXNE2NDG.js";
-import "./chunk-YLRZZLGG.js";
-import "./chunk-VOHY2O2W.js";
-import "./chunk-4RHG66EP.js";
-import "./chunk-HCM42F75.js";
+import "./chunk-IV5E4EHV.js";
+import "./chunk-4GOV2D4X.js";
+import "./chunk-QKQKTBVV.js";
+import "./chunk-I2PHDNRW.js";
+import "./chunk-67VZAFWN.js";
 import "./chunk-4IJNRUE7.js";
-import "./chunk-BWJ5AMOD.js";
-import "./chunk-IQEKYUOH.js";
+import "./chunk-N6YIY4CM.js";
+import "./chunk-XGQNP3YG.js";
 import {
   resolveEl,
   resolveEls
 } from "./chunk-ZNCB3DZ2.js";
-import "./chunk-W3MH7W5D.js";
-import "./chunk-Z6SRFCCD.js";
-import "./chunk-56LYTHQU.js";
-import "./chunk-ZJSCF2A4.js";
-import "./chunk-YSD5376E.js";
-import "./chunk-2LQNQUVT.js";
-import "./chunk-2J3BQQHA.js";
-import "./chunk-MZFSDYZE.js";
-import "./chunk-CF6OEEVD.js";
-import "./chunk-UK6L3VJJ.js";
+import "./chunk-Q444COJ6.js";
 import "./chunk-BGQOJZFW.js";
-import "./chunk-HKC65PTS.js";
-import "./chunk-JEKP7EQY.js";
-import "./chunk-SPSPSDHG.js";
-import "./chunk-MYMJ4JUA.js";
-import "./chunk-7U6QARGK.js";
+import "./chunk-MZFSDYZE.js";
+import "./chunk-UXBT5HQE.js";
+import "./chunk-7HPQVR47.js";
+import "./chunk-BDIBLBFS.js";
 import "./chunk-GISMJX5E.js";
+import "./chunk-PJHYZUYG.js";
 import "./chunk-5VWJ6TUI.js";
-import "./chunk-46F56PDU.js";
-import "./chunk-Q5FM47RE.js";
+import "./chunk-27HWJFP3.js";
 import "./chunk-54PXOMGL.js";
-import "./chunk-S5D7YRXR.js";
+import "./chunk-OTGZJTOP.js";
 import "./chunk-HOGLR6UM.js";
 import "./chunk-6UZ3OSJO.js";
-import "./chunk-CSXWZ3IC.js";
+import "./chunk-BLACMGG6.js";
 import "./chunk-L5EJU35C.js";
 export {
   CanvasHelper,
@@ -121,6 +116,7 @@ export {
   fullSizeCanvas,
   fullSizeElement,
   getTranslation,
+  imageDataAsGrid,
   inlineConsole,
   insertSorted,
   log,
@@ -141,6 +137,7 @@ export {
   setHtml,
   setProperty,
   setText,
+  tabSet,
   viewportToSpace
 };
 //# sourceMappingURL=dom.js.map

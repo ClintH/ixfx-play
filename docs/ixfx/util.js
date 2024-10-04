@@ -5,20 +5,17 @@ import {
   isEqualTrace,
   isInteger,
   jsComparer,
-  minMaxAvg,
+  minMaxAvg2 as minMaxAvg,
   numericComparer,
   runningiOS,
   throwResult
-} from "./chunk-JEKP7EQY.js";
-import "./chunk-SPSPSDHG.js";
-import "./chunk-MYMJ4JUA.js";
-import "./chunk-7U6QARGK.js";
+} from "./chunk-BDIBLBFS.js";
 import "./chunk-GISMJX5E.js";
+import "./chunk-PJHYZUYG.js";
 import "./chunk-5VWJ6TUI.js";
 import {
   guards_exports
-} from "./chunk-46F56PDU.js";
-import "./chunk-Q5FM47RE.js";
+} from "./chunk-27HWJFP3.js";
 import {
   mapKeys
 } from "./chunk-HOGLR6UM.js";
@@ -33,7 +30,7 @@ import {
   toStringDefault,
   toStringOrdered
 } from "./chunk-6UZ3OSJO.js";
-import "./chunk-CSXWZ3IC.js";
+import "./chunk-BLACMGG6.js";
 import "./chunk-L5EJU35C.js";
 export {
   guards_exports as Guards,
