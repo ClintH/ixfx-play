@@ -7,7 +7,7 @@ import { Points, Polar } from '../../ixfx/geometry.js';
 import * as Mod from '../../ixfx/modulation.js';
 const settings = Object.freeze({
     canvas: new CanvasHelper(`#canvas`, {
-        fill: `viewport`,
+        resizeLogic: `min`,
         onResize(context, size, helper) {
             onCodeUpdated();
         },

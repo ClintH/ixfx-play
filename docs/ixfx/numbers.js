@@ -4,6 +4,7 @@ import {
   differenceFromFixed,
   differenceFromLast,
   filter,
+  flip,
   isApprox,
   isValid,
   numericPercent,
@@ -11,11 +12,10 @@ import {
   numericRangeRaw,
   proportion,
   softmax
-} from "./chunk-AUX6RHPJ.js";
+} from "./chunk-LOHSGUZH.js";
 import {
-  Bipolar_exports,
-  flip
-} from "./chunk-GNXMKKD5.js";
+  Bipolar_exports
+} from "./chunk-SH4ABM2J.js";
 import {
   count
 } from "./chunk-UTOEERYG.js";
@@ -37,7 +37,7 @@ import {
   wrap,
   wrapInteger,
   wrapRange
-} from "./chunk-TIIF2VKF.js";
+} from "./chunk-5XDULOVE.js";
 import {
   scale,
   scaleClamped,
@@ -45,8 +45,8 @@ import {
   scalePercentages,
   scaler,
   scalerPercent
-} from "./chunk-MXBHIKA7.js";
-import "./chunk-TYALAIXN.js";
+} from "./chunk-ZKM3CAC3.js";
+import "./chunk-SITTCXYQ.js";
 import {
   average,
   dotProduct,
@@ -63,26 +63,26 @@ import {
 } from "./chunk-NGZXMICH.js";
 import "./chunk-XFNQJV53.js";
 import "./chunk-IV5E4EHV.js";
-import "./chunk-4GOV2D4X.js";
-import "./chunk-QKQKTBVV.js";
+import "./chunk-YXMHKGUE.js";
+import "./chunk-JBFVEOXN.js";
 import {
   clamp,
   clampIndex
 } from "./chunk-I2PHDNRW.js";
-import "./chunk-67VZAFWN.js";
+import "./chunk-GJRZJQBQ.js";
 import "./chunk-4IJNRUE7.js";
 import "./chunk-N6YIY4CM.js";
 import "./chunk-XGQNP3YG.js";
 import "./chunk-ZNCB3DZ2.js";
-import "./chunk-Q444COJ6.js";
-import "./chunk-BGQOJZFW.js";
+import "./chunk-JJVFFSN3.js";
+import "./chunk-24V3UXMK.js";
 import "./chunk-MZFSDYZE.js";
-import "./chunk-UXBT5HQE.js";
-import "./chunk-7HPQVR47.js";
+import "./chunk-CFKEFPR2.js";
+import "./chunk-GIV6V6A3.js";
 import {
   minMaxAvg
-} from "./chunk-BDIBLBFS.js";
-import "./chunk-GISMJX5E.js";
+} from "./chunk-YY2I2UQQ.js";
+import "./chunk-XR4VXEAN.js";
 import "./chunk-PJHYZUYG.js";
 import "./chunk-5VWJ6TUI.js";
 import "./chunk-27HWJFP3.js";

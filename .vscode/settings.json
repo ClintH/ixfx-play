@@ -36,6 +36,8 @@
   "typescript.inlayHints.variableTypes.enabled": false,
   "typescript.inlayHints.variableTypes.suppressWhenTypeMatchesName": true,
   "cSpell.words": [
-    "espruino"
+    "accel",
+    "espruino",
+    "ixfx"
   ]
 }

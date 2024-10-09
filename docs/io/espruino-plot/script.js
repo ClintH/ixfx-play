@@ -1,9 +1,9 @@
 import { Espruino } from "../../ixfx/io.js";
 import snarkdown from "./snarkdown.es.js";
 import * as Dom from "../../ixfx/dom.js";
-import { Plot2, Colour } from "../../ixfx/visual.js";
 import Split from "./Split.js";
-console.log(`asdf`);
+import * as Components from '../../ixfx/components.js';
+Components.init();
 Split([`#editor`, `#data`], {
     sizes: [50, 50],
     direction: `horizontal`,
@@ -34,12 +34,13 @@ setInterval(() => {
         capacity: 50,
         timestamp: true,
     }),
-    plot: new Plot2.Plot(document.querySelector(`#plotCanvas`), {
-        autoSize: true,
-        axisStrokeColour: Colour.getCssVariable(`fg`),
-        axisTextColour: Colour.getCssVariable(`fg`),
-        legendTextColour: `white`
-    }),
+    // plot: new Plot.Plot(document.querySelector(`#plotCanvas`) as HTMLCanvasElement, {
+    //   autoSize: true,
+    //   axisStrokeColour: Colour.getCssVariable(`fg`),
+    //   axisTextColour: Colour.getCssVariable(`fg`),
+    //   legendTextColour: `white`
+    // }),
+    plot: document.querySelector(`#plotCanvas`),
     txtCode: document.querySelector(`#txtCode`),
     dlgHelp: document.querySelector(`#dlgHelp`),
     selBoard: document.querySelector(`#board`)
@@ -48,7 +49,7 @@ const onConnected = (connected) => {
     const { plot } = settings;
     if (connected) {
         plot.clear();
-        plot.frozen = false;
+        updateState({ frozen: false });
         document.querySelector(`#btnConnect`)?.setAttribute(`disabled`, `true`);
         document.querySelector(`#btnSend`)?.removeAttribute(`disabled`);
     }
@@ -60,7 +61,6 @@ const onConnected = (connected) => {
 const onData = (event) => {
     const { log, plot } = settings;
     const data = event.data.trim(); // Remove line breaks etc
-    console.log(data);
     if (!data.startsWith(`{`) || !data.endsWith(`}`)) {
         if (state.jsonWarning) {
             updateState({ jsonWarning: true });
@@ -76,8 +76,8 @@ const onData = (event) => {
         const d = JSON.parse(data);
         if (!state.frozen) {
             log.log(data);
-            plot.plot(d);
-            plot.update();
+            plot.plotObject(d);
+            plot.draw();
         }
     }
     catch (error) {
@@ -125,7 +125,7 @@ const send = () => {
     // @ts-ignore
     const code = txtCode.value.trim();
     const codeWithSuffix = code + (state.board === `puck` ? `NRF.on('disconnect',()=>reset());` : ``);
-    console.log(code);
+    //console.log(code);
     try {
         plot.clear();
         p.writeScript(codeWithSuffix);
@@ -143,8 +143,8 @@ const setup = () => {
         updateState({ board: defaultBoard });
     }
     // Setup plotter
-    plot.axisX.visible = false;
-    plot.axisY.visible = false;
+    //plot.axisX.visible = false;
+    //plot.axisY.visible = false;
     // Setup UI
     Dom.Forms.textAreaKeyboard(txtCode);
     document.querySelector(`#btnClear`)?.addEventListener(`click`, () => {

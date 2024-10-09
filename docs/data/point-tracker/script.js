@@ -4,7 +4,9 @@ import { Points } from '../../ixfx/geometry.js';
 import { point } from '../../ixfx/trackers.js';
 import { drawDot, drawLine, setText } from '../../util.js';
 const settings = Object.freeze({
-    canvas: new CanvasHelper(`#canvas`, { fill: `viewport` }),
+    canvas: new CanvasHelper(`#canvas`, {
+        resizeLogic: `both`
+    }),
     tracker: point({
         id: `pt`,
         storeIntermediate: true
@@ -53,6 +55,10 @@ setup();
 function formatter(data, path) {
     if (path === `centroid` || path === `average`) {
         return Points.toString(Points.apply(data, Math.round));
+    }
+    else {
+        if (typeof data === `number`)
+            return data.toFixed(2);
     }
     return;
 }
