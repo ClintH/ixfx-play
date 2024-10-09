@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Circle filling</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link href="style.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
   </head>
   <body>
-    <section>
+    <section id="main">
       <p>
-        <em>start</em> and <em>end</em> expressions determine animation
+        <em>start</em>
+        and
+        <em>end</em>
+        expressions determine animation
         positions for each particle, on a 0..1 scale.
       </p>
-      <p><code>r()</code> yields a number from the random source.</p>
+      <p><code>r()</code>
+        yields a number from the random source.</p>
       <details>
         <summary>Example expressions</summary>
         <pre>
@@ -31,8 +32,7 @@
       Math.sqrt(1- r()*r()*r()*r())
       1 - Math.sqrt(1- r())
       1 - Math.sqrt(1- r() * r())
-      </pre
-        >
+      </pre>
       </details>
       <div class="form">
         <label for="source">Random source</label>
@@ -46,21 +46,19 @@
           <option>Weighted (quadInOut)</option>
         </select>
         <label for="startExpr">Start</label>
-        <input type="text" id="startExpr" value="r()" />
-
+        <input type="text" id="startExpr" value="r()">
         <label for="endExpr">End</label>
-        <input type="text" id="endExpr" value="1-r()" />
+        <input type="text" id="endExpr" value="1-r()">
         <label>Particles</label>
         <input
-          type="range"
-          id="numberParticles"
-          value="500"
-          min="100"
-          max="10000"
-        />
+        type="range"
+        id="numberParticles"
+        value="500"
+        min="100"
+        max="10000"
+      >
       </div>
     </section>
-
     <canvas id="canvas"></canvas>
     <section id="error" class="hidden">Error message</section>
     <section id="badge">
