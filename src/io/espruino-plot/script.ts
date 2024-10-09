@@ -1,9 +1,11 @@
 import { Espruino, StateChangeEvent, IoDataEvent } from "../../ixfx/io.js";
 import snarkdown from "./snarkdown.es.js";
 import * as Dom from "../../ixfx/dom.js";
-import { Plot2, Colour } from "../../ixfx/visual.js";
 import Split from "./Split.js";
-console.log(`asdf`);
+import { PlotElement } from "../../ixfx/components.js";
+import * as Components from '../../ixfx/components.js';
+Components.init();
+
 Split([ `#editor`, `#data` ], {
   sizes: [ 50, 50 ],
   direction: `horizontal`,
@@ -29,6 +31,7 @@ let state: State = Object.freeze({
   p: undefined,
   frozen: false,
 });
+
 const settings = Object.freeze({
   puckIntro: `
 Puck.accelOn(12.5);
@@ -44,12 +47,13 @@ setInterval(() => {
     capacity: 50,
     timestamp: true,
   }),
-  plot: new Plot2.Plot(document.querySelector(`#plotCanvas`) as HTMLCanvasElement, {
-    autoSize: true,
-    axisStrokeColour: Colour.getCssVariable(`fg`),
-    axisTextColour: Colour.getCssVariable(`fg`),
-    legendTextColour: `white`
-  }),
+  // plot: new Plot.Plot(document.querySelector(`#plotCanvas`) as HTMLCanvasElement, {
+  //   autoSize: true,
+  //   axisStrokeColour: Colour.getCssVariable(`fg`),
+  //   axisTextColour: Colour.getCssVariable(`fg`),
+  //   legendTextColour: `white`
+  // }),
+  plot: document.querySelector(`#plotCanvas`) as PlotElement,
   txtCode: document.querySelector(`#txtCode`) as HTMLTextAreaElement,
   dlgHelp: document.querySelector(`#dlgHelp`) as HTMLDialogElement,
   selBoard: document.querySelector(`#board`) as HTMLSelectElement
@@ -60,7 +64,7 @@ const onConnected = (connected: boolean) => {
 
   if (connected) {
     plot.clear();
-    plot.frozen = false;
+    updateState({ frozen: false });
     document.querySelector(`#btnConnect`)?.setAttribute(`disabled`, `true`);
     document.querySelector(`#btnSend`)?.removeAttribute(`disabled`);
   } else {
@@ -73,7 +77,6 @@ const onData = (event: IoDataEvent) => {
   const { log, plot } = settings;
 
   const data = event.data.trim(); // Remove line breaks etc
-  console.log(data);
   if (!data.startsWith(`{`) || !data.endsWith(`}`)) {
     if (state.jsonWarning) {
       updateState({ jsonWarning: true });
@@ -89,8 +92,8 @@ const onData = (event: IoDataEvent) => {
     const d = JSON.parse(data);
     if (!state.frozen) {
       log.log(data);
-      plot.plot(d);
-      plot.update();
+      plot.plotObject(d);
+      plot.draw();
     }
   } catch (error) {
     console.warn(error);
@@ -144,7 +147,7 @@ const send = () => {
   const code = txtCode.value.trim();
   const codeWithSuffix =
     code + (state.board === `puck` ? `NRF.on('disconnect',()=>reset());` : ``);
-  console.log(code);
+  //console.log(code);
 
   try {
     plot.clear();
@@ -165,8 +168,8 @@ const setup = () => {
   }
 
   // Setup plotter
-  plot.axisX.visible = false;
-  plot.axisY.visible = false;
+  //plot.axisX.visible = false;
+  //plot.axisY.visible = false;
 
   // Setup UI
   Dom.Forms.textAreaKeyboard(txtCode);
