@@ -3,10 +3,10 @@ import {
 } from "./chunk-54PXOMGL.js";
 import {
   round
-} from "./chunk-OTGZJTOP.js";
+} from "./chunk-4LY3IBHN.js";
 import "./chunk-HOGLR6UM.js";
 import "./chunk-6UZ3OSJO.js";
-import "./chunk-BLACMGG6.js";
+import "./chunk-Z5OJDQCF.js";
 import "./chunk-L5EJU35C.js";
 
 // src/web-components/DataDisplay.ts

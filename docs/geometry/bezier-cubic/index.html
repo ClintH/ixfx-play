@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cubic-bezier</title>
+    <link href="style.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="handle" id="point-a">A</div>
+    <div class="handle" id="point-b">B</div>
+    <div class="handle" id="point-cubic1">1</div>
+    <div class="handle" id="point-cubic2">2</div>
+    <div id="right">
+      <div id="right-top">
+        <fieldset>
+          <legend>A</legend>
+          <form>
+            <label for="a-x">X</label>
+            <input type="number" min="0" max="1" step="0.01" id="a-x">
+            <label for="a-y">Y</label>
+            <input type="number" min="0" max="1" step="0.01" id="a-y">
+          </form>
+        </fieldset>
+        <fieldset>
+          <legend>B</legend>
+          <form>
+            <label for="b-x">X</label>
+            <input type="number" min="0" max="1" step="0.01" id="b-x">
+            <label for="b-y">Y</label>
+            <input type="number" min="0" max="1" step="0.01" id="b-y">
+          </form>
+        </fieldset>
+        <fieldset>
+          <legend>Cubic 1</legend>
+          <form>
+            <label for="cubic1-x">X</label>
+            <input type="number" min="0" max="1" step="0.01" id="cubic1-x">
+            <label for="cubic1-y">Y</label>
+            <input type="number" min="0" max="1" step="0.01" id="cubic1-y">
+          </form>
+        </fieldset>
+        <fieldset>
+          <legend>Cubic 2</legend>
+          <form>
+            <label for="cubic2-x">X</label>
+            <input type="number" min="0" max="1" step="0.01" id="cubic2-x">
+            <label for="cubic2-y">Y</label>
+            <input type="number" min="0" max="1" step="0.01" id="cubic2-y">
+          </form>
+        </fieldset>
+      </div>
+      <div id="snippet"></div>
+    </div>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

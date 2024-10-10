@@ -48,7 +48,6 @@ const updatePointer = (event: PointerEvent) => {
   const aziAngle = event.azimuthAngle ?? 0;
   setHtml(`altitudeAngle`, rounder(altAngle));
   setHtml(`azimuthAngle`, rounder(aziAngle));
-
   tiltPlot(tiltScale(event.tiltX), tiltScale(event.tiltY));
 };
 

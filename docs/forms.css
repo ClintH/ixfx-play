@@ -26,20 +26,20 @@
  input[type="email"],
  select,
  textarea {
-   font: 1.25rem / 1.5 sans-serif;
+   font: 1.25ch / 1.5 sans-serif;
    display: block;
    width: 100%;
-   padding: 0.5rem 0.75rem;
+   padding: 0.5ch 0.75ch;
  }
 
  textarea {
-   min-height: 10rem;
+   min-height: 10ch;
  }
 
  input[type="radio"],
  input[type="checkbox"] {
-   height: 1.5em;
-   width: 1.5em;
+   height: 1.5ch;
+   width: 1.5ch;
    vertical-align: middle;
    align-self: center;
  }
