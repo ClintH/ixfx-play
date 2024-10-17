@@ -12,10 +12,10 @@ import {
   numericRangeRaw,
   proportion,
   softmax
-} from "./chunk-G4HRGHCW.js";
+} from "./chunk-YCLLFK3A.js";
 import {
   Bipolar_exports
-} from "./chunk-MZNVDQO3.js";
+} from "./chunk-NM4XC7MB.js";
 import {
   count
 } from "./chunk-6MZRE4JN.js";
@@ -37,7 +37,7 @@ import {
   wrap,
   wrapInteger,
   wrapRange
-} from "./chunk-UDUBOWO2.js";
+} from "./chunk-LETBQBU5.js";
 import {
   scale,
   scaleClamped,
@@ -46,8 +46,8 @@ import {
   scaler,
   scalerPercent,
   scalerTwoWay
-} from "./chunk-4E23HRKU.js";
-import "./chunk-TN36XKBW.js";
+} from "./chunk-EF6MLOJ5.js";
+import "./chunk-ODQWT54O.js";
 import {
   average,
   dotProduct,
@@ -61,32 +61,33 @@ import {
   totalFast,
   validNumbers,
   weight
-} from "./chunk-NGZXMICH.js";
+} from "./chunk-YG33FJI6.js";
 import "./chunk-XFNQJV53.js";
 import "./chunk-CYC5VE6S.js";
-import "./chunk-Q7NOOW25.js";
-import "./chunk-V7HIIYNX.js";
+import "./chunk-RTSGVLRZ.js";
+import "./chunk-AXQJZNKQ.js";
 import {
   clamp,
   clampIndex,
   clamper
-} from "./chunk-PS6NOW7A.js";
+} from "./chunk-QAEJS6HO.js";
 import "./chunk-5T3R27ZX.js";
 import "./chunk-N6YIY4CM.js";
-import "./chunk-4IJNRUE7.js";
 import "./chunk-47H3N64R.js";
-import "./chunk-ZNCB3DZ2.js";
-import "./chunk-WW6MBUMP.js";
-import "./chunk-24V3UXMK.js";
+import "./chunk-YU7FAXCM.js";
+import "./chunk-7JKM42NS.js";
+import "./chunk-BGQOJZFW.js";
 import "./chunk-MZFSDYZE.js";
-import "./chunk-52QDRU24.js";
-import "./chunk-GIV6V6A3.js";
+import "./chunk-IZDWDBIV.js";
+import "./chunk-7HPQVR47.js";
 import {
   minMaxAvg
-} from "./chunk-LZ42FUDS.js";
-import "./chunk-XR4VXEAN.js";
+} from "./chunk-MMMI4WJQ.js";
+import "./chunk-GISMJX5E.js";
 import "./chunk-NO53N4A2.js";
 import "./chunk-5VWJ6TUI.js";
+import "./chunk-B6WXXS62.js";
+import "./chunk-4IJNRUE7.js";
 import "./chunk-AKC4PULA.js";
 import "./chunk-54PXOMGL.js";
 import {

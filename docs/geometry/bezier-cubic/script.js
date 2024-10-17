@@ -36,7 +36,10 @@ cubic2.onValue(value => {
 });
 //const ds = new Plot.DataSet<Point, any>();
 const region = { height: 0.7, width: maxPlotWidth, x: 0, y: 0.15 };
-const p = Plot.insert({ fill: `viewport`, region }, {
+const p = Plot.insert({
+    canvasResizeTo: `viewport`,
+    region: { match: `#target`, marginPx: 50 },
+}, {
     grid: {
         increments: 0.1
     },

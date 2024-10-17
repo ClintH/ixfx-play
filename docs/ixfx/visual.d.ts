@@ -1,7 +1,7 @@
-export { B as BipolarView, b as CanvasRegion, C as CanvasSource, g as CartesianCanvasPlot, I as ImageDataGrid, c as InsertOptions, e as InsertOptionsParent, d as InsertOptionsViewport, P as Palette, a as Plot, S as SceneGraph, f as insert } from './index-JA9kdR5n.js';
+export { B as BipolarView, g as CanvasRegion, e as CanvasRegionSpec, b as CanvasRegionSpecAbsolutePositioned, d as CanvasRegionSpecMatched, C as CanvasRegionSpecRelativePositioned, c as CanvasRegionSpecRelativeSized, f as CanvasSource, k as CartesianCanvasPlot, I as ImageDataGrid, h as InsertOptions, P as Palette, a as Plot, S as SceneGraph, j as insert } from './index-DBPbv9xm.js';
 export { a as Drawing } from './Drawing-BA-hHZOn.js';
 export { S as Svg } from './Svg-D94XTP5k.js';
-export { b as Colour } from './Colour-YzEXhgtt.js';
+export { b as Colour } from './Colour-jpofjHkm.js';
 export { V as Video } from './Video-W9xZZbzn.js';
 import './CircleType-D9Xd-yDE.js';
 import './PointType-BDlA07rn.js';
@@ -17,4 +17,4 @@ import './Ellipse-Cie3ckUe.js';
 import './IStackImmutable-BNEmWxct.js';
 import 'colorjs.io';
 import './Types-CR0Pe5zY.js';
-import './Results-adq5iCSD.js';
+import './Results-ByWkmocN.js';

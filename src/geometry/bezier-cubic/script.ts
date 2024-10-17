@@ -45,29 +45,34 @@ cubic2.onValue(value => {
 
 //const ds = new Plot.DataSet<Point, any>();
 const region = { height: 0.7, width: maxPlotWidth, x: 0, y: 0.15 }
-const p = Plot.insert({ fill: `viewport`, region }, {
-  grid: {
-    increments: 0.1
-  },
-  clear: `canvas`,
-  range: { min: { x: 0, y: 0 }, max: { x: 1, y: 1 } },
-  connectStyle: `line`,
-  valueStyle: `dot`,
-  textStyle: {
-    size: `8px`,
-    colour: `gray`
-  },
-  axisStyle: {
-    colour: `hsl(0,0%,20%)`
-  },
-  show: {
-    grid: false,
-    axes: true,
-    axisValues: true,
-    whiskers: true
-  },
-  whiskerLength: 10
-});
+const p = Plot.insert(
+  {
+    canvasResizeTo: `viewport`,
+    region: { match: `#target`, marginPx: 50 },
+  }
+  , {
+    grid: {
+      increments: 0.1
+    },
+    clear: `canvas`,
+    range: { min: { x: 0, y: 0 }, max: { x: 1, y: 1 } },
+    connectStyle: `line`,
+    valueStyle: `dot`,
+    textStyle: {
+      size: `8px`,
+      colour: `gray`
+    },
+    axisStyle: {
+      colour: `hsl(0,0%,20%)`
+    },
+    show: {
+      grid: false,
+      axes: true,
+      axisValues: true,
+      whiskers: true
+    },
+    whiskerLength: 10
+  });
 p.setMeta(`default`, {
   colour: `hsl(50,100%,50%)`,
   lineWidth: 10

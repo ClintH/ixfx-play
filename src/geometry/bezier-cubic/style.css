@@ -1,7 +1,25 @@
 @import url("../../base.css");
 @import url("../../forms.css");
+
 body {
-  flex-wrap: wrap;
+  user-select: none;
+  -webkit-user-select: none;
+  overscroll-behavior: none;
+  touch-action: none;
+  overflow: hidden;
+  height: 100vh;
+  width:100vw;
+}
+section { 
+  position: absolute;
+  left:0;
+  top:0;
+  width:100vw;
+  height:100vh;
+  display: grid;
+  grid-template-rows: auto 8em;
+  align-items: end;
+  pointer-events: none;
 }
 
 .handle {
@@ -29,18 +47,14 @@ label {
 }
 
 #right {
-  position: absolute;
-  max-width: 20vw;
-  right: 0.5em;
-  top: 0.5em;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
   background-color: var(--chrome-3);
-  border: 1px solid var(--chrome-5);
   padding:0.5em;
-  z-index: 2;
+  overflow: hidden;
 }
 
 #right-top {
@@ -49,6 +63,7 @@ label {
   flex-direction: row;
   align-content: center;
   justify-content: flex-start;
+  pointer-events: all;
 }
 
 #point-a,#point-b {
@@ -64,4 +79,36 @@ label {
   align-self: center;
   font-size:8pt;
   font-family: monospace;
+  word-break: break-all;
+  text-wrap:wrap;
+  word-wrap: break-word;
+
+  user-select: text;
+  pointer-events: all;
+}
+
+#target {
+  position: relative;
+  z-index: 2;
+  width:100%;
+  height:100%;
+  user-select: none;
+  pointer-events: none;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  fieldset {
+    width:100%;
+    max-width:8em;
+  }
+  fieldset.wide {
+    max-width: unset;
+  }
+  #right {
+    height:100%;
+  }
+  section {
+    grid-template-rows: none;
+    grid-template-columns: auto 15em;
+  }
 }
