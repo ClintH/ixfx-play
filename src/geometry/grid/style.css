@@ -34,21 +34,26 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+
+}
+
+body {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 }
 
 #grid {
   border: 2px solid whitesmoke;
-  width: max-content;
 }
 
 section {
   display: flex;
   vertical-align: auto;
-  padding: 1rem;
-  width: max-content;
+  padding: 0.25rem;
+  width: 100%;
+  height:100%;
   flex-direction: column;
+  align-items:center;
 }
 
 #coords {
@@ -57,4 +62,25 @@ section {
 
 #tools {
   background-color: var(--chrome-1);
+  overflow: hidden;
+}
+
+#tools-container {
+  overflow: hidden;
+  justify-content: center;
+}
+
+/* Landscape */
+@media (min-aspect-ratio: 1/1) {
+  body {
+    flex-direction: row;
+  }
+
+  #tools-container {
+    min-width:15em;
+    width: 30vw;
+  }
+  #grid-container {
+   width:70vw; 
+  }
 }

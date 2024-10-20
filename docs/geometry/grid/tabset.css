@@ -1,6 +1,6 @@
  .ixfx-tabset {
    background-color: var(--chrome-3);
-   width: 20em;
+   max-width: 20em;
    border-radius: var(--radius);
 
    fieldset {

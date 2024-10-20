@@ -2,15 +2,27 @@ import { Grids, Points } from '../../ixfx/geometry.js';
 import { visitPanel } from './visit.js';
 import { offsetPanel } from './offset.js';
 import { linePanel } from './line.js';
-import { tabSet } from '../../ixfx/dom.js';
+import { tabSet, ElementSizer } from '../../ixfx/dom.js';
 import { Draw } from './draw.js';
 const canvasEl = document.querySelector(`#grid`);
 const coordsEl = document.querySelector(`#coords`);
+let initialised = false;
 let grid = {
     rows: 10,
     cols: 10,
     size: 50
 };
+ElementSizer.canvasParent(`#grid`, {
+    naturalSize: { height: 200, width: 200 },
+    stretch: `min`,
+    onSetSize(size, el) {
+        sizeGrid();
+    }
+});
+// const source = new CanvasSource(`#grid`, `min`);
+// source.createRegion({
+//   scale: `independent`,
+// })
 const draw = new Draw(grid);
 const tabbedPanels = tabSet({
     panels: [
@@ -41,5 +53,17 @@ canvasEl.addEventListener(`pointerup`, event => {
     ptr = scaleCanvasCoordinateForGrid(ptr);
     tabbedPanels.notify(`click`, Grids.cellAtPoint(grid, ptr));
 });
+function sizeGrid() {
+    const s = canvasEl.getBoundingClientRect();
+    let dim = Math.min(s.width, s.height);
+    grid = {
+        ...grid,
+        size: Math.floor(dim / grid.rows)
+    };
+    if (initialised) {
+        draw.draw();
+    }
+}
 draw.draw();
+initialised = true;
 //# sourceMappingURL=script.js.map

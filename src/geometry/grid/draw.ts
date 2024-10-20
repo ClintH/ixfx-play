@@ -38,7 +38,6 @@ export class Draw {
     this.gridlineStrokeStyle = vars.chrome_2;
     this.activatedFillStyle = vars.chrome_active_3;
     this.textFillStyle = vars.chrome_active_5;
-    //this.textShadowStyle = vars.chrome_active_5;
     this.highlightedStrokeStyle = vars.chrome_active_3;
     this.visitedFillStyle = vars.chrome_active_1;
   }
