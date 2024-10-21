@@ -42,6 +42,7 @@ export class Draw {
     this.visitedFillStyle = vars.chrome_active_1;
   }
 
+
   clearCellText() {
     this.cellText = Grids.Array1d.createMutable(``, this.grid);
     return this.cellText;

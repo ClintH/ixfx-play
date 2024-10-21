@@ -43,7 +43,7 @@ body {
 }
 
 #grid {
-  border: 2px solid whitesmoke;
+  overflow: hidden;
 }
 
 section {
@@ -54,6 +54,7 @@ section {
   height:100%;
   flex-direction: column;
   align-items:center;
+  justify-content: center;
 }
 
 #coords {
@@ -67,7 +68,12 @@ section {
 
 #tools-container {
   overflow: hidden;
-  justify-content: center;
+}
+
+@media (max-width: 500px){
+  body {
+    font-size: 10px;
+  }
 }
 
 /* Landscape */

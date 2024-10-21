@@ -56,11 +56,19 @@ canvasEl.addEventListener(`pointerup`, event => {
 function sizeGrid() {
     const s = canvasEl.getBoundingClientRect();
     let dim = Math.min(s.width, s.height);
+    let targetGrid = 10;
+    let size = Math.floor(dim / targetGrid);
+    if (size < 15) {
+        targetGrid = 5;
+        size = Math.floor(dim / targetGrid);
+    }
     grid = {
-        ...grid,
-        size: Math.floor(dim / grid.rows)
+        rows: targetGrid,
+        cols: targetGrid,
+        size
     };
     if (initialised) {
+        draw.grid = grid;
         draw.draw();
     }
 }
