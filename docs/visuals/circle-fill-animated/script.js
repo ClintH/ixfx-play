@@ -14,7 +14,7 @@ const settings = Object.freeze({
     }),
     piPi: Math.PI * 2,
     pointSize: 0.005,
-    pointColour: Colour.resolveToString(`--point-fill`),
+    pointColour: Colour.toString(`--point-fill`),
     radius: 0.5,
     origin: { x: 0.5, y: 0.5 },
     pingPong: Mod.pingPongPercent(0.001)

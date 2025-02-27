@@ -3,7 +3,7 @@ import {
   applyToValues,
   differenceFromFixed,
   differenceFromLast,
-  filter,
+  filterIterable,
   flip,
   isApprox,
   isValid,
@@ -11,17 +11,19 @@ import {
   numericRange,
   numericRangeRaw,
   proportion,
-  softmax
-} from "./chunk-YQFOO2R2.js";
+  rangeInclusive,
+  softmax,
+  thresholdAtLeast
+} from "./chunk-DKWLQETA.js";
 import {
   Bipolar_exports
-} from "./chunk-H24RARYV.js";
+} from "./chunk-LXXXWKFE.js";
 import {
   count
-} from "./chunk-6MZRE4JN.js";
+} from "./chunk-AJPKVRVS.js";
 import {
   linearSpace
-} from "./chunk-4DV6BRLR.js";
+} from "./chunk-ARAXT7VF.js";
 import {
   averageWeighted,
   interpolate2 as interpolate,
@@ -34,20 +36,21 @@ import {
   noiseFilter,
   piPi,
   quantiseEvery,
-  wrap,
-  wrapInteger,
-  wrapRange
-} from "./chunk-7NHVB4FC.js";
-import {
   scale,
   scaleClamped,
   scalePercent,
   scalePercentages,
   scaler,
+  scalerNull,
   scalerPercent,
-  scalerTwoWay
-} from "./chunk-EF6MLOJ5.js";
-import "./chunk-ODQWT54O.js";
+  scalerTwoWay,
+  wrap,
+  wrapInteger,
+  wrapRange
+} from "./chunk-LCHD6KMN.js";
+import "./chunk-N7FO4CPW.js";
+import "./chunk-INARIK5E.js";
+import "./chunk-XFNQJV53.js";
 import {
   average,
   dotProduct,
@@ -62,40 +65,35 @@ import {
   validNumbers,
   weight
 } from "./chunk-YG33FJI6.js";
-import "./chunk-XFNQJV53.js";
-import "./chunk-CYC5VE6S.js";
-import "./chunk-RTSGVLRZ.js";
-import "./chunk-AXQJZNKQ.js";
+import "./chunk-NK6WZHXG.js";
+import "./chunk-VYCNRTDD.js";
 import {
   clamp,
   clampIndex,
   clamper
-} from "./chunk-QAEJS6HO.js";
-import "./chunk-5T3R27ZX.js";
-import "./chunk-N6YIY4CM.js";
-import "./chunk-47H3N64R.js";
-import "./chunk-YU7FAXCM.js";
-import "./chunk-7JKM42NS.js";
-import "./chunk-BGQOJZFW.js";
+} from "./chunk-4OK6CU6W.js";
+import "./chunk-72EKR3DZ.js";
+import "./chunk-ICXKAKPN.js";
+import "./chunk-CVHSZDTH.js";
 import "./chunk-MZFSDYZE.js";
-import "./chunk-IZDWDBIV.js";
-import "./chunk-7HPQVR47.js";
+import "./chunk-IXB3RQED.js";
+import "./chunk-YKJ5OEMO.js";
 import {
   minMaxAvg
-} from "./chunk-MMMI4WJQ.js";
-import "./chunk-GISMJX5E.js";
-import "./chunk-NO53N4A2.js";
-import "./chunk-5VWJ6TUI.js";
-import "./chunk-B6WXXS62.js";
-import "./chunk-4IJNRUE7.js";
-import "./chunk-AKC4PULA.js";
-import "./chunk-54PXOMGL.js";
+} from "./chunk-RNGEX66F.js";
+import "./chunk-PSWPSMIG.js";
+import "./chunk-QVTHCRNR.js";
+import "./chunk-WYMJKVGY.js";
+import "./chunk-Z2SF7PPR.js";
 import {
   round
-} from "./chunk-4LY3IBHN.js";
+} from "./chunk-3UVU2F72.js";
 import "./chunk-HOGLR6UM.js";
 import "./chunk-6UZ3OSJO.js";
-import "./chunk-Z5OJDQCF.js";
+import "./chunk-UC4AQMTL.js";
+import "./chunk-CYC5VE6S.js";
+import "./chunk-N6YIY4CM.js";
+import "./chunk-4IJNRUE7.js";
 import "./chunk-L5EJU35C.js";
 export {
   Bipolar_exports as Bipolar,
@@ -110,7 +108,7 @@ export {
   differenceFromFixed,
   differenceFromLast,
   dotProduct,
-  filter,
+  filterIterable,
   flip,
   interpolate,
   interpolateAngle,
@@ -136,15 +134,18 @@ export {
   piPi,
   proportion,
   quantiseEvery,
+  rangeInclusive,
   round,
   scale,
   scaleClamped,
   scalePercent,
   scalePercentages,
   scaler,
+  scalerNull,
   scalerPercent,
   scalerTwoWay,
   softmax,
+  thresholdAtLeast,
   total,
   totalFast,
   validNumbers,

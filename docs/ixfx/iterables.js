@@ -1,5 +1,6 @@
 import {
   asCallback,
+  chain_exports,
   chunks,
   combineLatestToArray,
   concat,
@@ -27,53 +28,50 @@ import {
   uniqueByValue,
   until,
   zip
-} from "./chunk-VQU3KDHN.js";
-import {
-  chain_exports
-} from "./chunk-YDTDZITR.js";
-import "./chunk-43QEGSAG.js";
-import "./chunk-ROEIS7DO.js";
-import "./chunk-4FR3W3OV.js";
-import "./chunk-V5ZRK7VT.js";
-import "./chunk-K3YF5PK2.js";
+} from "./chunk-5SVUQMLV.js";
+import "./chunk-KWDFM445.js";
+import "./chunk-QJJ6YNP3.js";
+import "./chunk-OG7TSNWN.js";
+import "./chunk-UCAZO7IK.js";
+import "./chunk-BMX5N5CN.js";
 import {
   IterableAsync_exports
-} from "./chunk-7NHVB4FC.js";
-import "./chunk-EF6MLOJ5.js";
+} from "./chunk-LCHD6KMN.js";
+import "./chunk-N7FO4CPW.js";
 import {
   IterableSync_exports
-} from "./chunk-ODQWT54O.js";
-import "./chunk-YG33FJI6.js";
+} from "./chunk-INARIK5E.js";
 import "./chunk-XFNQJV53.js";
-import "./chunk-CYC5VE6S.js";
-import "./chunk-RTSGVLRZ.js";
-import "./chunk-AXQJZNKQ.js";
-import "./chunk-QAEJS6HO.js";
+import "./chunk-YG33FJI6.js";
+import "./chunk-NK6WZHXG.js";
 import {
   fromEvent,
   isAsyncIterable,
   isIterable
-} from "./chunk-5T3R27ZX.js";
-import "./chunk-N6YIY4CM.js";
-import "./chunk-47H3N64R.js";
-import "./chunk-YU7FAXCM.js";
-import "./chunk-7JKM42NS.js";
-import "./chunk-BGQOJZFW.js";
+} from "./chunk-VYCNRTDD.js";
+import "./chunk-4OK6CU6W.js";
+import "./chunk-72EKR3DZ.js";
+import "./chunk-ICXKAKPN.js";
+import "./chunk-CVHSZDTH.js";
 import "./chunk-MZFSDYZE.js";
-import "./chunk-IZDWDBIV.js";
-import "./chunk-7HPQVR47.js";
-import "./chunk-MMMI4WJQ.js";
-import "./chunk-GISMJX5E.js";
-import "./chunk-NO53N4A2.js";
-import "./chunk-5VWJ6TUI.js";
-import "./chunk-B6WXXS62.js";
-import "./chunk-4IJNRUE7.js";
-import "./chunk-AKC4PULA.js";
-import "./chunk-54PXOMGL.js";
-import "./chunk-4LY3IBHN.js";
+import "./chunk-IXB3RQED.js";
+import "./chunk-YKJ5OEMO.js";
+import "./chunk-RNGEX66F.js";
+import "./chunk-PSWPSMIG.js";
+import "./chunk-QVTHCRNR.js";
+import "./chunk-WYMJKVGY.js";
+import {
+  compareValuesShallow,
+  hasEqualValuesShallow,
+  maxScore
+} from "./chunk-Z2SF7PPR.js";
+import "./chunk-3UVU2F72.js";
 import "./chunk-HOGLR6UM.js";
 import "./chunk-6UZ3OSJO.js";
-import "./chunk-Z5OJDQCF.js";
+import "./chunk-UC4AQMTL.js";
+import "./chunk-CYC5VE6S.js";
+import "./chunk-N6YIY4CM.js";
+import "./chunk-4IJNRUE7.js";
 import "./chunk-L5EJU35C.js";
 export {
   IterableAsync_exports as Async,
@@ -82,6 +80,7 @@ export {
   asCallback,
   chunks,
   combineLatestToArray,
+  compareValuesShallow,
   concat,
   dropWhile,
   equals,
@@ -96,11 +95,13 @@ export {
   fromFunction,
   fromFunctionAwaited,
   fromIterable,
+  hasEqualValuesShallow,
   isAsyncIterable,
   isIterable,
   iteratorController,
   map,
   max,
+  maxScore,
   min,
   reduce,
   slice,
