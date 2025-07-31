@@ -1,4 +1,4 @@
-import * as Dom from 'ixfx/dist/dom.js';
+import { Dom } from "@ixfx/bundle"
 
 const settings = Object.freeze({
   lastEl: document.getElementById(`last`),
@@ -62,7 +62,7 @@ const toString = (ev) => {
 const initMidi = () => {
   const { deviceSelEl } = state;
   if (!navigator.requestMIDIAccess) throw new Error(`MIDI not supported in this browser.`);
-  
+
   navigator.requestMIDIAccess().then(
     (midi) => {
       const inputs = midi.inputs;
@@ -100,7 +100,7 @@ const setup = () => {
 
   const deviceSelEl = Dom.Forms.select(`#device`, (v) => {
     console.log(v);
-  }, { placeholderOpt:`Omni` });
+  }, { placeholderOpt: `Omni` });
   updateState({ deviceSelEl });
 
   document.getElementById(`btnLogClear`)?.addEventListener(`click`, () => {
@@ -115,7 +115,7 @@ initMidi();
  * Update state
  * @param {Partial<state>} s 
  */
-function updateState (s) {
+function updateState(s) {
   state = Object.freeze({
     ...state,
     ...s

@@ -1,14 +1,15 @@
 /* eslint-disable indent */
-import * as Geo from '../../ixfx/geometry.js';
-import { Grids, Points } from '../../ixfx/geometry.js';
+import * as Geo from '@ixfx/geometry';
+import { Grids, Points } from '@ixfx/geometry';
 import { Draw } from './draw.js';
-import * as Rx from '../../ixfx/rx.js';
+import * as Rx from '@ixfx/rx';
+import { RxUi } from '@ixfx/ui';
 
-export const offsetPanel = (grid: Geo.Grid, drawer: Draw) => {
+export const offsetPanel = (grid: Grids.Grid, drawer: Draw) => {
   /** @type Geo.GridCell */
   let startCell = { x: 0, y: 0 };
 
-  let rxForm: ReturnType<typeof Rx.From.domForm>;
+  let rxForm: ReturnType<typeof RxUi.domForm>;
   let unsub = () => {}
 
   const go = (data?: any | undefined) => {
@@ -60,7 +61,7 @@ export const offsetPanel = (grid: Geo.Grid, drawer: Draw) => {
         </div>
       <form>
       `
-    rxForm = Rx.From.domForm(`form`);
+    rxForm = RxUi.domForm(`form`);
     unsub = rxForm.onValue(value => {
       go(value);
     });

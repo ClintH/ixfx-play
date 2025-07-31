@@ -1,11 +1,11 @@
 import { pc, setHtml } from "../../util.js";
-import { round } from '../../ixfx/numbers.js';
-import * as Visual from '../../ixfx/visual.js';
-import { scaler } from "../../ixfx/numbers.js";
+import { round } from '@ixfx/numbers';
+import { Plot } from '@ixfx/visual';
+import { scaler } from "@ixfx/numbers";
 
 const settings = {
   tiltScale: scaler(-90, 90, -1, 1),
-  tiltPlot: Visual.BipolarView.init(`#plotTilt`, {
+  tiltPlot: Plot.BipolarView.init(`#plotTilt`, {
     yAxisBottomNegative: false,
     bgColour: `transparent`,
     axisColour: `greenyellow`,

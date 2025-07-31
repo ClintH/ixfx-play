@@ -1,0 +1,1 @@
+import{r as s}from"./result-aflA1LW7.js";import{i as f}from"./numbers-SvRH5ijj.js";function a(t,o,l){s(f(t,"positive","decimalPlaces"));const i=typeof o=="boolean"?o:!1;let e;if(t===0)e=Math.round;else{const r=Math.pow(10,t);i?e=n=>Math.ceil(n*r)/r:e=n=>Math.floor(n*r)/r}return typeof o=="number"?e(o):e}export{a as r};

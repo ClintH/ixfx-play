@@ -1,14 +1,14 @@
-import * as Geo from '../../ixfx/geometry.js';
-import { Grids } from '../../ixfx/geometry.js';
-import { Variables } from '../../ixfx/dom.js';
+import * as Geo from '@ixfx/geometry';
+import { Grids } from '@ixfx/geometry';
+import { getCssVariablesWithFallback } from '@ixfx/dom';
 
 export class Draw {
-  highlighted: Geo.GridCell[] = [];
-  visited: Geo.GridCell[] = [];
-  activated: Geo.GridCell[] = [];
-  cellText: Geo.GridArray1d<string>;
+  highlighted: Grids.GridCell[] = [];
+  visited: Grids.GridCell[] = [];
+  activated: Grids.GridCell[] = [];
+  cellText: Grids.GridArray1d<string>;
 
-  grid: Geo.GridVisual;
+  grid: Grids.GridVisual;
 
   gridlineStrokeStyle = `red`;
   textFillStyle = `white`;
@@ -19,13 +19,13 @@ export class Draw {
   ctx;
   canvasEl;
 
-  constructor(grid: Geo.GridVisual) {
+  constructor(grid: Grids.GridVisual) {
     this.grid = grid;
     this.cellText = this.clearCellText();
     this.canvasEl = document.querySelector(`#grid`) as HTMLCanvasElement;
     this.ctx = this.canvasEl.getContext(`2d`) as CanvasRenderingContext2D;
 
-    const vars = Variables.getWithFallback({
+    const vars = getCssVariablesWithFallback({
       chrome_1: `white`,
       chrome_2: `silver`,
       chrome_5: `black`,
@@ -55,7 +55,7 @@ export class Draw {
     this.setHighlighted(undefined);
   }
 
-  appendCellText(text: string, cell: Geo.GridCell) {
+  appendCellText(text: string, cell: Grids.GridCell) {
     if (!Grids.inside(this.cellText, cell)) return;
 
     let existing = this.cellText.get(cell);
@@ -64,7 +64,7 @@ export class Draw {
     this.cellText.set(existing, cell);
   }
 
-  setHighlighted(cells: Geo.GridCell | Geo.GridCell[] | undefined) {
+  setHighlighted(cells: Grids.GridCell | Grids.GridCell[] | undefined) {
     if (cells === undefined) {
       this.highlighted = [];
     } else if (Array.isArray(cells)) {
@@ -75,7 +75,7 @@ export class Draw {
     this.draw();
   }
 
-  addVisited(cell: Geo.GridCell) {
+  addVisited(cell: Grids.GridCell) {
     this.visited.push(cell);
     this.draw();
   }
@@ -86,7 +86,7 @@ export class Draw {
   }
 
 
-  fillCell(cell: Geo.GridCell, colour = `yellow`) {
+  fillCell(cell: Grids.GridCell, colour = `yellow`) {
     const { ctx } = this;
 
     const rect = Grids.rectangleForCell(this.grid, cell);

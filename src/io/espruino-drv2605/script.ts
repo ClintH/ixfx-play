@@ -1,7 +1,7 @@
-import { Espruino } from '../../ixfx/io.js';
-import { Forms } from '../../ixfx/dom.js';
-import { Envelopes } from '../../ixfx/modulation.js';
-import { Async } from '../../ixfx/iterables.js';
+import { Espruino } from '@ixfx/io';
+import { Forms } from '@ixfx/dom';
+import { Envelopes } from '@ixfx/modulation';
+import { Async } from '@ixfx/iterables';
 
 const effects = [
   `strong click 100%`, `strong click 60%`, `strong click 30%`,

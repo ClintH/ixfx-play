@@ -1,8 +1,11 @@
 {
   "port": 4500,
-  "open": "docs/index.html",
+  "open": "index.html",
   "host": "0.0.0.0",
-  "watch": ["src/**/*"],
+  "root": "docs",
+  "watch": [
+    "src/**/*"
+  ],
   "mount": {
     "/src": "./docs"
   },

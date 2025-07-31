@@ -1,5 +1,5 @@
-import * as Flow from '../../../ixfx/flow.js';
-import { Envelopes } from '../../../ixfx/modulation.js';
+import { continuously } from '@ixfx/core';
+import { Envelopes } from '@ixfx/modulation';
 
 const settings = {
   // Set up envelope
@@ -9,7 +9,7 @@ const settings = {
     sustainLevel: 1,
     retrigger: window.location.hash.includes(`retrigger`)
   }),
-  run: Flow.continuously(update)
+  run: continuously(update)
 };
 
 console.log(`Retrigger: ${ settings.env.retrigger }`);

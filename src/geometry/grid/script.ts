@@ -1,8 +1,8 @@
-import { Grids, Point, Points } from '../../ixfx/geometry.js';
+import { Grids, Points } from '@ixfx/geometry';
 import { visitPanel } from './visit.js';
 import { offsetPanel } from './offset.js';
 import { linePanel } from './line.js';
-import { tabSet, ElementSizer } from '../../ixfx/dom.js';
+import { tabSet, ElementSizer } from '@ixfx/dom';
 import { Draw } from './draw.js';
 
 const canvasEl = document.querySelector(`#grid`) as HTMLCanvasElement;
@@ -52,7 +52,7 @@ canvasEl.addEventListener(`pointermove`, event => {
 });
 
 
-const scaleCanvasCoordinateForGrid = (point: Point) => {
+const scaleCanvasCoordinateForGrid = (point: Points.Point) => {
   const size = canvasEl.getBoundingClientRect();
   const actualCellSize = size.width / 10;
   const scaling = grid.size / actualCellSize;

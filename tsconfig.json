@@ -3,15 +3,20 @@
     "module": "ESNext",
     "sourceMap": true,
     "moduleResolution": "Bundler",
-    "target": "ES2022",
+    "target": "esnext",
     "allowImportingTsExtensions": false,
     "isolatedModules": true,
     "allowJs": true,
     "strict": true,
-    "outDir": "./docs/",
-    "skipLibCheck": true,
-    "rootDirs": ["docs", "src"]
+    "outDir": "./build/",
+    "skipLibCheck": true
   },
-  "exclude": ["node_modules", "**/node_modules/*", "docs/*"],
-  "include": ["src/**/*.ts"]
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*",
+    "docs/*"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ]
 }

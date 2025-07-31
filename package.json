@@ -5,10 +5,13 @@
   "type": "module",
   "scripts": {
     "start": "npm run ixfx && concurrently npm:watch:*",
-    "build": "npm run ixfx && tsc && npm run static",
+    "dev": "vite --port=5174",
+    "build": "vite build",
+    "build_": "npm run ixfx && tsc && npm run static",
     "static": "cpx \"src/**/*.{html,css,js}\" docs",
     "clean": "rimraf docs",
-    "ixfx": "rimraf docs/ixfx && copyfiles --up 3 node_modules/ixfx/dist/**.* docs/ixfx",
+    "ixfx-source": "copyfiles --up 3 ../ixfx/bundle-for-demos/**.* node_modules/@ixfx/ && cp -r ../components/dist node_modules/@ixfx/component",
+    "ixfx": "rimraf docs/ixfx && cp -r ./node_modules/@ixfx ./docs/ixfx",
     "watch:tsc": "tsc --watch",
     "watch:static": "cpx \"src/**/*.{html,css,js}\" docs --watch"
   },
@@ -24,8 +27,13 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "@ixfx/bundle": "latest",
+    "@ixfx/components": "latest",
     "@typescript-eslint/parser": "^8.25.0",
+    "bezier-js": "6.1.4",
     "eslint-plugin-unicorn": "^57.0.0",
-    "lit": "3.2.1"
+    "json5": "2.2.3",
+    "lit": "3.2.1",
+    "vite": "7.0.6"
   }
 }

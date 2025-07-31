@@ -1,7 +1,8 @@
-import { Plot } from '../../ixfx/visual.js';
-import * as Rx from '../../ixfx/rx.js';
-import { Beziers, Point, Points } from '../../ixfx/geometry.js';
-import * as Dom from '../../ixfx/dom.js';
+import { Plot } from '@ixfx/visual';
+import * as Rx from '@ixfx/rx';
+import { Beziers, Points } from '@ixfx/geometry';
+import * as Dom from '@ixfx/dom';
+import { RxUi } from '@ixfx/ui';
 
 let maxPlotWidth = 0.7;
 if (window.location.hash.includes(`hide-panel`)) {
@@ -11,7 +12,7 @@ if (window.location.hash.includes(`hide-panel`)) {
 
 const snippetEl = document.querySelector(`#snippet`) as HTMLElement;
 
-const setPoint = (prefix: string, point: Point) => {
+const setPoint = (prefix: string, point: Points.Point) => {
   const inputX = document.querySelector(`#${ prefix }-x`) as HTMLInputElement;
   inputX.value = point.x.toString();
 
@@ -71,13 +72,13 @@ p.setMeta(`default`, {
 });
 
 
-Dom.Rx.windowResize(200).onValue(v => {
+RxUi.windowResize(200).onValue(v => {
   p.positionElementAt(pointA.last(), `#point-a`, `middle`);
   p.positionElementAt(pointB.last(), `#point-b`, `middle`);
   p.positionElementAt(handle1.last(), `#point-handle1`, `middle`);
 });
 
-function drag(suffix: string, rx: Rx.ReactiveWritable<Point> & Rx.ReactiveInitial<Point>) {
+function drag(suffix: string, rx: Rx.ReactiveWritable<Points.Point> & Rx.ReactiveInitial<Points.Point>) {
   Dom.DragDrop.draggable(`#point-${ suffix }`,
     {
       progress: (state) => {
@@ -147,10 +148,10 @@ function use() {
   p.draw();
 }
 
-function makeRxPair(prefix: string, rx: Rx.ReactiveInitial<Point> & Rx.ReactiveWritable<Point>) {
+function makeRxPair(prefix: string, rx: Rx.ReactiveInitial<Points.Point> & Rx.ReactiveWritable<Points.Point>) {
   const pair = Rx.combineLatestToObject({
-    x: Rx.From.domNumberInputValue(`#${ prefix }-x`),
-    y: Rx.From.domNumberInputValue(`#${ prefix }-y`, { emitInitialValue: true })
+    x: RxUi.domNumberInputValue(`#${ prefix }-x`),
+    y: RxUi.domNumberInputValue(`#${ prefix }-y`, { emitInitialValue: true })
   });
   pair.onValue(value => {
     rx.set(value);

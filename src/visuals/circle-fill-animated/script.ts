@@ -1,10 +1,10 @@
 /* eslint-disable unicorn/no-array-callback-reference */
-import { CanvasHelper } from '../../ixfx/dom.js';
-import { repeatSync, debounce } from '../../ixfx/flow.js';
-import * as Random from '../../ixfx/random.js';
-import { Colour } from '../../ixfx/visual.js';
-import { Points, Polar, Point } from '../../ixfx/geometry.js';
-import * as Mod from '../../ixfx/modulation.js';
+import { CanvasHelper } from '@ixfx/visual';
+import { repeatSync, debounce } from '@ixfx/flow';
+import * as Random from '@ixfx/random';
+import { Colour } from '@ixfx/visual';
+import { Points, Polar } from '@ixfx/geometry';
+import * as Mod from '@ixfx/modulation';
 
 const settings = Object.freeze({
   canvas: new CanvasHelper(`#canvas`, {
@@ -15,7 +15,7 @@ const settings = Object.freeze({
   }),
   piPi: Math.PI * 2,
   pointSize: 0.005,
-  pointColour: Colour.toString(`--point-fill`),
+  pointColour: Colour.toCssColour(`--point-fill`),
   radius: 0.5,
   origin: { x: 0.5, y: 0.5 },
   pingPong: Mod.pingPongPercent(0.001)
@@ -24,8 +24,8 @@ const settings = Object.freeze({
 type State = Readonly<{
   randomSource: Random.RandomSource
   numberOfPoints: number
-  startPoints: Point[]
-  endPoints: Point[]
+  startPoints: Points.Point[]
+  endPoints: Points.Point[]
   startExpression: string
   endExpression: string
   animationPoint: number
@@ -34,8 +34,8 @@ type State = Readonly<{
 let state: State = {
   randomSource: Math.random,
   numberOfPoints: 500,
-  startPoints: [] as Point[],
-  endPoints: [] as Point[],
+  startPoints: [] as Points.Point[],
+  endPoints: [] as Points.Point[],
   startExpression: `r()`,
   endExpression: `1 - r()`,
   animationPoint: 0
@@ -182,7 +182,7 @@ function updateState(s: Partial<typeof state>) {
 /**
  * Draws a point (in pixel coordinates)
  */
-function drawPoint(context: CanvasRenderingContext2D, position: Point, fillStyle = `black`, size = 1) {
+function drawPoint(context: CanvasRenderingContext2D, position: Points.Point, fillStyle = `black`, size = 1) {
   context.fillStyle = fillStyle;
   context.beginPath();
   context.arc(position.x, position.y, size, 0, settings.piPi);

@@ -1,32 +1,32 @@
-import {log, Forms} from "../../ixfx/dom.js"
+import { log, Forms } from "@ixfx/dom"
 
 const settings = Object.freeze({
   lastEl: document.querySelector(`#last`) as HTMLInputElement,
-  log: log(`#log`, {timestamp: true})
+  log: log(`#log`, { timestamp: true })
 });
 
 const extract = (event: KeyboardEvent) => {
   // Pull out some fields from the KeyEvent
-  const {altKey, metaKey, ctrlKey, shiftKey, key, code, repeat, type} = event;
-  return {altKey, metaKey, ctrlKey, shiftKey, key, code, repeat, type};
+  const { altKey, metaKey, ctrlKey, shiftKey, key, code, repeat, type } = event;
+  return { altKey, metaKey, ctrlKey, shiftKey, key, code, repeat, type };
 };
 
 const toString = (event: KeyboardEvent) => {
   const t = extract(event);
   return `{
-    key: ${t.key},
-    code: ${t.code},
-    altKey: ${t.altKey},
-    metaKey: ${t.metaKey},
-    ctrlKey: ${t.ctrlKey},
-    shiftKey: ${t.shiftKey},
-    repeat: ${t.repeat},
-    type: ${t.type}
+    key: ${ t.key },
+    code: ${ t.code },
+    altKey: ${ t.altKey },
+    metaKey: ${ t.metaKey },
+    ctrlKey: ${ t.ctrlKey },
+    shiftKey: ${ t.shiftKey },
+    repeat: ${ t.repeat },
+    type: ${ t.type }
   }`;
 };
 
 const setup = () => {
-  const {log, lastEl} = settings;
+  const { log, lastEl } = settings;
 
   const chkKeydown = Forms.checkbox(`#evKeydown`);
   const chkKeyup = Forms.checkbox(`#evKeyup`);

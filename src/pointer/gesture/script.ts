@@ -1,7 +1,8 @@
-import { Point, Points, radianToDegree, Triangles } from "../../ixfx/geometry.js";
-import { reconcileChildren, DataTable } from '../../ixfx/dom.js';
-import * as Trackers from "../../ixfx/trackers.js";
+import { Points, radianToDegree, Triangles, PointsTracker, PointTracker } from "@ixfx/geometry";
+import { reconcileChildren, DataTable } from '@ixfx/dom';
+import * as Trackers from "@ixfx/trackers";
 import { setText, pc, value } from "../../util.js";
+
 const settings = Object.freeze({
   currentPointsEl: document.querySelector(`#current-points`) as HTMLElement,
   startPointsEl: document.querySelector(`#start-points`) as HTMLElement,
@@ -11,7 +12,7 @@ const settings = Object.freeze({
 });
 
 type State = Readonly<{
-  pointers: Trackers.TrackedPointMap
+  pointers: PointsTracker
   twoFinger: {
     rotation: Trackers.NumberTracker
     distance: Trackers.NumberTracker
@@ -19,12 +20,12 @@ type State = Readonly<{
   threeFinger: {
     area: Trackers.NumberTracker
   },
-  centroid: Trackers.PointTracker
+  centroid: PointTracker
   centroidAngle: number
 }>
 let state: State = {
   /** @type {TrackedPointMap} */
-  pointers: Trackers.points({ storeIntermediate: false }),
+  pointers: new PointsTracker({ storeIntermediate: false }),
   twoFinger: {
     rotation: Trackers.number(),
     distance: Trackers.number()
@@ -32,12 +33,12 @@ let state: State = {
   threeFinger: {
     area: Trackers.number()
   },
-  centroid: Trackers.point(),
+  centroid: new PointTracker(),
   /** @type number */
   centroidAngle: 0
 };
 
-const gestureTwoFinger = (a: Point, b: Point) => {
+const gestureTwoFinger = (a: Points.Point, b: Points.Point) => {
   if (a === undefined) throw new Error(`point a undefined`);
   if (b === undefined) throw new Error(`point b undefined`);
 
@@ -52,7 +53,7 @@ const gestureTwoFinger = (a: Point, b: Point) => {
   twoFinger.rotation.seen(rotationAbs / 180);
 };
 
-const gestureThreeFinger = (a: Point, b: Point, c: Point) => {
+const gestureThreeFinger = (a: Points.Point, b: Points.Point, c: Points.Point) => {
   if (a === undefined) throw new Error(`point a undefined`);
   if (b === undefined) throw new Error(`point b undefined`);
   if (c === undefined) throw new Error(`point c undefined`);
@@ -61,7 +62,7 @@ const gestureThreeFinger = (a: Point, b: Point, c: Point) => {
   state.threeFinger.area.seen(Triangles.area(tri));
 };
 
-const gestureCentroid = (pointers: Trackers.TrackedPointMap) => {
+const gestureCentroid = (pointers: PointsTracker) => {
   if (pointers.size < 2) {
     state.centroid.reset();
     return;
@@ -113,7 +114,6 @@ const update = () => {
       angle: Math.round(latestPoint ? radianToDegree(Points.angleRadian(latestPoint, v.initial)) : Number.NaN)
     });
   }
-
   DataTable.fromList(`#pointers`, displayMap);
   // Update visuals
   draw();
@@ -185,7 +185,7 @@ const trackPoint = (event: PointerEvent) => {
 /**
  * Position element
  */
-const positionElement = (element: HTMLElement | null, point: Point, size: number) => {
+const positionElement = (element: HTMLElement | null, point: Points.Point, size: number) => {
   if (!element) return;
   element.style.left = (point.x - size / 2) + `px`;
   element.style.top = (point.y - size / 2) + `px`;

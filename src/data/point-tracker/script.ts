@@ -1,14 +1,13 @@
-import { CanvasHelper } from '../../ixfx/dom.js';
-import { DataTable } from '../../ixfx/dom.js';
-import { Point, Points, Rect } from '../../ixfx/geometry.js';
-import { point } from '../../ixfx/trackers.js';
+import { CanvasHelper } from '@ixfx/visual';
+import { DataTable } from '@ixfx/dom';
+import { Points, PointTracker, Rects } from '@ixfx/geometry';
 import { drawDot, drawLine, setText } from '../../util.js';
 
 const settings = Object.freeze({
   canvas: new CanvasHelper(`#canvas`, {
     resizeLogic: `both`
   }),
-  tracker: point({
+  tracker: new PointTracker({
     id: `pt`,
     storeIntermediate: true
   }),
@@ -17,8 +16,8 @@ const settings = Object.freeze({
 });
 
 type State = Readonly<{
-  bounds: Rect
-  lastPoint: Point
+  bounds: Rects.Rect
+  lastPoint: Points.Point
 }>
 
 let state: State = Object.freeze({
@@ -33,7 +32,7 @@ let state: State = Object.freeze({
 /**
  * New click point
  */
-const handlePoint = (pt: Point) => {
+const handlePoint = (pt: Points.Point) => {
   const { canvas, dtInitial, dtLast, tracker } = settings;
   const { lastPoint } = state;
   const { ctx } = canvas;
@@ -68,7 +67,7 @@ setup();
 
 function formatter(data: object, path: string) {
   if (path === `centroid` || path === `average`) {
-    return Points.toString(Points.apply(data as Point, Math.round));
+    return Points.toString(Points.apply(data as Points.Point, Math.round));
   } else {
     if (typeof data === `number`) return (data as number).toFixed(2);
   }

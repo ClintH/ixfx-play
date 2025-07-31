@@ -1,16 +1,16 @@
 /* eslint-disable indent */
-import * as Geo from '../../ixfx/geometry.js';
-import { Grids } from '../../ixfx/geometry.js';
+import * as Geo from '@ixfx/geometry';
+import { Grids } from '@ixfx/geometry';
 import { Draw } from './draw.js';
-import * as Iter from '../../ixfx/iterables.js'
-import * as Rx from '../../ixfx/rx.js';
+import * as Iter from '@ixfx/iterables'
+import * as Rx from '@ixfx/rx';
+import { RxUi } from '@ixfx/ui';
 
-
-export const visitPanel = (grid: Geo.Grid, drawer: Draw) => {
+export const visitPanel = (grid: Grids.Grid, drawer: Draw) => {
   let startCell = { x: 0, y: 0 };
 
 
-  let rxForm: ReturnType<typeof Rx.From.domForm>;
+  let rxForm: ReturnType<typeof RxUi.domForm>;
 
   let unsub = () => {}
 
@@ -67,7 +67,7 @@ export const visitPanel = (grid: Geo.Grid, drawer: Draw) => {
       </form>
       `
 
-    rxForm = Rx.From.domForm(`form`);
+    rxForm = RxUi.domForm(`form`);
     unsub = rxForm.onValue(value => {
       visit();
     });

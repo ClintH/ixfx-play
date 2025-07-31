@@ -1,12 +1,12 @@
 /* eslint-disable indent */
-import * as Geo from '../../ixfx/geometry.js';
-import { Grids } from '../../ixfx/geometry.js';
-import { Draw } from './draw.js';
-import * as Rx from '../../ixfx/rx.js';
+import { Grids, Points } from '@ixfx/geometry';
+import { Draw } from './draw';
+import * as Rx from '@ixfx/rx';
+import { RxUi } from '@ixfx/ui';
 
-export const linePanel = (grid: Geo.GridVisual, drawer: Draw) => {
+export const linePanel = (grid: Grids.GridVisual, drawer: Draw) => {
 
-  let rxForm: ReturnType<typeof Rx.From.domForm>;
+  let rxForm: ReturnType<typeof RxUi.domForm>;
 
   let aCell = { x: 0, y: 0 };
   let bCell = { x: 0, y: 0 };
@@ -15,10 +15,10 @@ export const linePanel = (grid: Geo.GridVisual, drawer: Draw) => {
   let unsub = () => {}
 
   const updateFromUi = (data: any) => {
-    const aXy = Geo.Points.fromString(data[ `a-xy` ] ?? `0,0`);
-    const bXy = Geo.Points.fromString(data[ `b-xy` ] ?? `0,0`);
+    const aXy = Points.fromString(data[ `a-xy` ] ?? `0,0`);
+    const bXy = Points.fromString(data[ `b-xy` ] ?? `0,0`);
 
-    if (Geo.Points.isNaN(aXy) || Geo.Points.isNaN(bXy)) return;
+    if (Points.isNaN(aXy) || Points.isNaN(bXy)) return;
     aCell = aXy;
     bCell = bXy;
   }
@@ -53,7 +53,7 @@ export const linePanel = (grid: Geo.GridVisual, drawer: Draw) => {
     // })
 
     //getFormData = () => new FormData(formEl);
-    rxForm = Rx.From.domForm(`form`);
+    rxForm = RxUi.domForm(`form`);
     unsub = rxForm.onValue(value => {
       updateFromUi(value);
       go();

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>espruino plot</title>
     <link rel="stylesheet" href="style.css">
+    <script type="importmap">{ "imports": { "@ixfx/": "/ixfx/" } }</script>
   </head>
   <body>
     <div id="container">
@@ -50,7 +51,7 @@ Puck.on('accel', (a) => {
           <div id="dataArea">
             <div id="plot">
               <div id="canvasWrapper">
-                <plot-element id="plotCanvas"></plot-element>
+                <ixfx-plot-element id="plotCanvas"></ixfx-plot-element>
               </div>
             </div>
             <div id="stream">

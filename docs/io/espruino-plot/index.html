@@ -4,7 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>espruino plot</title>
-    <link rel="stylesheet" href="style.css">
+
+    <script type="importmap">{ "imports": { "@ixfx/": "/ixfx/" } }</script>
+    <script type="module" crossorigin src="/assets/io/espruino-plot/index-YuO_XxaD.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="modulepreload" crossorigin href="/assets/result-aflA1LW7.js">
+    <link rel="modulepreload" crossorigin href="/assets/resolve-el-BUhvOf7L.js">
+    <link rel="modulepreload" crossorigin href="/assets/log-BkcsJhgr.js">
+    <link rel="modulepreload" crossorigin href="/assets/forms-C4su1Q0P.js">
+    <link rel="modulepreload" crossorigin href="/assets/numbers-SvRH5ijj.js">
+    <link rel="modulepreload" crossorigin href="/assets/error-message-BtgnhF27.js">
+    <link rel="modulepreload" crossorigin href="/assets/queue-fns-Cpl8E1uR.js">
+    <link rel="modulepreload" crossorigin href="/assets/simple-event-emitter-BaCTAiR9.js">
+    <link rel="modulepreload" crossorigin href="/assets/interval-type-CIaujdcR.js">
+    <link rel="modulepreload" crossorigin href="/assets/state-machine-ROMMoZIR.js">
+    <link rel="modulepreload" crossorigin href="/assets/sleep-DwDBk_RX.js">
+    <link rel="modulepreload" crossorigin href="/assets/with-events-BRQckvzl.js">
+    <link rel="modulepreload" crossorigin href="/assets/espruino-lL2Yqgry.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-Dp34reuP.css">
   </head>
   <body>
     <div id="container">
@@ -50,7 +67,7 @@ Puck.on('accel', (a) => {
           <div id="dataArea">
             <div id="plot">
               <div id="canvasWrapper">
-                <plot-element id="plotCanvas"></plot-element>
+                <ixfx-plot-element id="plotCanvas"></ixfx-plot-element>
               </div>
             </div>
             <div id="stream">
@@ -60,6 +77,5 @@ Puck.on('accel', (a) => {
         </div>
       </div>
     </div>
-    <script type="module" src="script.js"></script>
   </body>
 </html>

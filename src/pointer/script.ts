@@ -1,4 +1,4 @@
-import {log, Forms} from '../ixfx/dom.js'
+import { log, Forms } from '@ixfx/dom'
 
 const test = `asdf`;
 let x = `asf`;
@@ -12,7 +12,7 @@ const settings = Object.freeze({
 });
 
 const clearPointers = () => {
-  const {currentEl} = settings;
+  const { currentEl } = settings;
   if (!currentEl) return;
   currentEl.innerHTML = ``;
 };
@@ -24,17 +24,17 @@ const round = (v: number) => Math.round(v);
  * @param {PointerEvent} ev 
  */
 const updatePointer = (event: PointerEvent) => {
-  const {currentEl, log} = settings;
-  const {isPrimary, pointerType, pointerId, type, shiftKey, ctrlKey, metaKey} = event;
-  const {movementX, movementY, x, y, offsetX, offsetY, screenX, screenY, } = event;
+  const { currentEl, log } = settings;
+  const { isPrimary, pointerType, pointerId, type, shiftKey, ctrlKey, metaKey } = event;
+  const { movementX, movementY, x, y, offsetX, offsetY, screenX, screenY, } = event;
 
-  log.log(`${event.type} ${JSON.stringify(pointerEventSimplify(event))}`);
+  log.log(`${ event.type } ${ JSON.stringify(pointerEventSimplify(event)) }`);
   console.log(event);
-  let element = document.querySelector(`#ptr-${pointerId}`);
+  let element = document.querySelector(`#ptr-${ pointerId }`);
 
   if (element === null) {
     element = document.createElement(`div`);
-    element.id = `ptr-${pointerId}`;
+    element.id = `ptr-${ pointerId }`;
     currentEl?.append(element);
   }
 
@@ -42,37 +42,37 @@ const updatePointer = (event: PointerEvent) => {
   if (shiftKey) keys.push(`shift`);
   if (metaKey) keys.push(`meta`);
   if (ctrlKey) keys.push(`ctrl`);
-  const keyString = keys.map(k => `<kbd>${k}</kbd>`).join(` `);
+  const keyString = keys.map(k => `<kbd>${ k }</kbd>`).join(` `);
 
 
   let penString = ``;
   if (pointerType === `pen`) {
-    const {pressure, twist, tangentialPressure, tiltX, tiltY} = event;
-    penString += `pressure: ${pressure}<br />twist: ${twist} tangentialPressure: ${tangentialPressure}<br />tilt: ${tiltX},${tiltY}<br />`;
+    const { pressure, twist, tangentialPressure, tiltX, tiltY } = event;
+    penString += `pressure: ${ pressure }<br />twist: ${ twist } tangentialPressure: ${ tangentialPressure }<br />tilt: ${ tiltX },${ tiltY }<br />`;
     if (`altitudeAngle` in event && `azimuthAngle` in event) {
-      penString += `altitudeAngle ${event.altitudeAngle}<br />azimuthAngle: ${event.azimuthAngle})<br />`;
+      penString += `altitudeAngle ${ event.altitudeAngle }<br />azimuthAngle: ${ event.azimuthAngle })<br />`;
     }
     penString += `<br />`;
   }
 
   const coordsString = `<table class="coords">
   <thead><td></td><td></td><td>offset</td><td>screen</td><td>movement</td></thead>
-  <tr><td>x</td><td>${round(x)}</td><td>${round(offsetX)}</td><td>${round(screenX)}</td><td>${movementX}</td></tr>
-  <tr><td>y</td><td>${round(y)}</td><td>${round(offsetY)}</td><td>${round(screenY)}</td><td>${movementY}</td></tr>
+  <tr><td>x</td><td>${ round(x) }</td><td>${ round(offsetX) }</td><td>${ round(screenX) }</td><td>${ movementX }</td></tr>
+  <tr><td>y</td><td>${ round(y) }</td><td>${ round(offsetY) }</td><td>${ round(screenY) }</td><td>${ movementY }</td></tr>
   </table>`;
   element.innerHTML = `
-  <h1>${pointerId} ${pointerType} ${isPrimary ? `(primary)` : ``}</h1>
-  ${type}<br />
-  ${penString}
-  ${coordsString}<br />
-  ${keyString}<br >
+  <h1>${ pointerId } ${ pointerType } ${ isPrimary ? `(primary)` : `` }</h1>
+  ${ type }<br />
+  ${ penString }
+  ${ coordsString }<br />
+  ${ keyString }<br >
   `;
 };
 
 const pointerEventSimplify = (event: PointerEvent) => {
-  const {button, buttons, ctrlKey, isPrimary, metaKey, movementX, movementY, offsetX, offsetY, pageX, pageY, pointerId, pointerType, screenX, screenY, shiftKey, x, y} = event;
+  const { button, buttons, ctrlKey, isPrimary, metaKey, movementX, movementY, offsetX, offsetY, pageX, pageY, pointerId, pointerType, screenX, screenY, shiftKey, x, y } = event;
 
-  let r = {button, buttons, ctrlKey, isPrimary, metaKey, movementX, movementY, offsetX, offsetY, pageX, pageY, pointerId, pointerType, screenX, screenY, shiftKey, x, y};
+  let r = { button, buttons, ctrlKey, isPrimary, metaKey, movementX, movementY, offsetX, offsetY, pageX, pageY, pointerId, pointerType, screenX, screenY, shiftKey, x, y };
 
   if (event.pointerType !== `mouse`) {
     r = {
@@ -95,7 +95,7 @@ const pointerEventSimplify = (event: PointerEvent) => {
 };
 
 const setup = () => {
-  const {pointerEl, log} = settings;
+  const { pointerEl, log } = settings;
   if (!pointerEl) return;
   const chkPointermove = Forms.checkbox(`#evPointermove`);
   const chkPointerenter = Forms.checkbox(`#evPointerenter`);

@@ -1,4 +1,4 @@
-import { Point, Points } from "./ixfx/geometry";
+import { Points } from "@ixfx/geometry";
 
 export function setText(id: string, text: number | string | undefined, fallback?: string) {
   const element = document.querySelector(`#${ id }`) as HTMLElement;
@@ -25,7 +25,7 @@ export const setHtml = (id: string, text: string | number | undefined, fallback?
  * Coordinates in absolute units
  * @returns 
  */
-export const drawLine = (context: CanvasRenderingContext2D, a: Point, b: Point) => {
+export const drawLine = (context: CanvasRenderingContext2D, a: Points.Point, b: Points.Point) => {
   context.beginPath();
   context.strokeStyle = `black`;
   context.moveTo(a.x, a.y);
@@ -40,7 +40,7 @@ export const drawLine = (context: CanvasRenderingContext2D, a: Point, b: Point) 
  * @param a 
  * @param fillStyle 
  */
-export const drawDot = (context: CanvasRenderingContext2D, a: Point, fillStyle = `black`) => {
+export const drawDot = (context: CanvasRenderingContext2D, a: Points.Point, fillStyle = `black`) => {
   context.fillStyle = fillStyle;
   context.save();
   context.translate(a.x, a.y);

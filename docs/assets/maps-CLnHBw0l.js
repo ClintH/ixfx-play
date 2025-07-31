@@ -1,0 +1,1 @@
+const a=(e,r)=>[...e.values()].some(n=>r(n)),o=(e,r)=>{if(e.length!==r.length)throw new Error("Keys and values arrays should be same length");return Object.fromEntries(e.map((n,s)=>[n,r[s]]))},u=(e,r)=>async(n,s)=>{let t=e.get(n);if(t!==void 0)return t;if(t=await r(n,s),t===void 0)throw new Error("fn returned undefined");return e.set(n,t),t};export{u as g,a as s,o as z};
