@@ -24,7 +24,6 @@ function getHtmlEntryFiles(srcDir) {
   }
 
   traverseDir(srcDir);
-  console.log(entry);
   return entry;
 }
 

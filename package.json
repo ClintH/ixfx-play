@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run ixfx && concurrently npm:watch:*",
     "dev": "vite --port=5174",
-    "build": "vite build",
+    "build": "rimraf docs && vite build && mv ./docs/src/* ./docs/",
     "build_": "npm run ixfx && tsc && npm run static",
     "static": "cpx \"src/**/*.{html,css,js}\" docs",
     "clean": "rimraf docs",
