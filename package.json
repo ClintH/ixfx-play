@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "npm run ixfx && concurrently npm:watch:*",
-    "dev": "vite --port=5174",
-    "build": "rimraf docs && vite build && mv ./docs/src/* ./docs/",
+    "dev": "vite --host --port=5174",
+    "build": "rimraf docs && vite build && mv ./src/docs ./",
     "build_": "npm run ixfx && tsc && npm run static",
     "static": "cpx \"src/**/*.{html,css,js}\" docs",
     "clean": "rimraf docs",
@@ -31,9 +31,9 @@
     "@ixfx/components": "latest",
     "@typescript-eslint/parser": "^8.25.0",
     "bezier-js": "6.1.4",
-    "eslint-plugin-unicorn": "^57.0.0",
+    "eslint-plugin-unicorn": "^60.0.0",
     "json5": "2.2.3",
-    "lit": "3.2.1",
-    "vite": "7.0.6"
+    "lit": "3.3.1",
+    "vite": "7.1.3"
   }
 }

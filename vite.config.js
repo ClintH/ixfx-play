@@ -28,7 +28,11 @@ function getHtmlEntryFiles(srcDir) {
 }
 
 export default defineConfig({
-  base: "/ixfx-play",
+  server: {
+    host: '127.0.0.1'
+  },
+  base: '/ixfx-play',
+  root:'src',
   build: {
     rollupOptions: {
       input: getHtmlEntryFiles('src')
