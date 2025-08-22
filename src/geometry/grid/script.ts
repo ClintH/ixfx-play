@@ -18,7 +18,7 @@ let grid = {
 ElementSizer.canvasParent(`#grid`, {
   naturalSize: { height: 200, width: 200 },
   stretch: `min`,
-  onSetSize(size, el) {
+  onSizeChanging(size, el) {
     sizeGrid();
   }
 });

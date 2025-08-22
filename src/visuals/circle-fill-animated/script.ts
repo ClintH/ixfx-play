@@ -9,7 +9,7 @@ import * as Mod from '@ixfx/modulation';
 const settings = Object.freeze({
   canvas: new CanvasHelper(`#canvas`, {
     resizeLogic: `min`,
-    onResize(context, size, helper) {
+    onResized(context, size, helper) {
       onCodeUpdated();
     },
   }),

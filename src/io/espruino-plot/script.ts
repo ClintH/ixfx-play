@@ -2,7 +2,7 @@ import { Espruino, StateChangeEvent, IoDataEvent } from "@ixfx/io";
 import snarkdown from "./snarkdown.es.js";
 import * as Dom from "@ixfx/dom";
 import Split from "./Split.js";
-import { PlotElement } from "@ixfx/components/charts/plot.js";
+import { PlotElement } from "@ixfx/components/charts/plot";
 
 //import * as Components from '@ixfx/components/index.js';
 //Components.init();
