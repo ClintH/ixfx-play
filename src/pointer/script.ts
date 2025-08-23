@@ -1,4 +1,4 @@
-import { log, Forms } from '@ixfx/dom'
+import { log, Forms } from 'ixfx/dom.js'
 
 const test = `asdf`;
 let x = `asf`;

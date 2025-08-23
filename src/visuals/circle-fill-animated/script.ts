@@ -1,10 +1,10 @@
 /* eslint-disable unicorn/no-array-callback-reference */
-import { CanvasHelper } from '@ixfx/visual';
-import { repeatSync, debounce } from '@ixfx/flow';
-import * as Random from '@ixfx/random';
-import { Colour } from '@ixfx/visual';
-import { Points, Polar } from '@ixfx/geometry';
-import * as Mod from '@ixfx/modulation';
+import { CanvasHelper } from 'ixfx/visual.js';
+import { repeatSync, debounce } from 'ixfx/flow.js';
+import * as Random from 'ixfx/random.js';
+import { Colour } from 'ixfx/visual.js';
+import { Points, Polar } from 'ixfx/geometry.js';
+import * as Mod from 'ixfx/modulation.js';
 
 const settings = Object.freeze({
   canvas: new CanvasHelper(`#canvas`, {

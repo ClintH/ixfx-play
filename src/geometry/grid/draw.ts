@@ -1,6 +1,6 @@
-import * as Geo from '@ixfx/geometry';
-import { Grids } from '@ixfx/geometry';
-import { getCssVariablesWithFallback } from '@ixfx/dom';
+import * as Geo from 'ixfx/geometry.js';
+import { Grids } from 'ixfx/geometry.js';
+import { getCssVariablesWithFallback } from 'ixfx/dom.js';
 
 export class Draw {
   highlighted: Grids.GridCell[] = [];

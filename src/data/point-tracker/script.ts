@@ -1,6 +1,6 @@
-import { CanvasHelper } from '@ixfx/visual';
-import { DataTable } from '@ixfx/dom';
-import { Points, PointTracker, Rects } from '@ixfx/geometry';
+import { CanvasHelper } from 'ixfx/visual.js';
+import { DataTable } from 'ixfx/dom.js';
+import { Points, PointTracker, Rects } from 'ixfx/geometry.js';
 import { drawDot, drawLine, setText } from '../../util.js';
 
 const settings = Object.freeze({

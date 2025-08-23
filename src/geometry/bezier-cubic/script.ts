@@ -1,8 +1,8 @@
-import { Plot } from '@ixfx/visual';
-import * as Rx from '@ixfx/rx';
-import { Beziers, Points } from '@ixfx/geometry';
-import * as Dom from '@ixfx/dom';
-import { RxUi } from '@ixfx/ui';
+import { Plot } from 'ixfx/visual.js';
+import * as Rx from 'ixfx/rx.js';
+import { Beziers, Points } from 'ixfx/geometry.js';
+import * as Dom from 'ixfx/dom.js';
+import { RxUi } from 'ixfx/ui.js';
 
 let maxPlotWidth = 0.7;
 if (window.location.hash.includes(`hide-panel`)) {

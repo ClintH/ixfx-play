@@ -1,7 +1,7 @@
 import { pc, setHtml } from "../../util.js";
-import { round } from '@ixfx/numbers';
-import { Plot } from '@ixfx/visual';
-import { scaler } from "@ixfx/numbers";
+import { round } from 'ixfx/numbers.js';
+import { Plot } from 'ixfx/visual.js';
+import { scaler } from "ixfx/numbers.js";
 
 const settings = {
   tiltScale: scaler(-90, 90, -1, 1),

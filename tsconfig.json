@@ -17,6 +17,7 @@
     "docs/*"
   ],
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/io/midi/midi-fns.ts_"
   ]
 }

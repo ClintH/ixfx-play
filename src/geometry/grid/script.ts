@@ -1,8 +1,8 @@
-import { Grids, Points } from '@ixfx/geometry';
+import { Grids, Points } from 'ixfx/geometry.js';
 import { visitPanel } from './visit.js';
 import { offsetPanel } from './offset.js';
 import { linePanel } from './line.js';
-import { tabSet, ElementSizer } from '@ixfx/dom';
+import { tabSet, ElementSizer } from 'ixfx/dom.js';
 import { Draw } from './draw.js';
 
 const canvasEl = document.querySelector(`#grid`) as HTMLCanvasElement;

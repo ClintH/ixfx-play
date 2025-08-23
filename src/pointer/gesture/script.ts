@@ -1,6 +1,6 @@
-import { Points, radianToDegree, Triangles, PointsTracker, PointTracker } from "@ixfx/geometry";
-import { reconcileChildren, DataTable } from '@ixfx/dom';
-import * as Trackers from "@ixfx/trackers";
+import { Points, radianToDegree, Triangles, PointsTracker, PointTracker } from "ixfx/geometry.js";
+import { reconcileChildren, DataTable } from 'ixfx/dom.js';
+import * as Trackers from "ixfx/trackers.js";
 import { setText, pc, value } from "../../util.js";
 
 const settings = Object.freeze({

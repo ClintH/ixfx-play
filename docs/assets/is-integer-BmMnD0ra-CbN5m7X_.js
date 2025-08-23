@@ -1,0 +1,1 @@
+const e=r=>{if(r===void 0)return!1;if(typeof r=="string"){const t=Number.parseInt(r);return Number.isNaN(t)?!1:t.toString()===r.toString()}return typeof r=="number"?Number.isNaN(r)||!Number.isFinite(r)?!1:Math.round(r)===r:!1};export{e as i};

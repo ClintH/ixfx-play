@@ -1,8 +1,8 @@
-import { Espruino, IoEvents, StateChangeEvent } from "@ixfx/io";
-import { log } from "@ixfx/dom";
-import { forEach } from "@ixfx/iterables";
-import { Stacks } from "@ixfx/collections";
-import { sleep } from "@ixfx/flow";
+import { Espruino, IoEvents, StateChangeEvent } from "ixfx/io.js";
+import { log } from "ixfx/dom.js";
+import { forEach } from "ixfx/iterables.js";
+import { Stacks } from "ixfx/collections.js";
+import { sleep } from "ixfx/flow.js";
 
 const settings = Object.freeze({
   log: log(`#log`, {

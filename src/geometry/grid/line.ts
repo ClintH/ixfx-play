@@ -1,8 +1,8 @@
 /* eslint-disable indent */
-import { Grids, Points } from '@ixfx/geometry';
+import { Grids, Points } from 'ixfx/geometry.js';
 import { Draw } from './draw';
-import * as Rx from '@ixfx/rx';
-import { RxUi } from '@ixfx/ui';
+import * as Rx from 'ixfx/rx.js';
+import { RxUi } from 'ixfx/ui.js';
 
 export const linePanel = (grid: Grids.GridVisual, drawer: Draw) => {
 

@@ -1,4 +1,4 @@
-import { clamp, scale } from '@ixfx/numbers';
+import { clamp, scale } from 'ixfx/numbers.js';
 
 export type PressureForceState = Readonly<{
   webkitForce?: number

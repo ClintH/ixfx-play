@@ -1,6 +1,6 @@
-import { Espruino, StateChangeEvent, IoDataEvent } from "@ixfx/io";
+import { Espruino, StateChangeEvent, IoDataEvent } from "ixfx/io.js";
 import snarkdown from "./snarkdown.es.js";
-import * as Dom from "@ixfx/dom";
+import * as Dom from "ixfx/dom.js";
 import Split from "./Split.js";
 import { PlotElement } from "@ixfx/components/charts/plot";
 

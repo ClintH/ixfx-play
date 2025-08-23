@@ -1,5 +1,5 @@
-import { continuously } from '@ixfx/core';
-import { Envelopes } from '@ixfx/modulation';
+import { continuously } from 'ixfx/core.js';
+import { Envelopes } from 'ixfx/modulation.js';
 
 const settings = {
   // Set up envelope
