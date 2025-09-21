@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>meyda plot</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">{ "imports": { "@ixfx/": "/ixfx/" } }</script>
+  </head>
+  <body>
+    <div id="toolbar">
+      <button id="btnStart">Start</button>
+      <button id="btnFreeze">Freeze</button>
+      <button id="btnReset">Reset</button>
+      <label>Plot speed
+        <input type="range" min="1" max="200" id="plotSpeed" value="40"></label>
+    </div>
+    <div id="time-domain">
+      <details>
+        <summary>Time-domain</summary>
+        <div class="container"></div>
+      </details>
+    </div>
+    <div id="spectral">
+      <details>
+        <summary>Spectral</summary>
+        <div class="container"></div>
+      </details>
+    </div>
+    <div id="perceptual">
+      <details open>
+        <summary>Perceptual</summary>
+        <div class="container"></div>
+      </details>
+    </div>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

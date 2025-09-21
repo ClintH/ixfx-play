@@ -93,8 +93,7 @@ const onData = (event: IoDataEvent) => {
     const d = JSON.parse(data);
     if (!state.frozen) {
       log.log(data);
-      plot.plotObject(d);
-      plot.draw();
+      plot.appendObjectBySeries(d, true);
     }
   } catch (error) {
     console.warn(error);

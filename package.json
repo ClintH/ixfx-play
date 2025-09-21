@@ -4,12 +4,12 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "npm run ixfx && concurrently npm:watch:*",
+    "start_": "npm run ixfx && concurrently npm:watch:*",
     "dev": "vite --host --port=5174",
     "build": "rimraf docs && vite build && mv ./src/docs ./",
     "build_": "npm run ixfx && tsc && npm run static",
     "static": "cpx \"src/**/*.{html,css,js}\" docs",
-    "clean": "rimraf docs",
+    "clean": "rimraf docs && rimraf .vite",
     "ixfx-source": "copyfiles --up 3 ../ixfx/bundle-for-demos/**.* node_modules/@ixfx/ && cp -r ../components/dist node_modules/@ixfx/component",
     "ixfx": "rimraf docs/ixfx && cp -r ./node_modules/@ixfx ./docs/ixfx",
     "watch:tsc": "tsc --watch",
@@ -27,13 +27,14 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "ixfx": "latest",
-    "@ixfx/components": "latest",
+    "@ixfx/components": "0.2.3",
     "@typescript-eslint/parser": "^8.25.0",
     "bezier-js": "6.1.4",
     "eslint-plugin-unicorn": "^60.0.0",
+    "ixfx": "latest",
     "json5": "2.2.3",
     "lit": "3.3.1",
+    "meyda": "6.0.0-beta.2",
     "vite": "7.1.3"
   }
 }
