@@ -39,7 +39,7 @@ const settings = {
     powerSpectrum: { title: `Power Spectrum`, group: `spectral`, id: `powerSpectrum`, showAs: `float32` },
     spectralCentroid: { title: `Centroid`, group: `spectral`, showAs: `integer`, id: `spectralCentroid` },
     spectralFlatness: { title: `Flatness`, group: `spectral`, showAs: `decimal`, id: `spectralFlatness` },
-    //spectralFlux: { title: `Flux`, group: `spectral`, showAs: `decimal`, id: `spectralFlux` },
+    spectralFlux: { title: `Flux`, group: `spectral`, showAs: `decimal`, id: `spectralFlux` },
     spectralSlope: { title: `Slope`, group: `spectral`, showAs: `decimal`, id: `spectralSlope` },
     spectralRolloff: { title: `Rolloff`, group: `spectral`, showAs: `integer`, id: `spectralRolloff` },
     spectralSpread: { title: `Spread`, group: `spectral`, showAs: `integer`, id: `spectralSpread` },
@@ -211,6 +211,7 @@ async function initAudio() {
   const devices = await navigator.mediaDevices.enumerateDevices();
   const a = await navigator.mediaDevices.getUserMedia({ audio: true });
   const ctx = new AudioContext();
+
   const source = ctx.createMediaStreamSource(a);
   const m = M.default.createMeydaAnalyzer({
     audioContext: ctx,
