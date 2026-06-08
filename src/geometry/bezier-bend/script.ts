@@ -73,7 +73,7 @@ p.setMeta(`default`, {
 });
 
 
-RxUi.browserResizeObservable(window.document.body).onValue(v => {
+RxUi.browserResizeObservable(window.document.body).onValue(() => {
   p.positionElementAt(pointA.last(), `#point-a`, `middle`);
   p.positionElementAt(pointB.last(), `#point-b`, `middle`);
 });

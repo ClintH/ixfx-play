@@ -1,5 +1,5 @@
-import { Grids } from '@ixfx/geometry';
-import { getCssVariablesWithFallback } from '@ixfx/dom';
+import { Grids } from 'ixfx/geometry.js';
+import { getCssVariablesWithFallback } from 'ixfx/dom.js';
 export class Draw {
     highlighted = [];
     visited = [];

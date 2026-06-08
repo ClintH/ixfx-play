@@ -1,4 +1,4 @@
-import { Points } from "@ixfx/geometry";
+import { Points } from "ixfx/geometry.js";
 
 export function setText(id: string, text: number | string | undefined, fallback?: string) {
   const element = document.querySelector(`#${ id }`) as HTMLElement;

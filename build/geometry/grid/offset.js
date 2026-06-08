@@ -1,7 +1,7 @@
 /* eslint-disable indent */
-import * as Geo from '@ixfx/geometry';
-import { Grids, Points } from '@ixfx/geometry';
-import { RxUi } from '@ixfx/ui';
+import * as Geo from 'ixfx/geometry.js';
+import { Grids, Points } from 'ixfx/geometry.js';
+import { RxUi } from 'ixfx/ui.js';
 export const offsetPanel = (grid, drawer) => {
     /** @type Geo.GridCell */
     let startCell = { x: 0, y: 0 };

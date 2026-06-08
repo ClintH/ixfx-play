@@ -1,6 +1,6 @@
 /* eslint-disable indent */
-import { Grids, Points } from '@ixfx/geometry';
-import { RxUi } from '@ixfx/ui';
+import { Grids, Points } from 'ixfx/geometry.js';
+import { RxUi } from 'ixfx/ui.js';
 export const linePanel = (grid, drawer) => {
     let rxForm;
     let aCell = { x: 0, y: 0 };

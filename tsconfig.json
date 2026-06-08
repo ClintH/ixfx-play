@@ -8,6 +8,7 @@
     "isolatedModules": true,
     "allowJs": true,
     "strict": true,
+    "rootDir": "./src",
     "outDir": "./build/",
     "skipLibCheck": true
   },

@@ -8,6 +8,7 @@
   --hue-secondary: 60;
   --padding: 0.6rem;
   --padding-s: 0.3rem;
+  --plot-color:var(--fg);
   --fg: hsl(var(--hue-primary), 30%, 86%);
   --fg-faded: hsl(var(--hue-primary), 10%, 56%);
   --bg: hsl(var(--hue-secondary) 1% 14%);

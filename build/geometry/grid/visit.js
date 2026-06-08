@@ -1,6 +1,6 @@
-import { Grids } from '@ixfx/geometry';
-import * as Iter from '@ixfx/iterables';
-import { RxUi } from '@ixfx/ui';
+import { Grids } from 'ixfx/geometry.js';
+import * as Iter from 'ixfx/iterables.js';
+import { RxUi } from 'ixfx/ui.js';
 export const visitPanel = (grid, drawer) => {
     let startCell = { x: 0, y: 0 };
     let rxForm;

@@ -1,7 +1,7 @@
-import { Espruino } from "@ixfx/io";
-import { log } from "@ixfx/dom";
-import { Stacks } from "@ixfx/collections";
-import { sleep } from "@ixfx/flow";
+import { Espruino } from "ixfx/io.js";
+import { log } from "ixfx/dom.js";
+import { Stacks } from "ixfx/collections.js";
+import { sleep } from "ixfx/flow.js";
 const settings = Object.freeze({
     log: log(`#log`, {
         css: `

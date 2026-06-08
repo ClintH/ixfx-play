@@ -1,0 +1,1 @@
+import"../../modulepreload-polyfill-Dezn_h7o.js";var e=document.querySelector(`#plot`);e.plot(.4),console.log(e);

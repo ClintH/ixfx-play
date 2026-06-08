@@ -110,7 +110,7 @@ const update = () => {
 
     displayMap.set(v.id, {
       id: v.id,
-      length: Math.round(v.length),
+      length: Math.round(v.size),
       angle: Math.round(latestPoint ? radianToDegree(Points.angleRadian(latestPoint, v.initial)) : Number.NaN)
     });
   }

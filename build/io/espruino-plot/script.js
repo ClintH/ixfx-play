@@ -1,6 +1,6 @@
-import { Espruino } from "@ixfx/io";
+import { Espruino } from "ixfx/io.js";
 import snarkdown from "./snarkdown.es.js";
-import * as Dom from "@ixfx/dom";
+import * as Dom from "ixfx/dom.js";
 import Split from "./Split.js";
 //import * as Components from '@ixfx/components/index.js';
 //Components.init();
@@ -76,8 +76,7 @@ const onData = (event) => {
         const d = JSON.parse(data);
         if (!state.frozen) {
             log.log(data);
-            plot.plotObject(d);
-            plot.draw();
+            plot.appendObjectBySeries(d, true);
         }
     }
     catch (error) {

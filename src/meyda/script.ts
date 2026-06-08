@@ -1,33 +1,11 @@
 import * as C from "@ixfx/components";
 C.init();
-import { PlotElement } from "@ixfx/components/charts/plot";
+import { PlotSingleAxis } from "@ixfx/components/plots.js";
 import { movingAverage } from "ixfx/numbers.js";
+import { debounce, continuously} from "ixfx/flow.js";
 import { Colour } from "ixfx/visual.js";
 import * as M from 'meyda';
-
-type Field = {
-  title: string
-  id: string
-  showAs?: `decimal` | `integer` | `float32`,
-  group: `time` | `spectral` | `perceptual`
-}
-
-type ArrayFieldState = {
-  id: string
-  type: `array`
-}
-
-type NumberFieldState = {
-  type: `number`,
-  averager: (v: number) => number
-  id: string
-  range: {
-    min: number, max: number
-  }
-  lastValue: number
-  lastAverage: number
-}
-type FieldState = NumberFieldState | ArrayFieldState;
+import { ArrayFieldState, Field, FieldState, NumberFieldState } from "./types";
 
 const settings = {
   movingAverageSamples: 30,
@@ -50,14 +28,20 @@ const settings = {
     loudness: { title: `Loudness`, group: `perceptual`, showAs: `float32`, id: `loudness` },
     perceptualSharpness: { title: `Perceptual Sharpness`, group: `perceptual`, showAs: `decimal`, id: `perceptualSharpness` },
     mfcc: { title: `Mel-Frequency Cepstral Coefficients`, group: `perceptual`, showAs: `float32`, id: `mfcc` },
-
-
   } as Record<string, Field>,
   fgColour: Colour.resolveCss(`--fg`)
 }
 
 const fieldStates = new Map<string, FieldState>();
 
+const drawLoop = continuously(redrawPlots,40);
+drawLoop.start();
+
+function redrawPlots() {
+  for (const el of document.querySelectorAll(`ixfx-plot-single-axis`)) {
+    (el as PlotSingleAxis).redraw();
+  }
+}
 
 const onData = (event: M.MeydaFeaturesObject) => {
   const { fields } = settings;
@@ -67,10 +51,8 @@ const onData = (event: M.MeydaFeaturesObject) => {
     let currentState = fieldStates.get(key);
     if (typeof value === `object` && f.id === `loudness`) {
       handleValue(value.specific, f, currentState);
-
     } else {
       handleValue(value, f, currentState);
-
     }
   }
 };
@@ -141,12 +123,11 @@ function handleValue(v: Float32Array | number | number[], field: Field, fieldSta
       } else {
         arr = v as number[];
       }
-      plotEl.clearData();
-      //plotEl.plotSeries(arr, ``);
-      plotEl.setRawValues(arr, ``, true);
+      //plotEl.clear();
+      plotEl.set(arr, true);
     } else {
       if (typeof v === `number` && !Number.isNaN(v) && Number.isFinite(v)) {
-        plotEl.appendRawValues(v, ``, true);
+        plotEl.add(v, true);
       }
     }
   } else {
@@ -169,7 +150,7 @@ function getElementsForField(field: Field) {
     console.warn(`Section element not found: #section-${ field.id }`);
     return { sectionEl: undefined, plotEl: undefined, statsEl: undefined }
   }
-  const plotEl = sectionEl.querySelector(`ixfx-plot-element`);
+  const plotEl = sectionEl.querySelector(`ixfx-plot-single-axis`) as PlotSingleAxis;
   const statsEl = sectionEl.querySelector(`.stats`);
   return { sectionEl, plotEl, statsEl };
 }
@@ -256,6 +237,7 @@ async function initAudio() {
 //   }
 // }
 
+
 function setupContainer(fields: Generator<Field>, parentElQuery: string) {
   const container = document.querySelector(`${ parentElQuery } .container`);
   for (const b of fields) {
@@ -264,29 +246,30 @@ function setupContainer(fields: Generator<Field>, parentElQuery: string) {
     h.innerText = b.id;
     const h2 = document.createElement(`h2`);
     h2.innerText = b.title;
-    const p = document.createElement(`ixfx-plot-element`);
-    p.setDrawDebounce(40);
-    p.primaryAxis.bounds = `auto-persistent`;
+    const p = document.createElement(`ixfx-plot-single-axis`) as PlotSingleAxis;
+    //p.setDrawDebounce(40);
+    //p.primaryAxis.bounds = `auto-persistent`;
 
-    p.seriesColourGenerate = (_series) => settings.fgColour;
+    //p.seriesColourGenerate = (_series) => settings.fgColour;
     const showAs = b.showAs ?? `float32`;
     if (showAs === `float32`) {
-      //p.streaming = false;
-      p.renderStyle = `bar`;
-
+      //p.renderStyle = `bar`;
+      p.drawStyle = `hist-bottom`;
     } else {
-      p.setSeriesFormatting(``, {
-        dot: {
-          radius: 3, gapWidth: 0
-        }
-      })
-      p.seriesDefault = {
-        limit: 100,
-      };
+      // p.setSeriesFormatting(``, {
+      //   dot: {
+      //     radius: 3, gapWidth: 0
+      //   }
+      // })
+      p.drawStyle = `circles`;
+      p.capacity = 100;
+      // p.seriesDefault = {
+      //   limit: 100,
+      // };
     }
     p.id = `plot-${ b.id }`;
     s.id = `section-${ b.id }`;
-    p.hideLegend = true;
+    //p.hideLegend = true;
 
     s.append(h);
     s.append(h2);
@@ -335,7 +318,7 @@ function setup() {
 
   document.querySelector(`#btnReset`)?.addEventListener(`click`, (event) => {
     fieldStates.clear();
-    for (const el of document.querySelectorAll(`ixfx-plot-element`)) {
+    for (const el of document.querySelectorAll(`ixfx-plot-single-axis`)) {
       el.clear();
     }
   });
@@ -351,10 +334,10 @@ function setup() {
 
   document.querySelector(`#plotSpeed`)?.addEventListener(`change`, event => {
     const speed = Math.floor((event.target as HTMLInputElement).valueAsNumber);
-    for (const el of document.querySelectorAll(`ixfx-plot-element`)) {
-      el.setDrawDebounce(speed);
-    }
-    console.log(`Speed: ${ speed }`);
+    // for (const el of document.querySelectorAll(`ixfx-plot-element`)) {
+    //   el.setDrawDebounce(speed);
+    // }
+    drawLoop.interval = speed;
   })
 }
 

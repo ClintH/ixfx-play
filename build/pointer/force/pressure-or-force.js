@@ -1,4 +1,4 @@
-import { clamp, scale } from '@ixfx/numbers';
+import { clamp, scale } from 'ixfx/numbers.js';
 /**
  * Helper function to bind to pressure/force events.
  * Event data is available via the `onChange` callback.
